@@ -1,0 +1,584 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from '@storybook/blocks';
+
+<Meta title="🎨 Design System/Tokens" />
+
+# 🎨 Design Tokens - Actuaría System
+
+**Sistema de tokens sincronizados desde Figma**  
+*Última actualización: Abril 2024*
+
+---
+
+## 📖 Introducción
+
+Este Design System proporciona un conjunto exhaustivo de **Design Tokens** que garantizan coherencia visual y funcional en toda la plataforma de Actuaría. Los tokens están disponibles en **3 formatos**:
+
+- **CSS Variables** → Para estilos directos en HTML/CSS
+- **TypeScript** → Para importación en React/Next.js con type-safety
+- **Figma Variables** → Single source of truth en diseño
+
+---
+
+## 🎨 Paleta de Colores
+
+### Colores Primarios
+
+Los colores primarios (azul) se utilizan para acciones principales, enlaces y elementos de marca.
+
+| Nivel | Valor | Uso |
+|-------|-------|-----|
+| **50** | `#E8F2FF` | Fondos muy claros |
+| **100** | `#D0E5FF` | Hover states ligeros |
+| **200** | `#A2CBFF` | Estados hover |
+| **300** | `#73B1FF` | Estados activos ligeros |
+| **400** | `#4597FF` | Elementos secundarios |
+| **500** | `#1F7FFF` | **PRIMARY** - Acciones principales |
+| **600** | `#1563D6` | Hover activo |
+| **700** | `#0D47AD` | Estados activos/pressed |
+| **800** | `#082B84` | Énfasis fuerte |
+| **900** | `#04165B` | Texto oscuro sobre primario |
+
+**Uso en CSS:**
+```css
+.button-primary {
+  background-color: var(--color-primary-500);
+  color: var(--color-primary-900);
+}
+
+.button-primary:hover {
+  background-color: var(--color-primary-600);
+}
+```
+
+**Uso en React/TypeScript:**
+```typescript
+import { colors } from '@/tokens';
+
+const buttonStyles = {
+  backgroundColor: colors.primary[500],
+  '&:hover': {
+    backgroundColor: colors.primary[600],
+  },
+};
+```
+
+---
+
+### Colores Secundarios
+
+Verdes para indicar éxito, transacciones completadas y estados positivos.
+
+| Nivel | Valor | Uso |
+|-------|-------|-----|
+| **50** | `#E8F5E9` | Fondos de éxito |
+| **100** | `#C8E6C9` | Hover ligero |
+| **200** | `#A5D6A7` | Estados hover |
+| **300** | `#81C784` | Confirmaciones |
+| **400** | `#66BB6A` | Indicadores |
+| **500** | `#4CAF50` | **SECONDARY** - Éxito |
+| **600-900** | Variantes oscuras | |
+
+**Casos de uso:**
+- Badges de "Completado"
+- Mensajes de éxito
+- Iconografía positiva
+- Gráficos de tendencia positiva
+
+---
+
+### Colores de Acento
+
+Naranja para alertas, acciones importantes y llamadas a la acción.
+
+| Nivel | Valor | Uso |
+|-------|-------|-----|
+| **50-400** | Variantes claras | Estados hover |
+| **500** | `#FF9800` | **ACCENT** - Alertas/CTAs |
+| **600-900** | Variantes oscuras | Estados activos |
+
+**Casos de uso:**
+- Botones secundarios
+- Alertas de advertencia
+- Notificaciones pendientes
+- Elementos que requieren atención
+
+---
+
+### Colores Semánticos
+
+Estados y significados específicos:
+
+| Token | Color | Uso |
+|-------|-------|-----|
+| **Success** | `#4CAF50` | Operaciones exitosas |
+| **Warning** | `#FF9800` | Advertencias del sistema |
+| **Error** | `#F44336` | Errores de validación |
+| **Info** | `#2196F3` | Información general |
+| **Danger** | `#D32F2F` | Acciones destructivas |
+
+```typescript
+// En componentes React
+import { colors } from '@/tokens';
+
+<Alert severity="success" color={colors.semantic.success} />
+<Alert severity="error" color={colors.semantic.error} />
+```
+
+---
+
+### Paleta Neutral
+
+Grises para texto, bordes y fondos.
+
+| Nivel | Valor | Uso |
+|-------|-------|-----|
+| **0** | `#FFFFFF` | Fondo principal |
+| **50** | `#F9FAFB` | Fondos secundarios |
+| **100** | `#F3F4F6` | Áreas inertes |
+| **200** | `#E5E7EB` | Bordes ligeros |
+| **300** | `#D1D5DB` | Bordes por defecto |
+| **400** | `#9CA3AF` | Texto deshabilitado |
+| **500** | `#6B7280` | Texto terciario |
+| **600** | `#4B5563` | Texto secundario |
+| **700** | `#374151` | Texto semi-prominente |
+| **800** | `#1F2937` | Texto casi primario |
+| **900** | `#111827` | **Texto primario** |
+| **1000** | `#000000` | Negro puro |
+
+---
+
+## 📝 Tipografía
+
+### Font Families
+
+```typescript
+const fontFamily = {
+  sans: "Inter, -apple-system, BlinkMacSystemFont, ...",  // UI Default
+  serif: "Merriweather, Georgia, serif",                  // Editorial
+  mono: "Fira Code, Courier New, monospace",              // Code
+};
+```
+
+**Stack recomendado:**
+- **UI:** Inter (sans) - Interfaz limpia y profesional
+- **Contenido:** Merriweather (serif) - Documentos, reportes
+- **Código:** Fira Code (mono) - Ejemplos, valores técnicos
+
+---
+
+### Tamaños de Fuente
+
+| Token | Tamaño | Uso |
+|-------|--------|-----|
+| **xs** | 12px | Captions, badges |
+| **sm** | 14px | Etiquetas pequeñas |
+| **base** | 16px | Body text (default) |
+| **lg** | 18px | Body large |
+| **xl** | 20px | Subtítulos |
+| **2xl** | 24px | Heading 3 |
+| **3xl** | 30px | Heading 2 |
+| **4xl** | 36px | Heading 1 |
+| **5xl** | 44px | Display |
+
+**Escala recomendada:** `12 → 14 → 16 → 18 → 20 → 24 → 30 → 36 → 44`
+
+---
+
+### Pesos de Fuente
+
+| Token | Peso | Uso |
+|-------|------|-----|
+| **Light** | 300 | Texto largo (mejorar legibilidad) |
+| **Normal** | 400 | Body, párrafos |
+| **Medium** | 500 | Labels, botones |
+| **Semibold** | 600 | Subtítulos, énfasis |
+| **Bold** | 700 | Headings |
+| **Extrabold** | 800 | Display, énfasis máximo |
+
+**Recomendación de uso:**
+- Heading: Bold (700)
+- Subtitle: Semibold (600)
+- Body: Normal (400)
+- Label/Button: Medium (500)
+
+---
+
+### Alturas de Línea
+
+| Token | Valor | Uso |
+|-------|-------|-----|
+| **Tight** | 1.2 | Headings, títulos |
+| **Normal** | 1.5 | Body text estándar |
+| **Relaxed** | 1.75 | Textos largos (reportes) |
+| **Loose** | 2.0 | Máxima legibilidad |
+
+**Fórmula de oro:** `altura línea = tamaño fuente × 1.5`
+
+---
+
+### Composiciones Tipográficas Predefinidas
+
+Para mayor consistencia, utiliza estas composiciones en lugar de valores individuales:
+
+```typescript
+import { typographyComposites } from '@/tokens';
+
+// Display
+typographyComposites.displayLarge    // 44px, Bold, leading 52px
+typographyComposites.displaySmall    // 36px, Bold, leading 44px
+
+// Headings
+typographyComposites.headlineLarge   // 30px, Bold, leading 36px
+typographyComposites.headlineSmall   // 24px, Bold, leading 32px
+
+// Títulos
+typographyComposites.titleLarge      // 20px, Semibold, leading 28px
+typographyComposites.titleSmall      // 18px, Semibold, leading 26px
+
+// Body
+typographyComposites.bodyLarge       // 16px, Normal, leading 24px
+typographyComposites.bodySmall       // 14px, Normal, leading 20px
+
+// Labels
+typographyComposites.labelLarge      // 14px, Medium, letter-spacing 0.1px
+typographyComposites.labelSmall      // 12px, Medium, letter-spacing 0.5px
+```
+
+**Uso en estilos:**
+```css
+.heading-1 {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+```
+
+---
+
+## 📏 Espaciado
+
+Sistema de espaciado de **4px base** (múltiplos de 4):
+
+| Token | Valor | Casos de uso |
+|-------|-------|-------------|
+| **0** | 0px | Sin espaciado |
+| **xs** | 4px | Microgap entre elementos |
+| **sm** | 8px | Espaciado mínimo dentro de elementos |
+| **md** | 16px | Espaciado estándar (DEFAULT) |
+| **lg** | 24px | Espaciado entre secciones |
+| **xl** | 32px | Espaciado grande |
+| **2xl** | 48px | Secciones mayores |
+| **3xl** | 64px | Bloques principales |
+| **4xl** | 96px | Espaciado muy amplio |
+
+**Regla de oro:** Usa `md` como valor por defecto, sube/baja según necesidad.
+
+```typescript
+// React example
+import { spacing } from '@/tokens';
+
+<Box p={spacing.md} gap={spacing.sm} />
+```
+
+```css
+/* CSS example */
+.card {
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-md);
+}
+```
+
+---
+
+## 🎯 Border Radius
+
+Tokens de redondeado para diferentes contextos:
+
+| Token | Valor | Uso |
+|-------|-------|-----|
+| **None** | 0px | Bordes rectos (raramente) |
+| **sm** | 4px | Inputs, pequeños botones |
+| **md** | 8px | Cards, botones estándar |
+| **lg** | 12px | Modals, popovers |
+| **xl** | 16px | Containers grandes |
+| **Full** | 9999px | Avatares, badges circulares |
+
+**Consistencia:** Mantén máximo 3 valores en el proyecto (sm, md, lg).
+
+---
+
+## 🌙 Sombras
+
+Sistema de sombras para profundidad:
+
+| Token | CSS | Uso |
+|-------|-----|-----|
+| **sm** | `0 1px 2px rgba(0,0,0,0.05)` | Hover sutil |
+| **md** | `0 4px 6px rgba(0,0,0,0.1)` | Cards, botones |
+| **lg** | `0 10px 15px rgba(0,0,0,0.1)` | Popovers |
+| **xl** | `0 20px 25px rgba(0,0,0,0.1)` | Modals |
+| **2xl** | `0 25px 50px rgba(0,0,0,0.25)` | Dropdowns |
+| **Inner** | Inset | Inputs inactivos |
+| **None** | Transparent | Sin sombra |
+
+**Elevaciones recomendadas:**
+```
+Level 0 (Fondo):     Ninguna
+Level 1 (Raised):    shadow-sm
+Level 2 (Floating):  shadow-md
+Level 3 (Modal):     shadow-xl
+```
+
+---
+
+## ⚡ Transiciones
+
+Tiempos de animación para movimiento fluido:
+
+| Token | Duración | Función | Uso |
+|-------|----------|---------|-----|
+| **fast** | 150ms | ease-in-out | Micro-interacciones |
+| **base** | 200ms | ease-in-out | Interacciones estándar |
+| **slow** | 300ms | ease-in-out | Transiciones notables |
+| **slowest** | 500ms | ease-in-out | Animaciones complejas |
+
+**Recomendaciones:**
+- Hover effects: `fast`
+- Page transitions: `base`
+- Modal animations: `slow`
+- Complejas: `slowest`
+
+```typescript
+import { transitions, getTransition } from '@/tokens';
+
+// Acceso directo
+transition: transitions.base;  // '200ms cubic-bezier(...)'
+
+// Helper function
+transition: getTransition('opacity', 'fast');
+```
+
+---
+
+## 🌗 Dark Mode
+
+Todos los tokens soportan dark mode automáticamente a través de:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: var(--color-neutral-900);
+    --color-text-primary: var(--color-neutral-50);
+    /* ... */
+  }
+}
+```
+
+**En React:**
+```typescript
+const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const bgColor = isDark ? colors.neutral[900] : colors.neutral[0];
+```
+
+---
+
+## 📱 Breakpoints
+
+Puntos de quiebre responsivos:
+
+| Token | Valor | Dispositivo |
+|-------|-------|-------------|
+| **xs** | 320px | Mobile pequeño |
+| **sm** | 640px | Mobile grande |
+| **md** | 768px | Tablet |
+| **lg** | 1024px | Laptop |
+| **xl** | 1280px | Desktop |
+| **2xl** | 1536px | Ultra-wide |
+
+```typescript
+// Helper function
+import { mediaQuery } from '@/tokens';
+
+// CSS-in-JS
+const styles = {
+  [mediaQuery('md')]: {
+    fontSize: '18px',
+  },
+};
+```
+
+```css
+/* CSS */
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+```
+
+---
+
+## 💡 Alias Semánticos
+
+Nombres significativos para contextos específicos:
+
+```typescript
+const semanticColors = {
+  background: {
+    primary: '#FFFFFF',      // Fondo principal
+    secondary: '#F9FAFB',    // Fondo secundario
+    tertiary: '#F3F4F6',     // Fondo terciario
+  },
+  text: {
+    primary: '#111827',      // Texto principal
+    secondary: '#6B7280',    // Texto secundario
+    tertiary: '#9CA3AF',     // Texto terciario
+  },
+  status: {
+    success: '#4CAF50',
+    error: '#F44336',
+    warning: '#FF9800',
+  },
+};
+```
+
+**Ventajas:**
+- Más semántico que "color-primary-500"
+- Fácil cambio global en dark mode
+- Mantenimiento simplificado
+
+---
+
+## 🚀 Cómo Usar
+
+### En CSS
+
+```css
+/* Importar variables */
+@import '@/styles/design-tokens.css';
+
+.button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  background-color: var(--color-primary-500);
+  color: var(--color-primary-900);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.button:hover {
+  background-color: var(--color-primary-600);
+  box-shadow: var(--shadow-lg);
+}
+```
+
+### En React/TypeScript
+
+```typescript
+import { 
+  colors, 
+  spacing, 
+  typography, 
+  getCSSVariable,
+  typographyComposites 
+} from '@/tokens';
+
+// Uso directo
+const buttonStyles = {
+  padding: `${spacing.md} ${spacing.lg}`,
+  fontSize: typography.fontSize.base,
+  backgroundColor: colors.primary[500],
+  color: colors.primary[900],
+  borderRadius: '8px',
+  transition: `all 200ms ease-in-out`,
+};
+
+// Composiciones
+const headingStyles = {
+  ...typographyComposites.headlineLarge,
+  color: colors.neutral[900],
+  marginBottom: spacing.lg,
+};
+
+// Variables CSS
+const dynamicBg = getCSSVariable('color-primary-500');
+```
+
+### En Styled Components / Emotion
+
+```typescript
+import styled from 'styled-components';
+import { colors, spacing, transitions } from '@/tokens';
+
+const Button = styled.button`
+  padding: ${spacing.md} ${spacing.lg};
+  background-color: ${colors.primary[500]};
+  border-radius: 8px;
+  transition: all ${transitions.base};
+
+  &:hover {
+    background-color: ${colors.primary[600]};
+  }
+`;
+```
+
+### En Tailwind CSS
+
+Configura tokens como extensiones:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: tokens.colors.primary,
+        secondary: tokens.colors.secondary,
+      },
+      spacing: tokens.spacing,
+      borderRadius: tokens.radius,
+      boxShadow: tokens.shadows,
+    },
+  },
+};
+```
+
+---
+
+## ✅ Checklist de Implementación
+
+- [ ] Importar `design-tokens.css` en tu proyecto principal
+- [ ] Instalarconsulta para TypeScript si usas React
+- [ ] Revisar guía de colores en Figma
+- [ ] Aplicar composiciones tipográficas en componentes
+- [ ] Usar alias semánticos en lugar de valores crudos
+- [ ] Testar dark mode en navegadores
+- [ ] Documentar nuevos tokens en Storybook
+- [ ] Sincronizar cambios de Figma semanalmente
+
+---
+
+## 🔗 Enlaces Útiles
+
+- 🎨 **Figma Design System:** [Ver en Figma](https://figma.com/your-design-system)
+- 📚 **Componentes Storybook:** Navega las secciones de componentes
+- 📦 **NPM Package:** `npm install @actuaria/design-tokens`
+- 🔄 **CI/CD Integration:** Ver configuración en `.github/workflows`
+
+---
+
+## 📞 Soporte
+
+¿Preguntas sobre tokens?
+- 💬 Slack: #design-system
+- 📧 Email: design-system@actuaria.com
+- 🐙 GitHub Issues: [design-system/issues](https://github.com/actuaria/design-system/issues)
+
+---
+
+**Última actualización:** Abril 8, 2024  
+**Versión:** 1.0.0  
+**Próxima revisión:** Q3 2024

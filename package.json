@@ -1,0 +1,111 @@
+{
+  "name": "@actuaria/design-system",
+  "version": "1.0.0",
+  "description": "Actuaría Design System - Design Tokens Pipeline (Figma → CSS/TS/Storybook)",
+  "author": "Actuaría Design & Engineering Team",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/actuaria/design-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/actuaria/design-system/issues"
+  },
+  "homepage": "https://github.com/actuaria/design-system#readme",
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "figma",
+    "css-variables",
+    "typescript",
+    "storybook",
+    "actuaria"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "main": "./src/tokens/index.ts",
+  "types": "./src/tokens/index.ts",
+  "exports": {
+    ".": "./src/tokens/index.ts",
+    "./colors": "./src/tokens/colors.ts",
+    "./typography": "./src/tokens/typography.ts",
+    "./spacing": "./src/tokens/spacing.ts",
+    "./styles": "./src/styles/design-tokens.css"
+  },
+  "files": [
+    "src/tokens/",
+    "src/styles/",
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "storybook:watch": "storybook dev -p 6006 --watch",
+    "build:storybook": "storybook build",
+    "sync:tokens": "node scripts/sync-tokens.js",
+    "sync:tokens:watch": "nodemon --watch src/tokens scripts/sync-tokens.js",
+    "validate:tokens": "ajv validate -s schema/tokens.schema.json -d src/tokens/tokens.json",
+    "generate:docs": "node scripts/generate-docs.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json,md}\"",
+    "build": "tsc",
+    "clean": "rm -rf dist build coverage .storybook-static",
+    "prepare": "npm run type-check && npm run lint",
+    "release": "standard-version && npm publish",
+    "version:major": "npm version major",
+    "version:minor": "npm version minor",
+    "version:patch": "npm version patch",
+    "preversion": "npm run type-check && npm run lint",
+    "postversion": "git push --tags origin main"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0",
+    "@storybook/addon-interactions": "^7.0.0",
+    "@storybook/addon-links": "^7.0.0",
+    "@storybook/blocks": "^7.0.0",
+    "@storybook/react": "^7.0.0",
+    "@storybook/react-vite": "^7.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "ajv-cli": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "node-fetch": "^3.0.0",
+    "nodemon": "^3.0.0",
+    "prettier": "^3.0.0",
+    "standard-version": "^9.0.0",
+    "storybook": "^7.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "storybook": {
+    "storiesPath": "./src",
+    "storybookVersion": "7.0.0"
+  }
+}
