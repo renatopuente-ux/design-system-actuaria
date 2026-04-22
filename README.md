@@ -30,33 +30,74 @@ https://figma.com/file/N1wh3u4sX3UGyUU5oWOaz6
 
 ```
 design-system-actuaria/
-├── tokens.ts                  # Tokens TypeScript — colores, tipografía, espaciado
-├── design-tokens.css          # CSS Custom Properties (fuente canónica de variables)
-├── Tokens.stories.mdx         # Documentación de tokens en Storybook
+├── tokens.ts                      # Tokens TypeScript — colores, tipografía, espaciado
+├── design-tokens.css              # CSS Custom Properties (fuente canónica de variables)
+├── Tokens.stories.mdx             # Documentación de tokens en Storybook
 │
 └── src/
     └── components/
-        ├── index.ts           # Barrel export de todos los componentes
+        ├── index.ts               # Barrel export de los 60 componentes
         │
-        ├── Button/            # Variantes: primary, secondary, ghost, danger
-        ├── ButtonIcon/        # Botón icónico cuadrado
-        ├── ButtonGroup/       # Grupo horizontal o vertical de botones
-        ├── RadioButton/       # Radio individual con label
-        ├── RadioButtonGroup/  # Grupo de radios con fieldset
-        ├── DropdownMenu/      # Menú desplegable con items y danger state
-        ├── SearchInput/       # Input con icono de búsqueda y botón limpiar
-        ├── AvatarDropdown/    # Avatar con menú de usuario
-        ├── DatePicker/        # Calendario nativo sin dependencias externas
-        ├── Text/              # Variantes tipográficas: heading, body, tiny, link
-        ├── TextBlock/         # Bloque editorial con icono, título y cuerpo
-        ├── NavigationHeader/  # Header sticky 64px con logo, nav y avatar
-        ├── EmptyState/        # Pantalla vacía con icono, título y acción
-        ├── User/              # Avatar + nombre + rol en tres tamaños
-        ├── Card/              # Contenedor con padding y sombra
-        ├── Drawer/            # Panel lateral izquierdo o derecho
-        ├── BarChart/          # Gráfica de barras SVG nativa
-        ├── ProgressBar/       # Barra de progreso con tres tamaños
-        └── MotionBar/         # Barra animada con conteo de valor hacia target
+        ├── Accordion/             # Acordeón con transición de altura y allowMultiple
+        ├── Actuarin/              # Mascota SVG de Actuaria, 3 expresiones
+        ├── Alert/                 # Banner inline con borde semántico y dismiss
+        ├── AlertGlobal/           # Banner fixed top full-width por variante
+        ├── Autocomplete/          # Input con filtrado y navegación por teclado
+        ├── Avatar/                # Círculo con imagen o iniciales, 5 tamaños
+        ├── AvatarDropdown/        # Avatar con menú desplegable de usuario
+        ├── Badge/                 # Etiqueta pill con 5 variantes semánticas
+        ├── BadgeCount/            # Contador circular para notificaciones
+        ├── BadgeDot/              # Punto de estado con animación pulse
+        ├── BannerSlider/          # Carrusel full-width con autoplay y dots
+        ├── BarChart/              # Gráfica de barras SVG nativa sin dependencias
+        ├── Breadcrumbs/           # Migaja de pan con aria-current
+        ├── Button/                # Variantes: primary, secondary, ghost, danger
+        ├── ButtonGroup/           # Grupo horizontal o vertical de botones
+        ├── ButtonIcon/            # Botón icónico cuadrado
+        ├── Card/                  # Contenedor con padding, sombra y hover
+        ├── CardFlip/              # Tarjeta con animación 3D de volteo CSS
+        ├── Checkbox/              # Casilla personalizada con estado indeterminate
+        ├── Combobox/              # Input libre + selector estructurado con filtro
+        ├── DatePicker/            # Calendario nativo sin dependencias externas
+        ├── Divider/               # Separador horizontal/vertical con label opcional
+        ├── Drawer/                # Panel lateral izquierdo o derecho con overlay
+        ├── DropdownMenu/          # Menú desplegable con items danger y disabled
+        ├── EmptyState/            # Pantalla vacía con icono, título y acción
+        ├── FileUpload/            # Dropzone con drag-over y lista de archivos
+        ├── Footer/                # Pie de página oscuro con columnas y legal
+        ├── Hero/                  # Sección portada con badge, título y CTAs
+        ├── IconContainer/         # Wrapper de icono con variantes semánticas
+        ├── LoadingBar/            # Barra determinate e indeterminate animada
+        ├── Logotipo/              # Logo SVG inline: wordmark o monograma A
+        ├── Modal/                 # Diálogo centrado sm/md/lg con backdrop
+        ├── MotionBar/             # Barra animada con conteo requestAnimationFrame
+        ├── NavigationHeader/      # Header sticky 64px con logo, nav y avatar
+        ├── NavigationSide/        # Sidebar 240px colapsable a 64px icon-only
+        ├── Pagination/            # Paginación con elipsis automáticas
+        ├── ProgressBar/           # Barra de progreso con tres tamaños
+        ├── RadioButton/           # Radio individual con label accesible
+        ├── RadioButtonGroup/      # Grupo de radios con fieldset y legend
+        ├── Rating/                # Estrellas interactivas con preview hover
+        ├── SearchInput/           # Input con icono de búsqueda y botón limpiar
+        ├── SegmentedControl/      # Selector pill de opciones exclusivas
+        ├── Select/                # Selector custom con ARIA combobox completo
+        ├── Slider/                # Control deslizante con fill de track animado
+        ├── Slot/                  # Placeholder de layout con borde punteado
+        ├── Stepper/               # Indicador de pasos horizontal y vertical
+        ├── SummaryList/           # Lista label/valor con acciones de edición
+        ├── Table/                 # Tabla con striped rows, hover y alineación
+        ├── Tabs/                  # Pestañas con navegación por teclado
+        ├── Tag/                   # Etiqueta removible con icono opcional
+        ├── Testimonial/           # Tarjeta de cita con autor y rating
+        ├── Text/                  # 8 variantes tipográficas con prop as
+        ├── TextArea/              # Área de texto con contador de caracteres
+        ├── TextBlock/             # Bloque editorial con icono, título y cuerpo
+        ├── TextInput/             # Campo de texto con label, hint y error
+        ├── TextLink/              # Enlace inline con soporte externo ↗
+        ├── Toggle/                # Interruptor on/off en tamaños sm y md
+        ├── Tooltip/               # Aparece en hover/focus, 4 posiciones
+        ├── Tracking/              # Timeline vertical de seguimiento de estados
+        └── User/                  # Avatar + nombre + rol en tres tamaños
 ```
 
 ---
