@@ -2,7 +2,7 @@
 
 **Sistema centralizado de componentes, tokens y estilos para Actuaria Consultores.**
 
-Fuente única de verdad para diseño y desarrollo — sincronizado desde Figma, consumido directamente por Claude Design y herramientas de desarrollo.
+Actuaria Consultores es una firma con 40 años de experiencia en soluciones matemáticas y tecnológicas para la mitigación de riesgos financieros. Este design system es la fuente única de verdad para el diseño y desarrollo de sus productos digitales: **Actuaria Plus**, **Actuafast** y **Actuaria.com**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/renatopuente-ux/design-system-actuaria)
@@ -144,7 +144,11 @@ Cada componente incluye:
 3. Usar tokens de `design-tokens.css` en el proyecto anfitrión
 
 ### Claude Design
-Usar la URL del repo directamente como contexto de design system al generar interfaces para Actuaria Plus y productos derivados.
+Usar la URL del repo directamente como contexto de design system al generar interfaces para los productos de Actuaria:
+
+- **Actuaria Plus** — Plataforma SaaS de gestión actuarial
+- **Actuafast** — Herramienta de cálculo actuarial rápido
+- **Actuaria.com** — Sitio corporativo y portal de servicios
 
 ---
 
