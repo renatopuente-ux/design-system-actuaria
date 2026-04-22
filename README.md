@@ -101,7 +101,7 @@ design-system-actuaria/
 
 ---
 
-## Componentes — 56 en total
+## Componentes — 60 en total
 
 Cada componente incluye:
 - `[Name].tsx` — React 18 + TypeScript estricto
@@ -179,4 +179,4 @@ MIT © 2026 Actuaria Consultores.
 
 ---
 
-Made with ❤️ by Actuaria Design Team — Last update: Abril 22, 2026 · 56 componentes
+Made with ❤️ by Actuaria Design Team — Last update: Abril 22, 2026 · 60 componentes
