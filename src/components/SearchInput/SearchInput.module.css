@@ -1,0 +1,75 @@
+.si { display: flex; flex-direction: column; gap: var(--spacing-8, 8px); }
+
+.si__label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.si__wrapper {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1.5px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--radius-card, 16px);
+  background: var(--background-base, white);
+  padding: 0 var(--spacing-12, 12px);
+  gap: var(--spacing-8, 8px);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.si__wrapper:focus-within {
+  border-color: var(--interactive-action, #4c64d9);
+  box-shadow: 0 0 0 3px rgba(76,100,217,0.15);
+}
+
+.si__wrapper--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
+}
+
+.si__icon {
+  display: flex;
+  align-items: center;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  flex-shrink: 0;
+}
+
+.si__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  min-width: 0;
+}
+
+.si__input::placeholder { color: var(--text-weak, rgba(0,9,51,0.65)); }
+.si__input::-webkit-search-decoration,
+.si__input::-webkit-search-cancel-button { display: none; }
+
+.si__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  border-radius: 50%;
+  padding: 0;
+  transition: background 100ms ease;
+  flex-shrink: 0;
+}
+.si__clear:hover { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
+.si__clear:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25); }
+
+[data-theme='dark'] .si__wrapper { background: #1e2030; border-color: rgba(255,255,255,0.1); }
+[data-theme='dark'] .si__input { color: white; }

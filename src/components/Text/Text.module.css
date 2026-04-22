@@ -1,0 +1,73 @@
+.tx { margin: 0; font-family: var(--font-family-body, 'Nunito', sans-serif); }
+
+/* Variants */
+.tx--heading1 {
+  font-size: var(--font-size-heading-1, 40px);
+  line-height: var(--line-height-heading-1, 48px);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+.tx--heading3 {
+  font-size: var(--font-size-heading-3, 24px);
+  line-height: var(--line-height-heading-3, 32px);
+  font-weight: 600;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+.tx--heading4 {
+  font-size: var(--font-size-heading-4, 20px);
+  line-height: var(--line-height-heading-4, 28px);
+  font-weight: 400;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+.tx--body {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
+  font-weight: 400;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+.tx--bodyBold {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
+  font-weight: 600;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+.tx--tiny {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  font-weight: 400;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+.tx--uppercase {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+.tx--textLink {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
+  font-weight: 600;
+  color: var(--text-brand, #151f47);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+.tx--textLink:hover { color: var(--interactive-action, #4c64d9); }
+
+/* Alignment */
+.tx--left  { text-align: left; }
+.tx--center { text-align: center; }
+.tx--right { text-align: right; }
+
+/* Dark mode */
+[data-theme='dark'] .tx--heading1,
+[data-theme='dark'] .tx--heading3,
+[data-theme='dark'] .tx--heading4 { color: white; }
+[data-theme='dark'] .tx--body,
+[data-theme='dark'] .tx--bodyBold,
+[data-theme='dark'] .tx--tiny,
+[data-theme='dark'] .tx--uppercase { color: rgba(255,255,255,0.65); }
+[data-theme='dark'] .tx--textLink { color: rgba(255,255,255,0.85); }

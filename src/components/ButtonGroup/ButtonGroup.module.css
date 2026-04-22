@@ -1,0 +1,32 @@
+.bg {
+  display: inline-flex;
+  gap: 0;
+}
+
+.bg--horizontal { flex-direction: row; }
+.bg--vertical { flex-direction: column; }
+
+/* Collapse borders between siblings */
+.bg--horizontal > :not(:first-child) > button,
+.bg--horizontal > :not(:first-child) {
+  border-left-width: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.bg--horizontal > :not(:last-child) > button,
+.bg--horizontal > :not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bg--vertical > :not(:first-child) > button,
+.bg--vertical > :not(:first-child) {
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.bg--vertical > :not(:last-child) > button,
+.bg--vertical > :not(:last-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

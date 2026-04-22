@@ -26,18 +26,19 @@
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
   },
-  "main": "./src/tokens/index.ts",
-  "types": "./src/tokens/index.ts",
+  "main": "./tokens.ts",
+  "types": "./tokens.ts",
   "exports": {
-    ".": "./src/tokens/index.ts",
-    "./colors": "./src/tokens/colors.ts",
-    "./typography": "./src/tokens/typography.ts",
-    "./spacing": "./src/tokens/spacing.ts",
-    "./styles": "./src/styles/design-tokens.css"
+    ".": "./tokens.ts",
+    "./styles": "./design-tokens.css",
+    "./components": "./src/components/index.ts",
+    "./components/*": "./src/components/*/index.ts"
   },
   "files": [
-    "src/tokens/",
-    "src/styles/",
+    "tokens.ts",
+    "design-tokens.css",
+    "Tokens.stories.mdx",
+    "src/components/",
     "dist/",
     "README.md",
     "LICENSE"

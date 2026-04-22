@@ -1,0 +1,69 @@
+.dp { position: relative; display: inline-flex; flex-direction: column; gap: var(--spacing-8, 8px); }
+
+.dp__label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px); font-weight: 600;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.dp__input {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8, 8px);
+  height: 40px; padding: 0 var(--spacing-12, 12px);
+  border: 1.5px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--radius-card, 16px);
+  background: var(--background-base, white);
+  cursor: pointer; min-width: 180px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  font-family: inherit;
+}
+.dp__input:hover:not(:disabled) { border-color: var(--interactive-action, #4c64d9); }
+.dp__input:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(76,100,217,0.25); border-color: var(--interactive-action, #4c64d9); }
+.dp__input--disabled { opacity: 0.5; cursor: not-allowed; }
+
+.dp__value { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); color: var(--text-strong, rgba(0,6,38,0.9)); }
+.dp__placeholder { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); color: var(--text-weak, rgba(0,9,51,0.65)); }
+
+.dp__calendar {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 200;
+  background: var(--background-base, white);
+  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--radius-card, 16px);
+  box-shadow: var(--shadow-overlay);
+  padding: var(--spacing-16, 16px);
+  width: 280px;
+  animation: dp-open 150ms ease;
+}
+@keyframes dp-open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+.dp__nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-12, 12px); }
+.dp__monthyear { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); font-weight: 600; color: var(--text-strong, rgba(0,6,38,0.9)); }
+.dp__navbtn {
+  width: 28px; height: 28px; border: none; background: none; cursor: pointer;
+  border-radius: 8px; font-size: 18px; color: var(--text-weak, rgba(0,9,51,0.65));
+  display: flex; align-items: center; justify-content: center;
+  transition: background 100ms ease;
+}
+.dp__navbtn:hover { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
+.dp__navbtn:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25); }
+
+.dp__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.dp__dayname { text-align: center; font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: 11px; font-weight: 600; color: var(--text-weak, rgba(0,9,51,0.65)); padding: 4px 0; }
+
+.dp__day {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 8px; border: none; background: none;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px); font-weight: 400;
+  color: var(--text-strong, rgba(0,6,38,0.9)); cursor: pointer;
+  transition: background 100ms ease;
+}
+.dp__day:hover:not(:disabled) { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
+.dp__day:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25); }
+.dp__day--selected { background: var(--interactive-action, #4c64d9) !important; color: white !important; font-weight: 600; }
+.dp__day--today { border: 1.5px solid var(--interactive-action, #4c64d9); }
+.dp__day--disabled { opacity: 0.3; cursor: not-allowed; }
+
+[data-theme='dark'] .dp__calendar { background: #1e2030; border-color: rgba(255,255,255,0.1); }
+[data-theme='dark'] .dp__monthyear, [data-theme='dark'] .dp__day { color: white; }
+[data-theme='dark'] .dp__input { background: #1e2030; border-color: rgba(255,255,255,0.1); }
+[data-theme='dark'] .dp__value { color: white; }

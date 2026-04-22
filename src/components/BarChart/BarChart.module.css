@@ -1,0 +1,11 @@
+.bc { width: 100%; }
+
+.bc__title {
+  margin: 0 0 var(--spacing-12, 12px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
