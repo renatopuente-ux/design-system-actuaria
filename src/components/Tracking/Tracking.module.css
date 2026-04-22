@@ -1,0 +1,125 @@
+/* Tracking — trk- prefix
+   Vertical timeline. Completed: filled icon. Current: pulsing dot. Pending: outlined ring. */
+
+.trk-root {
+  --trk-color-completed: var(--interactive-action, #4c64d9);
+  --trk-color-current: var(--interactive-action, #4c64d9);
+  --trk-color-pending: var(--stroke-weak, rgba(0, 17, 102, 0.2));
+  --trk-connector-filled: var(--interactive-action, #4c64d9);
+  --trk-connector-empty: var(--stroke-weak, rgba(0, 17, 102, 0.12));
+  --trk-text-label: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --trk-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --trk-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --trk-icon-size: 20px;
+  --trk-connector-width: 2px;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--trk-font-family);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each step */
+.trk-step {
+  display: flex;
+  gap: var(--spacing-16, 16px);
+  min-height: 60px;
+}
+
+/* Color per status */
+.trk-step--completed { color: var(--trk-color-completed); }
+.trk-step--current   { color: var(--trk-color-current); }
+.trk-step--pending   { color: var(--trk-color-pending); }
+
+/* Left indicator column */
+.trk-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--trk-icon-size);
+}
+
+.trk-icon {
+  width: var(--trk-icon-size);
+  height: var(--trk-icon-size);
+  flex-shrink: 0;
+}
+
+/* Pulsing animation for current step */
+@keyframes trk-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.15); }
+}
+
+.trk-icon--pulse {
+  animation: trk-pulse 1.8s ease-in-out infinite;
+}
+
+/* Connector line between steps */
+.trk-connector {
+  flex: 1;
+  width: var(--trk-connector-width);
+  background-color: var(--trk-connector-empty);
+  margin: 4px 0;
+  border-radius: 1px;
+  min-height: 24px;
+}
+
+.trk-connector--filled {
+  background-color: var(--trk-connector-filled);
+}
+
+/* Right content column */
+.trk-content {
+  flex: 1;
+  padding-bottom: var(--spacing-16, 16px);
+}
+
+.trk-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-8, 8px);
+  flex-wrap: wrap;
+}
+
+.trk-label {
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  color: var(--trk-text-label);
+}
+
+/* Override label color for pending steps */
+.trk-step--pending .trk-label {
+  color: var(--trk-text-weak);
+  font-weight: 400;
+}
+
+.trk-date {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--trk-text-weak);
+  white-space: nowrap;
+}
+
+.trk-description {
+  margin: 4px 0 0;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--trk-text-weak);
+  line-height: 1.5;
+}
+
+/* Dark mode */
+[data-theme='dark'] .trk-root {
+  --trk-color-completed: #7b93f0;
+  --trk-color-current: #7b93f0;
+  --trk-color-pending: rgba(255, 255, 255, 0.2);
+  --trk-connector-filled: #7b93f0;
+  --trk-connector-empty: rgba(255, 255, 255, 0.1);
+  --trk-text-label: rgba(255, 255, 255, 0.9);
+  --trk-text-weak: rgba(255, 255, 255, 0.5);
+}

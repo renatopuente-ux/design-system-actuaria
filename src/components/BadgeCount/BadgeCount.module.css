@@ -1,0 +1,38 @@
+/* BadgeCount — circular numeric indicator
+   Prefix: bdc-
+   Font-weight: 600 per design system rule
+   All colors via CSS custom properties — no raw hex values */
+
+.bdc-root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill, 48px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  /* Brand interactive color as background per spec */
+  background-color: var(--interactive-action, #4c64d9);
+  color: var(--background-base, #ffffff);
+  white-space: nowrap;
+  box-sizing: border-box;
+  /* Ensures pixel-perfect circle for single digits */
+  letter-spacing: 0;
+}
+
+/* ── dark mode ── */
+[data-theme='dark'] .bdc-root {
+  /* Brand color stays consistent in dark mode; text becomes the dark base */
+  background-color: var(--interactive-action, #4c64d9);
+  color: var(--background-base, #ffffff);
+}
+
+/* ── focus ring (WCAG 2.1 AA) ── */
+.bdc-root:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 100, 217, 0.25);
+}

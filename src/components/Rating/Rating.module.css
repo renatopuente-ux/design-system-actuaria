@@ -1,0 +1,64 @@
+.rt-root {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-family-body);
+}
+
+/* Size variants */
+.rt-root--sm .rt-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.rt-root--md .rt-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.rt-root--lg .rt-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.rt-star {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px;
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+/* Readonly: no pointer interaction */
+[role='img'].rt-star {
+  cursor: default;
+}
+
+.rt-star:not([role='img']):hover {
+  transform: scale(1.15);
+}
+
+.rt-star:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Filled star — uses warning color (gold) */
+.rt-star--filled .rt-icon {
+  fill: var(--color-warning);
+  stroke: none;
+}
+
+/* Empty star — uses stroke-weak token */
+.rt-star--empty .rt-icon {
+  fill: none;
+  stroke: var(--stroke-weak);
+  stroke-width: 1.5px;
+}
+
+/* Dark mode — empty stars slightly brighter */
+[data-theme='dark'] .rt-star--empty .rt-icon {
+  stroke: rgba(255, 255, 255, 0.2);
+}

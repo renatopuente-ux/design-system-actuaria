@@ -1,0 +1,99 @@
+/* Badge — pill-shaped semantic label
+   Prefix: bdg-
+   Font-weight: 600 only (design system rule)
+   All colors via CSS custom properties — no raw hex values */
+
+.bdg-root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill, 48px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+  /* default variant colors */
+  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+}
+
+/* ── sizes ── */
+.bdg-root--md {
+  font-size: var(--font-size-tiny, 14px);
+  padding: 4px var(--spacing-12, 12px);
+}
+
+.bdg-root--sm {
+  font-size: 12px;
+  padding: 2px var(--spacing-8, 8px);
+}
+
+/* ── variants ── */
+.bdg-root--default {
+  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  border-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+}
+
+.bdg-root--success {
+  /* Semantic green — uses CSS custom property for dark-mode compatibility */
+  background-color: var(--fill-success-weak, rgba(16, 185, 129, 0.1));
+  color: var(--text-success, #059669);
+  border-color: var(--stroke-success, rgba(16, 185, 129, 0.25));
+}
+
+.bdg-root--warning {
+  background-color: var(--fill-warning-weak, rgba(245, 158, 11, 0.1));
+  color: var(--text-warning, #d97706);
+  border-color: var(--stroke-warning, rgba(245, 158, 11, 0.25));
+}
+
+.bdg-root--error {
+  background-color: var(--fill-error-weak, rgba(239, 68, 68, 0.1));
+  color: var(--text-error, #dc2626);
+  border-color: var(--stroke-error, rgba(239, 68, 68, 0.25));
+}
+
+.bdg-root--info {
+  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  color: var(--text-brand, #4c64d9);
+  border-color: var(--stroke-brand, rgba(76, 100, 217, 0.2));
+}
+
+/* ── dark mode ── */
+[data-theme='dark'] .bdg-root--default {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .bdg-root--success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+[data-theme='dark'] .bdg-root--warning {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+[data-theme='dark'] .bdg-root--error {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme='dark'] .bdg-root--info {
+  background-color: rgba(76, 100, 217, 0.15);
+  color: #818cf8;
+  border-color: rgba(76, 100, 217, 0.3);
+}
+
+/* ── focus ring (WCAG 2.1 AA) ── */
+.bdg-root:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 100, 217, 0.25);
+}

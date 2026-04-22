@@ -1,0 +1,40 @@
+.lb-track {
+  width: 100%;
+  background-color: var(--fill-weaker);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Determinate bar — grows from left to right via inline width */
+.lb-bar--determinate {
+  display: block;
+  height: 100%;
+  background-color: var(--interactive-action);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* Indeterminate bar — sliding animation left → right, infinite */
+.lb-bar--indeterminate {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background-color: var(--interactive-action);
+  border-radius: 9999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: lb-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes lb-slide {
+  0%   { left: -40%; }
+  60%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Dark mode — slightly brighter track */
+[data-theme='dark'] .lb-track {
+  background-color: rgba(255, 255, 255, 0.08);
+}

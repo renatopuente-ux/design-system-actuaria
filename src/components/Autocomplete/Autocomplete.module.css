@@ -1,0 +1,135 @@
+/* Autocomplete — prefix: ac- */
+/* All color values reference design tokens only; no raw hex. */
+
+.ac-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.ac-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+/* Wrapper positions the search icon inside the input */
+.ac-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ac-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-12) var(--spacing-16);
+  padding-left: 40px; /* leave room for search icon */
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ac-input::placeholder {
+  color: var(--text-weak);
+  font-weight: 400;
+}
+
+.ac-input:focus-visible {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+.ac-input--disabled {
+  background-color: var(--fill-weaker);
+  color: var(--text-weak);
+  cursor: not-allowed;
+}
+
+/* Search icon positioned at left of input */
+.ac-icon {
+  position: absolute;
+  left: var(--spacing-12);
+  color: var(--text-weak);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* Dropdown list */
+.ac-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-8) 0;
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.ac-option {
+  padding: var(--spacing-8) var(--spacing-16);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.ac-option:hover {
+  background-color: var(--fill-weaker);
+}
+
+.ac-option--active {
+  background-color: var(--fill-brand-weak);
+  color: var(--text-brand);
+  font-weight: 600;
+}
+
+.ac-empty {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-weak);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+}
+
+[data-theme='dark'] .ac-input {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+  color: var(--text-strong);
+}
+
+[data-theme='dark'] .ac-list {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}
+
+[data-theme='dark'] .ac-empty {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}

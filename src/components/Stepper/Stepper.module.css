@@ -1,0 +1,173 @@
+.stp-root {
+  --stp-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --stp-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --stp-color-text-brand: var(--text-brand, #4c64d9);
+  --stp-color-action: var(--interactive-action, #4c64d9);
+  --stp-color-stroke-brand: var(--stroke-brand-weak, rgba(76, 100, 217, 0.2));
+  --stp-color-stroke-weak: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  --stp-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --stp-font-size: var(--font-size-tiny, 14px);
+  --stp-spacing-8: var(--spacing-8, 8px);
+  --stp-spacing-12: var(--spacing-12, 12px);
+  --stp-spacing-16: var(--spacing-16, 16px);
+  --stp-indicator-size: 32px;
+  --stp-connector-thickness: 2px;
+
+  font-family: var(--stp-font-family);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[data-theme='dark'] .stp-root {
+  --stp-color-text-strong: rgba(255, 255, 255, 0.9);
+  --stp-color-text-weak: rgba(255, 255, 255, 0.55);
+  --stp-color-stroke-weak: rgba(255, 255, 255, 0.15);
+}
+
+/* === Horizontal layout === */
+.stp-root--horizontal {
+  display: flex;
+  align-items: flex-start;
+}
+
+.stp-root--horizontal .stp-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.stp-root--horizontal .stp-step__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--stp-spacing-8);
+  z-index: 1;
+}
+
+.stp-root--horizontal .stp-step__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Horizontal connector: extends from indicator to the next step */
+.stp-root--horizontal .stp-connector {
+  position: absolute;
+  top: calc(var(--stp-indicator-size) / 2);
+  left: 50%;
+  right: calc(-50%);
+  height: var(--stp-connector-thickness);
+  background-color: var(--stp-color-stroke-weak);
+}
+
+.stp-root--horizontal .stp-connector--completed {
+  background-color: var(--stp-color-action);
+}
+
+/* === Vertical layout === */
+.stp-root--vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.stp-root--vertical .stp-step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: var(--stp-spacing-16);
+}
+
+.stp-root--vertical .stp-step--last {
+  padding-bottom: 0;
+}
+
+.stp-root--vertical .stp-step__body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--stp-spacing-12);
+}
+
+.stp-root--vertical .stp-step__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 6px;
+}
+
+/* Vertical connector: runs from below the indicator down to the next step */
+.stp-root--vertical .stp-connector {
+  position: absolute;
+  left: calc(var(--stp-indicator-size) / 2);
+  top: var(--stp-indicator-size);
+  bottom: 0;
+  width: var(--stp-connector-thickness);
+  background-color: var(--stp-color-stroke-weak);
+  transform: translateX(-50%);
+}
+
+.stp-root--vertical .stp-connector--completed {
+  background-color: var(--stp-color-action);
+}
+
+/* === Step indicator circle === */
+.stp-indicator {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--stp-indicator-size);
+  height: var(--stp-indicator-size);
+  border-radius: 50%;
+  border: 2px solid var(--stp-color-stroke-weak);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--stp-color-text-weak);
+  background: transparent;
+  transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease;
+  z-index: 1;
+}
+
+/* Completed: filled brand background with checkmark */
+.stp-indicator--completed {
+  background-color: var(--stp-color-action);
+  border-color: var(--stp-color-action);
+  color: #ffffff;
+}
+
+/* Current: outlined brand ring */
+.stp-indicator--current {
+  border-color: var(--stp-color-action);
+  color: var(--stp-color-text-brand);
+  background: transparent;
+}
+
+/* Upcoming: muted grey ring */
+.stp-indicator--upcoming {
+  border-color: var(--stp-color-stroke-weak);
+  color: var(--stp-color-text-weak);
+}
+
+/* === Step text === */
+.stp-step__label {
+  font-size: var(--stp-font-size);
+  font-weight: 600;
+  color: var(--stp-color-text-strong);
+}
+
+.stp-step--upcoming .stp-step__label {
+  font-weight: 400;
+  color: var(--stp-color-text-weak);
+}
+
+.stp-step__description {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--stp-color-text-weak);
+  line-height: 1.4;
+}

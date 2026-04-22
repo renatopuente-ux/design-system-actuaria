@@ -1,0 +1,71 @@
+/* Avatar — av- prefix
+   Sizes: xs=24px sm=32px md=40px lg=48px xl=64px
+   Background defaults to --interactive-action; override via color prop */
+
+.av-root {
+  --av-color-bg: var(--interactive-action, #4c64d9);
+  --av-color-text: #ffffff;
+  --av-font-family: var(--font-family-body, 'Nunito', sans-serif);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--av-color-bg);
+  color: var(--av-color-text);
+  font-family: var(--av-font-family);
+  font-weight: 600;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* Size variants */
+.av-root--xs {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.av-root--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+.av-root--md {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.av-root--lg {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+}
+
+.av-root--xl {
+  width: 64px;
+  height: 64px;
+  font-size: 20px;
+}
+
+/* Image fills the full circle */
+.av-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.av-initials {
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Dark mode */
+[data-theme='dark'] .av-root {
+  --av-color-bg: var(--interactive-action, #4c64d9);
+  --av-color-text: #ffffff;
+}

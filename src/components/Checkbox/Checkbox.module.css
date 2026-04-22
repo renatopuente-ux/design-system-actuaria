@@ -1,0 +1,84 @@
+/* Checkbox — prefix: cb- */
+/* All color values reference design tokens only; no raw hex. */
+
+.cb-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  font-family: var(--font-family-body);
+  user-select: none;
+}
+
+.cb-root--disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Visually hide the native input while keeping it accessible */
+.cb-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* Custom 16×16 box */
+.cb-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--stroke-weak);
+  background-color: var(--background-base);
+  color: var(--background-base); /* SVG icon inherits white */
+  transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Checked / indeterminate: fill with brand action color */
+.cb-box--active {
+  background-color: var(--interactive-action);
+  border-color: var(--interactive-action);
+}
+
+.cb-box--disabled {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}
+
+/* Focus ring — applied to the visual box when native input is focused */
+.cb-native:focus-visible + .cb-box {
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
+/* Hover — show subtle fill when not disabled */
+.cb-root:not(.cb-root--disabled):hover .cb-box:not(.cb-box--active) {
+  background-color: var(--fill-brand-weak);
+  border-color: var(--stroke-brand-weak);
+}
+
+.cb-label {
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .cb-box {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}
+
+[data-theme='dark'] .cb-box--active {
+  background-color: var(--interactive-action);
+  border-color: var(--interactive-action);
+}

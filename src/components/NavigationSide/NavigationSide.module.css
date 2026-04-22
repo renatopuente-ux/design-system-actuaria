@@ -1,0 +1,122 @@
+.ns-root {
+  --ns-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --ns-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --ns-color-text-brand: var(--text-brand, #4c64d9);
+  --ns-color-action: var(--interactive-action, #4c64d9);
+  --ns-color-fill-brand-weak: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  --ns-color-fill-hover: var(--fill-weaker, rgba(0, 17, 102, 0.04));
+  --ns-color-stroke-brand: var(--stroke-brand-weak, rgba(76, 100, 217, 0.2));
+  --ns-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --ns-font-size: var(--font-size-tiny, 14px);
+  --ns-spacing-8: var(--spacing-8, 8px);
+  --ns-spacing-12: var(--spacing-12, 12px);
+  --ns-spacing-16: var(--spacing-16, 16px);
+  --ns-width: 240px;
+  --ns-collapsed-width: 64px;
+  --ns-icon-size: 20px;
+  --ns-indent-base: var(--ns-spacing-16);
+  --ns-indent-step: 16px;
+  --ns-shadow-focus: var(--shadow-focus, 0 0 0 3px rgba(76, 100, 217, 0.25));
+
+  width: var(--ns-width);
+  min-height: 100vh;
+  font-family: var(--ns-font-family);
+  transition: width 240ms ease;
+  overflow: hidden;
+}
+
+.ns-root--collapsed {
+  width: var(--ns-collapsed-width);
+}
+
+[data-theme='dark'] .ns-root {
+  --ns-color-text-strong: rgba(255, 255, 255, 0.9);
+  --ns-color-text-weak: rgba(255, 255, 255, 0.55);
+  --ns-color-fill-brand-weak: rgba(76, 100, 217, 0.15);
+  --ns-color-fill-hover: rgba(255, 255, 255, 0.04);
+}
+
+.ns-list,
+.ns-sublist {
+  list-style: none;
+  margin: 0;
+  padding: var(--ns-spacing-8) 0;
+}
+
+.ns-item {
+  list-style: none;
+}
+
+/* Row — works for both <a> and <button> */
+.ns-item__row {
+  display: flex;
+  align-items: center;
+  gap: var(--ns-spacing-12);
+  width: 100%;
+  padding: var(--ns-spacing-8) var(--ns-spacing-16);
+  border: none;
+  border-left: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  font-family: var(--ns-font-family);
+  font-size: var(--ns-font-size);
+  font-weight: 400;
+  color: var(--ns-color-text-weak);
+  text-decoration: none;
+  text-align: left;
+  border-radius: 0;
+  transition: background-color 160ms ease, color 160ms ease, border-left-color 160ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ns-item__row:hover {
+  background-color: var(--ns-color-fill-hover);
+  color: var(--ns-color-text-strong);
+}
+
+/* Active item: brand fill + left border + brand text */
+.ns-item__row--active {
+  background-color: var(--ns-color-fill-brand-weak);
+  border-left-color: var(--ns-color-action);
+  color: var(--ns-color-text-brand);
+  font-weight: 600;
+}
+
+.ns-item__row:focus-visible {
+  outline: none;
+  box-shadow: var(--ns-shadow-focus);
+  border-radius: 4px;
+}
+
+.ns-item__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ns-icon-size);
+  height: var(--ns-icon-size);
+}
+
+.ns-item__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chevron for expandable items */
+.ns-chevron {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--ns-color-text-weak);
+  transition: transform 240ms ease;
+}
+
+.ns-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Sub-navigation list */
+.ns-sublist {
+  padding: 0;
+}

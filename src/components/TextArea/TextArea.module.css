@@ -1,0 +1,108 @@
+/* TextArea — prefix: ta- */
+/* All color values reference design tokens only; no raw hex. */
+
+.ta-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.ta-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.ta-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  outline: none;
+  resize: vertical; /* vertical-only to protect horizontal layout */
+  min-height: 80px;
+  line-height: 1.6;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ta-textarea::placeholder {
+  color: var(--text-weak);
+  font-weight: 400;
+}
+
+.ta-textarea:focus-visible {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+.ta-textarea--error {
+  border-color: var(--color-error, rgba(220, 38, 38, 0.8));
+  background-color: var(--fill-error-weak, rgba(220, 38, 38, 0.04));
+}
+
+.ta-textarea--error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.ta-textarea--disabled,
+.ta-textarea:disabled {
+  background-color: var(--fill-weaker);
+  color: var(--text-weak);
+  cursor: not-allowed;
+  resize: none;
+  border-color: var(--stroke-weak);
+}
+
+.ta-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-8);
+}
+
+.ta-hint {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--text-weak);
+  line-height: 1.4;
+}
+
+.ta-error {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--color-error, rgba(220, 38, 38, 0.9));
+  line-height: 1.4;
+}
+
+.ta-counter {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--text-weak);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Counter turns brand color when >90% of limit consumed */
+.ta-counter--near-limit {
+  color: var(--color-error, rgba(220, 38, 38, 0.9));
+  font-weight: 600;
+}
+
+[data-theme='dark'] .ta-textarea {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+  color: var(--text-strong);
+}
+
+[data-theme='dark'] .ta-textarea:focus-visible {
+  box-shadow: var(--shadow-focus);
+}

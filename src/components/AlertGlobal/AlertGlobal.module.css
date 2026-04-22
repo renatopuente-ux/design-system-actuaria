@@ -1,0 +1,94 @@
+.ag-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-24);
+  font-family: var(--font-family-body);
+  min-height: 48px;
+}
+
+.ag-root--info {
+  background-color: var(--color-info);
+}
+
+.ag-root--success {
+  background-color: var(--color-success);
+}
+
+.ag-root--warning {
+  background-color: var(--color-warning);
+}
+
+.ag-root--error {
+  background-color: var(--color-error);
+}
+
+.ag-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  flex: 1;
+  justify-content: center;
+}
+
+.ag-message {
+  margin: 0;
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+/* Ghost-style action button — white text, bordered */
+.ag-action {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  padding: 4px var(--spacing-12);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.ag-action:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.ag-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.ag-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  padding: 0 0 0 var(--spacing-16);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+}
+
+.ag-dismiss:hover {
+  color: #ffffff;
+}
+
+.ag-dismiss:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}

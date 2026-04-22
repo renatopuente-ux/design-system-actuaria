@@ -1,0 +1,75 @@
+/* Tag — removable pill label with optional icon
+   Prefix: tag-
+   Font-weight: 400 for label, 600 for remove button per design system
+   All colors via CSS custom properties — no raw hex values */
+
+.tag-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  padding: 4px var(--spacing-12, 12px);
+  border-radius: var(--radius-pill, 48px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  /* Brand-weak fill + brand text per spec */
+  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  color: var(--text-brand, #4c64d9);
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.tag-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Icon inherits brand color from parent */
+}
+
+.tag-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Remove button — visually minimal, inherits color */
+.tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin-left: 2px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* Slight background on hover for affordance */
+  transition: background-color 120ms ease;
+}
+
+.tag-remove:hover {
+  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+}
+
+.tag-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 100, 217, 0.25);
+}
+
+/* ── dark mode ── */
+[data-theme='dark'] .tag-root {
+  background-color: rgba(76, 100, 217, 0.15);
+  color: #818cf8;
+}
+
+[data-theme='dark'] .tag-remove:hover {
+  background-color: rgba(76, 100, 217, 0.2);
+}

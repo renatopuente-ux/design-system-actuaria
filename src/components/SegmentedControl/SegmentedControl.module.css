@@ -1,0 +1,85 @@
+/* SegmentedControl — sc- prefix
+   Pill-shaped tab switcher. Active option: white bg + shadow.
+   Container: --fill-weaker tinted background. */
+
+.sc-root {
+  --sc-bg: rgba(0, 17, 102, 0.06);
+  --sc-radius: var(--radius-pill, 48px);
+  --sc-active-bg: var(--background-base, #ffffff);
+  --sc-active-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.08);
+  --sc-text-active: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --sc-text-inactive: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --sc-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --sc-transition: background 120ms ease, box-shadow 120ms ease, color 120ms ease;
+
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--sc-bg);
+  border-radius: var(--sc-radius);
+  font-family: var(--sc-font-family);
+}
+
+/* Size: md (default) */
+.sc-root--md {
+  padding: 4px;
+  gap: 2px;
+}
+
+.sc-root--md .sc-option {
+  padding: 6px 16px;
+  font-size: var(--font-size-tiny, 14px);
+  border-radius: calc(var(--sc-radius) - 4px);
+  min-height: 32px;
+}
+
+/* Size: sm */
+.sc-root--sm {
+  padding: 3px;
+  gap: 2px;
+}
+
+.sc-root--sm .sc-option {
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: calc(var(--sc-radius) - 3px);
+  min-height: 26px;
+}
+
+/* Option button base */
+.sc-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  color: var(--sc-text-inactive);
+  transition: var(--sc-transition);
+  white-space: nowrap;
+  outline: none;
+}
+
+.sc-option:focus-visible {
+  outline: 2px solid var(--interactive-action, #4c64d9);
+  outline-offset: 1px;
+}
+
+/* Active state */
+.sc-option--active {
+  background-color: var(--sc-active-bg);
+  box-shadow: var(--sc-active-shadow);
+  color: var(--sc-text-active);
+  font-weight: 600;
+  cursor: default;
+}
+
+/* Dark mode */
+[data-theme='dark'] .sc-root {
+  --sc-bg: rgba(255, 255, 255, 0.08);
+  --sc-active-bg: rgba(255, 255, 255, 0.14);
+  --sc-text-active: rgba(255, 255, 255, 0.95);
+  --sc-text-inactive: rgba(255, 255, 255, 0.5);
+  --sc-active-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+}

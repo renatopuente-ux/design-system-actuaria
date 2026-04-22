@@ -1,0 +1,185 @@
+/* Hero — hr- prefix
+   Full-width section for primary landing content.
+   All values reference CSS custom properties — no raw HEX allowed here. */
+
+.hr-root {
+  --hr-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --hr-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --hr-color-text-brand: var(--text-brand, #4c64d9);
+  --hr-color-fill-weaker: var(--fill-weaker, rgba(0, 17, 102, 0.04));
+  --hr-color-fill-brand-weak: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  --hr-color-stroke-weak: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  --hr-color-interactive: var(--interactive-action, #4c64d9);
+  --hr-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --hr-font-size-h1: var(--font-size-heading-1, 40px);
+  --hr-font-size-small: var(--font-size-small, 16px);
+  --hr-font-size-tiny: var(--font-size-tiny, 14px);
+  --hr-spacing-8: var(--spacing-8, 8px);
+  --hr-spacing-12: var(--spacing-12, 12px);
+  --hr-spacing-16: var(--spacing-16, 16px);
+  --hr-spacing-24: var(--spacing-24, 24px);
+  --hr-spacing-32: var(--spacing-32, 32px);
+  --hr-radius-pill: var(--radius-pill, 48px);
+  --hr-radius-card: var(--radius-card, 16px);
+
+  width: 100%;
+  padding: 96px var(--hr-spacing-32);
+  background-color: var(--hr-color-fill-weaker);
+  box-sizing: border-box;
+}
+
+/* Alignment variants */
+.hr-root--center .hr-content {
+  align-items: center;
+  text-align: center;
+}
+
+.hr-root--left .hr-content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hr-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hr-spacing-24);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Badge pill above the title */
+.hr-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--hr-spacing-8) var(--hr-spacing-16);
+  background-color: var(--hr-color-fill-brand-weak);
+  color: var(--hr-color-text-brand);
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-tiny);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: var(--hr-radius-pill);
+  border: 1px solid var(--hr-color-stroke-weak);
+  width: fit-content;
+}
+
+.hr-subtitle {
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-tiny);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--hr-color-text-brand);
+  margin: 0;
+}
+
+/* Heading-1: 40px / 48px / weight 600 / tracking -0.5px — mandatory per DS */
+.hr-title {
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-h1);
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -0.5px;
+  color: var(--hr-color-text-strong);
+  margin: 0;
+}
+
+.hr-description {
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-small);
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--hr-color-text-weak);
+  margin: 0;
+  max-width: 600px;
+}
+
+.hr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hr-spacing-12);
+  margin-top: var(--hr-spacing-8);
+}
+
+/* Primary button — mirrors DS button pattern without importing Button component */
+.hr-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hr-spacing-12) var(--hr-spacing-24);
+  background-color: var(--hr-color-interactive);
+  color: var(--background-base, #ffffff);
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-small);
+  font-weight: 600;
+  line-height: 24px;
+  border: none;
+  border-radius: var(--hr-radius-card);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  text-decoration: none;
+}
+
+.hr-btn-primary:hover {
+  opacity: 0.88;
+}
+
+.hr-btn-primary:focus-visible {
+  outline: 2px solid var(--hr-color-interactive);
+  outline-offset: 3px;
+}
+
+/* Secondary button — outlined variant */
+.hr-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--hr-spacing-12) var(--hr-spacing-24);
+  background-color: transparent;
+  color: var(--hr-color-text-strong);
+  font-family: var(--hr-font-family);
+  font-size: var(--hr-font-size-small);
+  font-weight: 600;
+  line-height: 24px;
+  border: 1.5px solid var(--hr-color-stroke-weak);
+  border-radius: var(--hr-radius-card);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.hr-btn-secondary:hover {
+  border-color: var(--hr-color-interactive);
+  background-color: var(--hr-color-fill-brand-weak);
+}
+
+.hr-btn-secondary:focus-visible {
+  outline: 2px solid var(--hr-color-interactive);
+  outline-offset: 3px;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .hr-root {
+  --hr-color-text-strong: #ffffff;
+  --hr-color-text-weak: rgba(255, 255, 255, 0.65);
+  --hr-color-fill-weaker: rgba(255, 255, 255, 0.03);
+  --hr-color-fill-brand-weak: rgba(76, 100, 217, 0.15);
+  --hr-color-stroke-weak: rgba(255, 255, 255, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hr-root {
+    padding: 64px var(--hr-spacing-24);
+  }
+
+  .hr-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .hr-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

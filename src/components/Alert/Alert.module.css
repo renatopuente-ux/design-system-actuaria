@@ -1,0 +1,106 @@
+.alt-root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  background-color: var(--fill-weaker);
+  position: relative;
+  font-family: var(--font-family-body);
+}
+
+.alt-root--info {
+  border-left-color: var(--color-info);
+  background-color: var(--fill-brand-weak);
+}
+
+.alt-root--success {
+  border-left-color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+.alt-root--warning {
+  border-left-color: var(--color-warning);
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+.alt-root--error {
+  border-left-color: var(--color-error);
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.alt-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-small);
+  margin-top: 1px;
+}
+
+.alt-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.alt-title {
+  margin: 0 0 4px 0;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.alt-message {
+  margin: 0;
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--text-weak);
+  line-height: 1.5;
+}
+
+.alt-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-weak);
+  padding: 0;
+  margin-left: var(--spacing-8);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+}
+
+.alt-dismiss:hover {
+  color: var(--text-strong);
+}
+
+.alt-dismiss:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: 4px;
+}
+
+/* Dark mode */
+[data-theme='dark'] .alt-root {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme='dark'] .alt-root--info {
+  background-color: rgba(76, 100, 217, 0.12);
+}
+
+[data-theme='dark'] .alt-root--success {
+  background-color: rgba(16, 185, 129, 0.12);
+}
+
+[data-theme='dark'] .alt-root--warning {
+  background-color: rgba(245, 158, 11, 0.12);
+}
+
+[data-theme='dark'] .alt-root--error {
+  background-color: rgba(239, 68, 68, 0.12);
+}

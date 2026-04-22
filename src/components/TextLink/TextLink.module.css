@@ -1,0 +1,66 @@
+/* TextLink — tl- prefix
+   Inline link component. Uses --text-brand for color, underlines on hover.
+   External variant appends ↗ icon via inline SVG.
+   Focus ring on :focus-visible only — avoids outline on mouse click (WCAG 2.4.7). */
+
+.tl-root {
+  --tl-color: var(--text-brand, #4c64d9);
+  --tl-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --tl-font-size-md: var(--font-size-small, 16px);
+  --tl-font-size-sm: var(--font-size-tiny, 14px);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--tl-color);
+  font-family: var(--tl-font-family);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  /* Reset button styles when rendered as <button> */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  transition: text-decoration-color 0.15s ease, opacity 0.15s ease;
+  line-height: inherit;
+}
+
+/* Size variants */
+.tl-root--md {
+  font-size: var(--tl-font-size-md);
+  line-height: 24px;
+}
+
+.tl-root--sm {
+  font-size: var(--tl-font-size-sm);
+  line-height: 20px;
+}
+
+/* Underline appears on hover, not by default — cleaner in dense layouts */
+.tl-root:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--tl-color);
+  opacity: 0.82;
+}
+
+/* Focus ring: only on keyboard navigation, never on mouse click */
+.tl-root:focus-visible {
+  outline: 2px solid var(--tl-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* External icon alignment — vertically centered with text baseline */
+.tl-external-icon {
+  flex-shrink: 0;
+  /* Slight offset to align optically with cap-height of the text */
+  margin-top: -1px;
+  color: currentColor;
+}
+
+/* Dark mode: --text-brand resolves to the brand indigo which works on dark bg too.
+   If a lighter variant is needed, override here. */
+[data-theme='dark'] .tl-root {
+  --tl-color: var(--interactive-action, #4c64d9);
+}

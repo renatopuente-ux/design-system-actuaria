@@ -1,0 +1,92 @@
+/* TextInput — prefix: ti- */
+/* All color values reference design tokens only; no raw hex. */
+
+.ti-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.ti-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.ti-required {
+  color: var(--text-brand);
+}
+
+.ti-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+}
+
+.ti-input::placeholder {
+  color: var(--text-weak);
+  font-weight: 400;
+}
+
+/* Focus ring — 3px brand indigo shadow per spec */
+.ti-input:focus-visible {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+/* Error state */
+.ti-input--error {
+  border-color: var(--color-error, rgba(220, 38, 38, 0.8));
+  background-color: var(--fill-error-weak, rgba(220, 38, 38, 0.04));
+}
+
+.ti-input--error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+/* Disabled state */
+.ti-input--disabled,
+.ti-input:disabled {
+  background-color: var(--fill-weaker);
+  color: var(--text-weak);
+  cursor: not-allowed;
+  border-color: var(--stroke-weak);
+}
+
+.ti-hint {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--text-weak);
+  line-height: 1.4;
+}
+
+.ti-error {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--color-error, rgba(220, 38, 38, 0.9));
+  line-height: 1.4;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .ti-input {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+  color: var(--text-strong);
+}
+
+[data-theme='dark'] .ti-input:focus-visible {
+  box-shadow: var(--shadow-focus);
+}

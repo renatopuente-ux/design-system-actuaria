@@ -101,7 +101,7 @@ design-system-actuaria/
 
 ---
 
-## Componentes — 19 en total
+## Componentes — 56 en total
 
 Cada componente incluye:
 - `[Name].tsx` — React 18 + TypeScript estricto
@@ -113,7 +113,21 @@ Cada componente incluye:
 - Focus ring accesible: `box-shadow: var(--shadow-focus)`
 - `aria-*` y `role` correctos para WCAG AA
 - Navegación por teclado completa
-- Sin dependencias externas (DatePicker y BarChart en SVG/HTML nativo)
+- Sin dependencias externas (DatePicker, BarChart, Slider en HTML/SVG nativo)
+
+### Listado completo
+
+| Categoría | Componentes |
+|---|---|
+| **Formularios** | TextInput, TextArea, Checkbox, Toggle, Select, Slider, Autocomplete, Combobox, DatePicker, FileUpload, RadioButton, RadioButtonGroup |
+| **Botones** | Button, ButtonIcon, ButtonGroup |
+| **Navegación** | NavigationHeader, NavigationSide, Breadcrumbs, Tabs, Pagination, Accordion, Stepper |
+| **Overlay & Feedback** | Modal, Drawer, Alert, AlertGlobal, Tooltip, LoadingBar, Rating |
+| **Datos & Tablas** | Table, SummaryList, Badge, BadgeCount, BadgeDot, Tag, Divider |
+| **Tipografía** | Text, TextBlock, TextLink |
+| **Layout & Contenido** | Hero, Footer, Card, CardFlip, BannerSlider, Testimonial, EmptyState |
+| **Métricas** | BarChart, ProgressBar, MotionBar |
+| **Identidad & Especiales** | Avatar, AvatarDropdown, User, Actuarín, Logotipo, IconContainer, SegmentedControl, Slot, Tracking, DropdownMenu, SearchInput |
 
 ---
 
@@ -161,4 +175,4 @@ MIT © 2026 Actuaria Consultores.
 
 ---
 
-Made with ❤️ by Actuaria Design Team — Last update: Abril 22, 2026
+Made with ❤️ by Actuaria Design Team — Last update: Abril 22, 2026 · 56 componentes

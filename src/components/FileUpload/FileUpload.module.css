@@ -1,0 +1,156 @@
+/* FileUpload — fu- prefix
+   Dashed dropzone with drag-over highlight and file list. */
+
+.fu-root {
+  --fu-border: 1.5px dashed var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  --fu-border-drag: 1.5px dashed var(--interactive-action, #4c64d9);
+  --fu-bg: transparent;
+  --fu-bg-drag: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  --fu-radius: var(--radius-card, 16px);
+  --fu-text-label: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --fu-text-hint: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --fu-text-brand: var(--text-brand, #4c64d9);
+  --fu-font-family: var(--font-family-body, 'Nunito', sans-serif);
+  --fu-error-color: #c0392b;
+  --fu-file-bg: rgba(0, 17, 102, 0.04);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12, 12px);
+  font-family: var(--fu-font-family);
+  width: 100%;
+}
+
+/* Hidden native input */
+.fu-input {
+  display: none;
+}
+
+/* Dropzone area */
+.fu-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8, 8px);
+  border: var(--fu-border);
+  border-radius: var(--fu-radius);
+  background-color: var(--fu-bg);
+  padding: var(--spacing-24, 24px);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+  text-align: center;
+  min-height: 140px;
+}
+
+.fu-dropzone:focus-visible {
+  outline: 2px solid var(--interactive-action, #4c64d9);
+  outline-offset: 2px;
+}
+
+.fu-dropzone--drag-over {
+  background-color: var(--fu-bg-drag);
+  border: var(--fu-border-drag);
+}
+
+.fu-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--fu-text-brand);
+  flex-shrink: 0;
+}
+
+.fu-label {
+  margin: 0;
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  color: var(--fu-text-label);
+}
+
+.fu-hint {
+  margin: 0;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--fu-text-hint);
+}
+
+/* Errors */
+.fu-errors {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fu-error-item {
+  font-size: var(--font-size-tiny, 14px);
+  color: var(--fu-error-color);
+  font-weight: 400;
+}
+
+/* File list */
+.fu-file-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fu-file-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  background-color: var(--fu-file-bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.fu-file-name {
+  flex: 1;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--fu-text-label);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fu-file-size {
+  font-size: 12px;
+  color: var(--fu-text-hint);
+  white-space: nowrap;
+}
+
+.fu-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--fu-text-hint);
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 120ms ease, background 120ms ease;
+  flex-shrink: 0;
+}
+
+.fu-remove-btn:hover {
+  color: var(--fu-error-color);
+  background: rgba(192, 57, 43, 0.08);
+}
+
+/* Dark mode */
+[data-theme='dark'] .fu-root {
+  --fu-border: 1.5px dashed rgba(255, 255, 255, 0.15);
+  --fu-border-drag: 1.5px dashed var(--interactive-action, #4c64d9);
+  --fu-bg-drag: rgba(76, 100, 217, 0.15);
+  --fu-text-label: rgba(255, 255, 255, 0.9);
+  --fu-text-hint: rgba(255, 255, 255, 0.5);
+  --fu-file-bg: rgba(255, 255, 255, 0.06);
+}

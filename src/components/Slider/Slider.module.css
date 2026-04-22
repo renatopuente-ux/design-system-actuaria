@@ -1,0 +1,116 @@
+/* Slider — prefix: sr- */
+/* All color values reference design tokens only; no raw hex. */
+/* Track fill is driven by --sr-fill-pct CSS custom property set inline from the component. */
+
+.sr-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.sr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sr-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.sr-value {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-brand);
+  min-width: 2.5ch;
+  text-align: right;
+}
+
+/* Range input — reset native appearance then apply custom styling */
+.sr-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  outline: none;
+  cursor: pointer;
+
+  /*
+   * Track fill: gradient splits at --sr-fill-pct.
+   * Left of thumb: --interactive-action. Right of thumb: --stroke-weak.
+   * This technique avoids JS DOM mutation for the fill.
+   */
+  background: linear-gradient(
+    to right,
+    var(--interactive-action) 0%,
+    var(--interactive-action) var(--sr-fill-pct, 0%),
+    var(--stroke-weak) var(--sr-fill-pct, 0%),
+    var(--stroke-weak) 100%
+  );
+}
+
+.sr-input:focus-visible {
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-pill);
+}
+
+/* WebKit thumb */
+.sr-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--interactive-action);
+  border: 2px solid var(--background-base);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.sr-input::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+/* Mozilla thumb */
+.sr-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--interactive-action);
+  border: 2px solid var(--background-base);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.sr-input::-moz-range-thumb:hover {
+  transform: scale(1.12);
+}
+
+.sr-bounds {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sr-bound {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--text-weak);
+}
+
+[data-theme='dark'] .sr-input {
+  background: linear-gradient(
+    to right,
+    var(--interactive-action) 0%,
+    var(--interactive-action) var(--sr-fill-pct, 0%),
+    var(--fill-weaker) var(--sr-fill-pct, 0%),
+    var(--fill-weaker) 100%
+  );
+}

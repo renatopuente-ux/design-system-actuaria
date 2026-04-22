@@ -1,0 +1,89 @@
+/* Actuarin — actn- prefix
+   Actuaria's mascot character. Navy + indigo brand palette.
+   Expression variants: happy | thinking | celebrating */
+
+:root {
+  --actn-navy: #151f47;
+  --actn-indigo: #4c64d9;
+}
+
+.actn-root {
+  --actn-font-family: var(--font-family-body, 'Nunito', sans-serif);
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  font-family: var(--actn-font-family);
+}
+
+/* Size wrappers control the surrounding layout space */
+.actn-root--sm { gap: 6px; }
+.actn-root--md { gap: 8px; }
+.actn-root--lg { gap: 10px; }
+
+/* SVG itself is sized via width/height props — no extra CSS needed */
+.actn-svg {
+  display: block;
+  /* Smooth entrance — purely decorative */
+  animation: actn-enter 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes actn-enter {
+  from { opacity: 0; transform: scale(0.85) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Speech bubble */
+.actn-bubble {
+  position: relative;
+  background-color: var(--background-base, #ffffff);
+  border: 1.5px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  max-width: 220px;
+  text-align: center;
+  box-shadow: var(--shadow-overlay, 0px 8px 8px -4px rgba(0,0,0,0.04), 0px 20px 24px -4px rgba(0,0,0,0.08));
+  line-height: 1.45;
+}
+
+/* Bubble tail pointing downward toward the character */
+.actn-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--background-base, #ffffff);
+}
+
+.actn-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+}
+
+/* Dark mode */
+[data-theme='dark'] .actn-bubble {
+  background-color: #1e2a5e;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='dark'] .actn-bubble::after {
+  border-top-color: #1e2a5e;
+}
+
+[data-theme='dark'] .actn-bubble::before {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}

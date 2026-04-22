@@ -1,0 +1,100 @@
+.tt-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tt-bubble {
+  position: absolute;
+  z-index: 1200;
+  background-color: var(--text-strong);
+  color: #ffffff;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  line-height: 1.4;
+  padding: 6px var(--spacing-12);
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 240px;
+  white-space: normal;
+  pointer-events: none;
+  /* Animate in */
+  animation: tt-fadein 0.1s ease;
+}
+
+@keyframes tt-fadein {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Placement: top (default) */
+.tt-bubble--top {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Placement: bottom */
+.tt-bubble--bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Placement: left */
+.tt-bubble--left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Placement: right */
+.tt-bubble--right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Arrow */
+.tt-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tt-arrow--top {
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid var(--text-strong);
+}
+
+.tt-arrow--bottom {
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid var(--text-strong);
+}
+
+.tt-arrow--left {
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid var(--text-strong);
+}
+
+.tt-arrow--right {
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid var(--text-strong);
+}

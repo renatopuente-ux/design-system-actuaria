@@ -1,0 +1,60 @@
+/* Divider — horizontal or vertical separator, optional label
+   Prefix: dv-
+   Line weight: 1px using --stroke-weak token
+   All colors via CSS custom properties — no raw hex values */
+
+/* ── horizontal (default) ── */
+.dv-root {
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: none;
+  background-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* ── horizontal with centered label ── */
+.dv-root--labeled {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  width: 100%;
+}
+
+.dv-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+}
+
+.dv-label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── vertical ── */
+.dv-root--vertical {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  min-height: 1em;
+  background-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* ── dark mode ── */
+[data-theme='dark'] .dv-root,
+[data-theme='dark'] .dv-line,
+[data-theme='dark'] .dv-root--vertical {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .dv-label {
+  color: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,149 @@
+/* Select — prefix: sl- */
+/* All color values reference design tokens only; no raw hex. */
+
+.sl-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.sl-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+/* Trigger button mimics the TextInput visual style */
+.sl-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sl-trigger:focus-visible {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+.sl-trigger--open {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+.sl-trigger--error {
+  border-color: var(--color-error, rgba(220, 38, 38, 0.8));
+}
+
+.sl-trigger--disabled {
+  background-color: var(--fill-weaker);
+  color: var(--text-weak);
+  cursor: not-allowed;
+}
+
+.sl-trigger--placeholder .sl-trigger-text {
+  color: var(--text-weak);
+}
+
+.sl-trigger-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sl-chevron {
+  color: var(--text-weak);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.sl-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown list */
+.sl-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-8) 0;
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+  outline: none;
+}
+
+.sl-option {
+  padding: var(--spacing-8) var(--spacing-16);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.sl-option:hover {
+  background-color: var(--fill-weaker);
+}
+
+.sl-option--selected {
+  background-color: var(--fill-brand-weak);
+  color: var(--text-brand);
+  font-weight: 600;
+}
+
+.sl-option--focused {
+  background-color: var(--fill-weaker);
+  outline: none;
+}
+
+.sl-option--selected.sl-option--focused {
+  background-color: var(--fill-brand-weak);
+}
+
+.sl-error {
+  font-size: var(--font-size-tiny);
+  font-weight: 400;
+  color: var(--color-error, rgba(220, 38, 38, 0.9));
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .sl-trigger {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+  color: var(--text-strong);
+}
+
+[data-theme='dark'] .sl-list {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}
+
+[data-theme='dark'] .sl-option:hover {
+  background-color: var(--fill-brand-weak);
+}

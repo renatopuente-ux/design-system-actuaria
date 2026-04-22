@@ -1,0 +1,37 @@
+/* BadgeDot — small status indicator dot
+   Prefix: bdd-
+   pulse: keyframe animation that scales + fades to signal activity
+   All colors via CSS custom properties — no raw hex values */
+
+@keyframes bdd-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.bdd-root {
+  display: inline-block;
+  border-radius: 50%;
+  /* Default color: brand interactive — overridable via inline style */
+  background-color: var(--interactive-action, #4c64d9);
+  flex-shrink: 0;
+}
+
+/* pulse variant: periodic breathe animation indicating live/active state */
+.bdd-root--pulse {
+  animation: bdd-pulse 1.8s ease-in-out infinite;
+}
+
+/* ── dark mode ── */
+[data-theme='dark'] .bdd-root {
+  background-color: var(--interactive-action, #4c64d9);
+}

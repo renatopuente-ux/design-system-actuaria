@@ -1,0 +1,195 @@
+/* Combobox — prefix: cx- */
+/* All color values reference design tokens only; no raw hex. */
+
+.cx-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+  font-family: var(--font-family-body);
+}
+
+.cx-label {
+  font-size: var(--font-size-tiny);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+/* Field wrapper — positions icons inside the input */
+.cx-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cx-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-12) 40px var(--spacing-12) var(--spacing-16);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* When clear button is also visible, add extra right padding */
+.cx-input--has-clear {
+  padding-right: 64px;
+}
+
+.cx-input::placeholder {
+  color: var(--text-weak);
+  font-weight: 400;
+}
+
+.cx-input:focus-visible {
+  border-color: var(--stroke-brand-weak);
+  box-shadow: var(--shadow-focus);
+}
+
+.cx-input--disabled {
+  background-color: var(--fill-weaker);
+  color: var(--text-weak);
+  cursor: not-allowed;
+}
+
+/* Chevron button — right of input, opens/closes list */
+.cx-chevron-btn {
+  position: absolute;
+  right: var(--spacing-12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-weak);
+}
+
+.cx-chevron-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.cx-chevron {
+  transition: transform 0.15s ease;
+}
+
+.cx-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Clear (×) button — positions to the left of the chevron */
+.cx-clear {
+  position: absolute;
+  right: 36px; /* chevron 20px + spacing-12 + gap */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-weak);
+  border-radius: 50%;
+  transition: background-color 0.1s ease;
+}
+
+.cx-clear:hover {
+  background-color: var(--fill-weaker);
+  color: var(--text-strong);
+}
+
+.cx-clear:focus-visible {
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
+/* Dropdown list */
+.cx-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-8) 0;
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.cx-option {
+  padding: var(--spacing-8) var(--spacing-16);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.cx-option:hover {
+  background-color: var(--fill-weaker);
+}
+
+.cx-option--selected {
+  background-color: var(--fill-brand-weak);
+  color: var(--text-brand);
+  font-weight: 600;
+}
+
+.cx-option--active {
+  background-color: var(--fill-weaker);
+}
+
+.cx-option--selected.cx-option--active {
+  background-color: var(--fill-brand-weak);
+}
+
+.cx-empty {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-weak);
+  background-color: var(--background-base);
+  border: 1px solid var(--stroke-weak);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+}
+
+[data-theme='dark'] .cx-input {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+  color: var(--text-strong);
+}
+
+[data-theme='dark'] .cx-list {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}
+
+[data-theme='dark'] .cx-empty {
+  background-color: var(--fill-weaker);
+  border-color: var(--stroke-weak);
+}

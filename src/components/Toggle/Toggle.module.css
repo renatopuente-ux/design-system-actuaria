@@ -1,0 +1,118 @@
+/* Toggle — prefix: tg- */
+/* All color values reference design tokens only; no raw hex. */
+
+.tg-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  font-family: var(--font-family-body);
+  user-select: none;
+}
+
+.tg-root--disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Visually hidden native input — keeps keyboard and AT accessibility */
+.tg-native {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* Track — pill shape */
+.tg-track {
+  position: relative;
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* md: 40×24px */
+.tg-track--md {
+  width: 40px;
+  height: 24px;
+}
+
+/* sm: 32×18px */
+.tg-track--sm {
+  width: 32px;
+  height: 18px;
+}
+
+/* Off state: use stroke-weak as track color */
+.tg-track--off {
+  background-color: var(--stroke-weak);
+}
+
+/* On state: interactive-action fill */
+.tg-track--on {
+  background-color: var(--interactive-action);
+}
+
+.tg-track--disabled {
+  background-color: var(--fill-weaker);
+}
+
+/* Focus ring on track when native input is focused */
+.tg-native:focus-visible + .tg-track {
+  box-shadow: var(--shadow-focus);
+  outline: none;
+}
+
+/* Thumb — circular indicator */
+.tg-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(3px);
+  background-color: var(--background-base);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* md thumb: 18px */
+.tg-thumb--md {
+  width: 18px;
+  height: 18px;
+}
+
+/* sm thumb: 13px */
+.tg-thumb--sm {
+  width: 13px;
+  height: 13px;
+}
+
+/* Thumb slides right when on */
+/* md: track 40px - thumb 18px - 2×3px padding = 16px translate */
+.tg-thumb--md.tg-thumb--on {
+  transform: translateY(-50%) translateX(19px);
+}
+
+/* sm: track 32px - thumb 13px - 2×3px padding = 13px translate */
+.tg-thumb--sm.tg-thumb--on {
+  transform: translateY(-50%) translateX(16px);
+}
+
+.tg-label {
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .tg-track--off {
+  background-color: var(--fill-weaker);
+}
+
+[data-theme='dark'] .tg-thumb {
+  background-color: var(--background-base);
+}

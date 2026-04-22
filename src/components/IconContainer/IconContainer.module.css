@@ -1,0 +1,106 @@
+/* IconContainer — ic- prefix
+   Centers an icon in a sized, tinted box.
+   Sizes: sm=32px md=40px lg=48px */
+
+.ic-root {
+  --ic-font-family: var(--font-family-body, 'Nunito', sans-serif);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- Sizes ---- */
+.ic-root--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.ic-root--md {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.ic-root--lg {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+}
+
+/* ---- Shapes ---- */
+.ic-root--circle {
+  border-radius: 50%;
+}
+
+.ic-root--square {
+  border-radius: 10px;
+}
+
+.ic-root--sm.ic-root--square {
+  border-radius: 8px;
+}
+
+.ic-root--lg.ic-root--square {
+  border-radius: 12px;
+}
+
+/* ---- Variants ---- */
+
+/* default: neutral weak fill */
+.ic-root--default {
+  background-color: rgba(0, 17, 102, 0.06);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+/* brand: indigo tinted fill */
+.ic-root--brand {
+  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
+  color: var(--interactive-action, #4c64d9);
+}
+
+/* success: green tinted */
+.ic-root--success {
+  background-color: rgba(22, 163, 74, 0.08);
+  color: #16a34a;
+}
+
+/* warning: amber tinted */
+.ic-root--warning {
+  background-color: rgba(217, 119, 6, 0.08);
+  color: #d97706;
+}
+
+/* error: red tinted */
+.ic-root--error {
+  background-color: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+}
+
+/* ---- Dark mode ---- */
+[data-theme='dark'] .ic-root--default {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='dark'] .ic-root--brand {
+  background-color: rgba(76, 100, 217, 0.18);
+  color: #7b93f0;
+}
+
+[data-theme='dark'] .ic-root--success {
+  background-color: rgba(22, 163, 74, 0.15);
+  color: #4ade80;
+}
+
+[data-theme='dark'] .ic-root--warning {
+  background-color: rgba(217, 119, 6, 0.15);
+  color: #fbbf24;
+}
+
+[data-theme='dark'] .ic-root--error {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+}
