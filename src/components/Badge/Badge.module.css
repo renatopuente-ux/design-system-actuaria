@@ -1,99 +1,102 @@
-/* Badge — pill-shaped semantic label
-   Prefix: bdg-
-   Font-weight: 600 only (design system rule)
-   All colors via CSS custom properties — no raw hex values */
+/* ═══════════════════════════════════════════════════════════════
+   Badge — Actuaria Design System
+   Figma node: 3508:66832  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
 
 .bdg-root {
+  /* Per-tone tokens — overridden by .bdg-tone--* */
+  --bdg-bg:     transparent;
+  --bdg-border: transparent;
+  --bdg-text:   var(--text-strong, rgba(0, 6, 38, 0.9));
+
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-pill, 48px);
+  gap: var(--spacing-4, 4px);
+  padding: 0 var(--spacing-8, 8px);
+  border-radius: 16px;
+  border: 1px solid var(--bdg-border);
+  background-color: var(--bdg-bg);
+  color: var(--bdg-text);
   font-family: var(--font-family-body, 'Nunito', sans-serif);
   font-weight: 600;
   white-space: nowrap;
-  line-height: 1;
-  /* default variant colors */
-  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-  color: var(--text-strong, rgba(0, 6, 38, 0.9));
-  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  box-sizing: border-box;
 }
 
-/* ── sizes ── */
-.bdg-root--md {
+/* ── Sizes ────────────────────────────────────────────────────── */
+/* Figma: Medium h-32, font 16px/24lh; Small h-24, font 14px/20lh */
+.bdg-size--medium {
+  height: 32px;
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
+}
+
+.bdg-size--small {
+  height: 24px;
   font-size: var(--font-size-tiny, 14px);
-  padding: 4px var(--spacing-12, 12px);
+  line-height: var(--line-height-tiny, 20px);
 }
 
-.bdg-root--sm {
-  font-size: 12px;
-  padding: 2px var(--spacing-8, 8px);
+/* ── Icon ─────────────────────────────────────────────────────── */
+.bdg-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
-/* ── variants ── */
-.bdg-root--default {
-  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-  color: var(--text-strong, rgba(0, 6, 38, 0.9));
-  border-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+/* ── Label ────────────────────────────────────────────────────── */
+.bdg-label {
+  flex: 1;
+  min-width: 0;
 }
 
-.bdg-root--success {
-  /* Semantic green — uses CSS custom property for dark-mode compatibility */
-  background-color: var(--fill-success-weak, rgba(16, 185, 129, 0.1));
-  color: var(--text-success, #059669);
-  border-color: var(--stroke-success, rgba(16, 185, 129, 0.25));
+/* ── Badge dot — 12px green status indicator ─────────────────── */
+.bdg-dot {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--fill-success-strong, #4caf50);
 }
 
-.bdg-root--warning {
-  background-color: var(--fill-warning-weak, rgba(245, 158, 11, 0.1));
-  color: var(--text-warning, #d97706);
-  border-color: var(--stroke-warning, rgba(245, 158, 11, 0.25));
+/* ── Tone: Error ──────────────────────────────────────────────── */
+.bdg-tone--error {
+  --bdg-bg:     rgba(255, 74, 74, 0.05);
+  --bdg-border: rgba(199, 58, 58, 0.14);
+  --bdg-text:   #c73a3a;
 }
 
-.bdg-root--error {
-  background-color: var(--fill-error-weak, rgba(239, 68, 68, 0.1));
-  color: var(--text-error, #dc2626);
-  border-color: var(--stroke-error, rgba(239, 68, 68, 0.25));
+/* ── Tone: Warning ────────────────────────────────────────────── */
+.bdg-tone--warning {
+  --bdg-bg:     rgba(255, 152, 0, 0.05);
+  --bdg-border: rgba(255, 152, 0, 0.2);
+  --bdg-text:   #ff9800;
 }
 
-.bdg-root--info {
-  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
-  color: var(--text-brand, #4c64d9);
-  border-color: var(--stroke-brand, rgba(76, 100, 217, 0.2));
+/* ── Tone: Success ────────────────────────────────────────────── */
+.bdg-tone--success {
+  --bdg-bg:     rgba(76, 175, 80, 0.05);
+  --bdg-border: rgba(76, 175, 80, 0.2);
+  --bdg-text:   #4caf50;
 }
 
-/* ── dark mode ── */
-[data-theme='dark'] .bdg-root--default {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.12);
+/* ── Tone: Information ────────────────────────────────────────── */
+.bdg-tone--information {
+  --bdg-bg:     rgba(38, 176, 255, 0.05);
+  --bdg-border: rgba(26, 116, 168, 0.2);
+  --bdg-text:   #1a74a8;
 }
 
-[data-theme='dark'] .bdg-root--success {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border-color: rgba(16, 185, 129, 0.3);
+/* ── Tone: Neutral ────────────────────────────────────────────── */
+.bdg-tone--neutral {
+  --bdg-bg:     rgba(21, 31, 71, 0.19);
+  --bdg-border: rgba(0, 17, 102, 0.1);
+  --bdg-text:   rgba(0, 9, 51, 0.65);
 }
 
-[data-theme='dark'] .bdg-root--warning {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-[data-theme='dark'] .bdg-root--error {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-[data-theme='dark'] .bdg-root--info {
-  background-color: rgba(76, 100, 217, 0.15);
-  color: #818cf8;
-  border-color: rgba(76, 100, 217, 0.3);
-}
-
-/* ── focus ring (WCAG 2.1 AA) ── */
-.bdg-root:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(76, 100, 217, 0.25);
+/* ── Tone: Brand ──────────────────────────────────────────────── */
+.bdg-tone--brand {
+  --bdg-bg:     rgba(21, 31, 71, 0.05);
+  --bdg-border: rgba(21, 31, 71, 0.2);
+  --bdg-text:   #151f47;
 }
