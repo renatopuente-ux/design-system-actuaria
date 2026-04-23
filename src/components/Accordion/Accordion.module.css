@@ -1,30 +1,43 @@
+/* ═══════════════════════════════════════════════════════════════
+   Accordion — Actuaria Design System
+   Figma node: 3449:61196 (Accordion) · 3447:5042 (AccordionItem)
+   fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
+
 .acc-root {
-  --acc-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --acc-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --acc-color-stroke: var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  --acc-color-fill-hover: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-  --acc-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --acc-font-size: var(--font-size-small, 16px);
-  --acc-font-size-tiny: var(--font-size-tiny, 14px);
-  --acc-spacing-12: var(--spacing-12, 12px);
-  --acc-spacing-16: var(--spacing-16, 16px);
-  --acc-spacing-24: var(--spacing-24, 24px);
-  --acc-shadow-focus: var(--shadow-focus, 0 0 0 3px rgba(76, 100, 217, 0.25));
-  --acc-transition-speed: 280ms;
+  /* Local aliases — resolved from global DS tokens */
+  --acc-color-text-strong:   var(--text-strong,  rgba(0, 6, 38, 0.9));
+  --acc-color-text-weak:     var(--text-weak,    rgba(0, 9, 51, 0.65));
+  --acc-color-text-disabled: var(--text-disabled, rgba(0, 17, 102, 0.1));
+  --acc-color-stroke:        var(--stroke-weak,  rgba(0, 17, 102, 0.1));
+  --acc-color-fill-hover:    rgba(21, 31, 71, 0.08);   /* fill/hover — Figma spec */
+  --acc-color-fill-press:    rgba(0, 17, 102, 0.10);   /* fill/press — Figma spec */
+  --acc-font-family:         var(--font-family-body, 'Nunito', sans-serif);
+  --acc-font-size:           var(--font-size-small, 16px);
+  --acc-spacing-8:           var(--spacing-8,  8px);
+  --acc-spacing-16:          var(--spacing-16, 16px);
+  --acc-spacing-32:          var(--spacing-32, 32px);
+  --acc-shadow-focus:        0 0 0 3px rgba(21, 31, 71, 0.2); /* navy focus — Figma spec */
+  --acc-transition-speed:    280ms;
 
   font-family: var(--acc-font-family);
-  border-top: 1px solid var(--acc-color-stroke);
+  /* top border — Figma: border-t on first item, bottom border on root */
+  border-top:    1px solid var(--acc-color-stroke);
+  border-bottom: 1px solid var(--acc-color-stroke);
   width: 100%;
 }
 
 [data-theme='dark'] .acc-root {
-  --acc-color-text-strong: rgba(255, 255, 255, 0.9);
-  --acc-color-text-weak: rgba(255, 255, 255, 0.6);
-  --acc-color-stroke: rgba(255, 255, 255, 0.12);
-  --acc-color-fill-hover: rgba(255, 255, 255, 0.04);
+  --acc-color-text-strong:   rgba(255, 255, 255, 0.9);
+  --acc-color-text-weak:     rgba(255, 255, 255, 0.6);
+  --acc-color-text-disabled: rgba(255, 255, 255, 0.2);
+  --acc-color-stroke:        rgba(255, 255, 255, 0.12);
+  --acc-color-fill-hover:    rgba(255, 255, 255, 0.06);
+  --acc-color-fill-press:    rgba(255, 255, 255, 0.10);
+  --acc-shadow-focus:        0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
-/* Item row — bordered below each item */
+/* ── Item row ─────────────────────────────────────────────── */
 .acc-item {
   border-bottom: 1px solid var(--acc-color-stroke);
   list-style: none;
@@ -34,19 +47,24 @@
   border-bottom: none;
 }
 
+.acc-item--disabled {
+  pointer-events: none;
+}
+
 .acc-item__heading {
   margin: 0;
   padding: 0;
 }
 
-/* Trigger button: full-width row with space-between layout */
+/* ── Trigger button ───────────────────────────────────────── */
+/* Figma: py-16px, no horizontal padding; gap 16px between title and chevron */
 .acc-item__trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--acc-spacing-12);
+  gap: var(--acc-spacing-16);
   width: 100%;
-  padding: var(--acc-spacing-16) var(--acc-spacing-24);
+  padding: var(--acc-spacing-16) 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -57,23 +75,36 @@
   text-align: left;
   transition: background-color var(--acc-transition-speed) ease;
   border-radius: 0;
+  position: relative;
 }
 
 .acc-item__trigger:hover {
   background-color: var(--acc-color-fill-hover);
 }
 
+.acc-item__trigger:active {
+  background-color: var(--acc-color-fill-press);
+}
+
 .acc-item__trigger:focus-visible {
   outline: none;
-  box-shadow: var(--acc-shadow-focus);
-  border-radius: 4px;
+  /* Figma: inset navy outline —4px offset */
+  box-shadow: inset 0 0 0 2px var(--stroke-focus, #151f47);
+  border-radius: 2px;
+}
+
+.acc-item__trigger:disabled,
+.acc-item--disabled .acc-item__trigger {
+  cursor: not-allowed;
+  color: var(--acc-color-text-disabled);
 }
 
 .acc-item__title {
   flex: 1;
+  min-width: 0;
 }
 
-/* Chevron icon — rotates 180° smoothly when open */
+/* ── Chevron icon — rotates 180° smoothly when open ──────── */
 .acc-chevron {
   flex-shrink: 0;
   color: var(--acc-color-text-weak);
@@ -84,21 +115,24 @@
   transform: rotate(180deg);
 }
 
-/* Panel: max-height transition for smooth open/close. Initial height 0 + overflow hidden */
+.acc-item--disabled .acc-chevron {
+  color: var(--acc-color-text-disabled);
+}
+
+/* ── Panel ────────────────────────────────────────────────── */
+/* max-height transition: 0 → scrollHeight set by JS */
 .acc-panel {
   max-height: 0;
   overflow: hidden;
   transition: max-height var(--acc-transition-speed) ease;
 }
 
-.acc-panel--open {
-  /* max-height is set via JS to scrollHeight; CSS just enables the transition */
-}
-
+/* ── Panel inner content ─────────────────────────────────── */
+/* Figma: pt-8px, pr-32px, no left/bottom padding */
 .acc-panel__inner {
-  padding: 0 var(--acc-spacing-24) var(--acc-spacing-16);
-  font-size: var(--acc-font-size-tiny);
+  padding: var(--acc-spacing-8) var(--acc-spacing-32) var(--acc-spacing-16) 0;
+  font-size: var(--acc-font-size);
   font-weight: 400;
   color: var(--acc-color-text-weak);
-  line-height: 1.6;
+  line-height: 1.5;
 }

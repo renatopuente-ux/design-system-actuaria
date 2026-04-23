@@ -90,3 +90,16 @@ export const SingleItem: Story = {
     defaultOpen: [],
   },
 };
+
+export const WithDisabled: Story = {
+  args: {
+    items: [
+      actuarialItems[0],
+      { ...actuarialItems[1], disabled: true },
+      actuarialItems[2],
+      { ...actuarialItems[3], disabled: true },
+    ],
+    allowMultiple: false,
+    defaultOpen: ['reservas'],
+  },
+};

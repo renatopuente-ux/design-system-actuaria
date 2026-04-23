@@ -5,6 +5,7 @@ export interface AccordionItem {
   id: string;
   title: string;
   content: React.ReactNode;
+  disabled?: boolean;
 }
 
 export interface AccordionProps {
@@ -13,20 +14,20 @@ export interface AccordionProps {
   defaultOpen?: string[];
 }
 
-// Chevron rotates 180° via CSS when open — no inline style needed
+// Chevron rotates 180° via CSS when open — 24×24 matches Figma spec
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
       className={`${styles['acc-chevron']} ${open ? styles['acc-chevron--open'] : ''}`}
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
       focusable="false"
     >
       <path
-        d="M4 6l4 4 4-4"
+        d="M6 9l6 6 6-6"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -91,6 +92,7 @@ export function Accordion({ items, allowMultiple = false, defaultOpen = [] }: Ac
     <div className={styles['acc-root']} role="list">
       {items.map((item, index) => {
         const isOpen = openIds.has(item.id);
+        const isDisabled = Boolean(item.disabled);
         const headerId = `${uid}-header-${item.id}`;
         const panelId = `${uid}-panel-${item.id}`;
         const isLast = index === items.length - 1;
@@ -98,7 +100,13 @@ export function Accordion({ items, allowMultiple = false, defaultOpen = [] }: Ac
         return (
           <div
             key={item.id}
-            className={`${styles['acc-item']} ${isLast ? styles['acc-item--last'] : ''}`}
+            className={[
+              styles['acc-item'],
+              isLast ? styles['acc-item--last'] : '',
+              isDisabled ? styles['acc-item--disabled'] : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
             role="listitem"
           >
             <h3 className={styles['acc-item__heading']}>
@@ -107,14 +115,15 @@ export function Accordion({ items, allowMultiple = false, defaultOpen = [] }: Ac
                 className={styles['acc-item__trigger']}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => toggle(item.id)}
+                onClick={() => !isDisabled && toggle(item.id)}
+                disabled={isDisabled}
                 type="button"
               >
                 <span className={styles['acc-item__title']}>{item.title}</span>
                 <ChevronIcon open={isOpen} />
               </button>
             </h3>
-            <AccordionPanel id={panelId} headerId={headerId} open={isOpen}>
+            <AccordionPanel id={panelId} headerId={headerId} open={isOpen && !isDisabled}>
               {item.content}
             </AccordionPanel>
           </div>
@@ -123,3 +132,5 @@ export function Accordion({ items, allowMultiple = false, defaultOpen = [] }: Ac
     </div>
   );
 }
+
+export default Accordion;
