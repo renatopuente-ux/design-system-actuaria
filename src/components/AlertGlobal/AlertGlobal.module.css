@@ -1,94 +1,203 @@
+/* ═══════════════════════════════════════════════════════════════
+   AlertGlobal — Actuaria Design System
+   Figma node: 5801:57029  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
+
 .ag-root {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  /* Per-tone tokens — overridden by .ag-tone--* */
+  --ag-bg:           transparent;
+  --ag-border:       transparent;
+  --ag-text:         var(--text-strong, rgba(0, 6, 38, 0.9));
+  --ag-icon-color:   currentColor;
+  --ag-btn-border:   var(--stroke-strong, rgba(0, 13, 77, 0.45));
+  --ag-btn-text:     var(--text-weak, rgba(0, 9, 51, 0.65));
+
+  position: relative;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--spacing-12) var(--spacing-24);
-  font-family: var(--font-family-body);
-  min-height: 48px;
+  width: 100%;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  background-color: var(--ag-bg);
+  border-bottom: 1px solid var(--ag-border);
 }
 
-.ag-root--info {
-  background-color: var(--color-info);
+/* ── Device: Desktop ──────────────────────────────────────── */
+/* Figma: px-24 py-12, gap-24, items-center */
+.ag-device--desktop {
+  gap: var(--spacing-24, 24px);
+  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  align-items: center;
 }
 
-.ag-root--success {
-  background-color: var(--color-success);
+/* ── Device: Mobile ───────────────────────────────────────── */
+/* Figma: pl-32 pr-48 py-16, gap-12, items-start */
+.ag-device--mobile {
+  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-16, 16px) 48px var(--spacing-16, 16px) var(--spacing-32, 32px);
+  align-items: flex-start;
 }
 
-.ag-root--warning {
-  background-color: var(--color-warning);
-}
-
-.ag-root--error {
-  background-color: var(--color-error);
-}
-
+/* ── Content row (desktop: icon+text in row; mobile: col) ─ */
 .ag-content {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12, 12px);
   flex: 1;
+  min-width: 0;
+}
+
+.ag-content--mobile {
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+  gap: var(--spacing-12, 12px);
+  padding: 2px 0;
 }
 
-.ag-message {
-  margin: 0;
-  font-size: var(--font-size-tiny);
-  font-weight: 600;
-  color: #ffffff;
-  line-height: 1.4;
-}
-
-/* Ghost-style action button — white text, bordered */
-.ag-action {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 6px;
-  color: #ffffff;
-  cursor: pointer;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-tiny);
-  font-weight: 600;
-  padding: 4px var(--spacing-12);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-  white-space: nowrap;
-}
-
-.ag-action:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
-.ag-action:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
-}
-
-.ag-dismiss {
+/* ── Icon ─────────────────────────────────────────────────── */
+.ag-icon {
   flex-shrink: 0;
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  font-size: 22px;
-  line-height: 1;
-  padding: 0 0 0 var(--spacing-16);
   display: flex;
   align-items: center;
-  transition: color 0.15s ease;
+  justify-content: center;
+  color: var(--ag-icon-color);
+}
+
+/* ── Message text ─────────────────────────────────────────── */
+.ag-message {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--ag-text);
+}
+
+/* Mobile message fills container width */
+.ag-content--mobile .ag-message {
+  flex: none;
+  width: 100%;
+}
+
+.ag-message--inverse {
+  color: var(--text-inverse-strong, white);
+}
+
+/* ── Button group ─────────────────────────────────────────── */
+.ag-button-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--spacing-8, 8px);
+  align-items: center;
+}
+
+/* ── Dismiss button ───────────────────────────────────────── */
+.ag-dismiss {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--ag-text);
+  opacity: 0.6;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
 }
 
 .ag-dismiss:hover {
-  color: #ffffff;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
 .ag-dismiss:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
+  box-shadow: 0 0 0 2px var(--stroke-focus, #151f47);
+  opacity: 1;
+}
+
+/* Absolute dismiss — mobile only, top-right corner */
+.ag-dismiss--abs {
+  position: absolute;
+  top: var(--spacing-16, 16px);
+  right: var(--spacing-16, 16px);
+}
+
+/* ── Tone: Error ──────────────────────────────────────────── */
+.ag-tone--error {
+  --ag-bg:         rgba(255, 74, 74, 0.05);
+  --ag-border:     rgba(199, 58, 58, 0.14);
+  --ag-icon-color: rgb(199, 58, 58);
+}
+
+/* ── Tone: Warning ────────────────────────────────────────── */
+.ag-tone--warning {
+  --ag-bg:         rgba(255, 152, 0, 0.05);
+  --ag-border:     rgba(255, 152, 0, 0.2);
+  --ag-icon-color: rgb(200, 118, 0);
+}
+
+/* ── Tone: Success ────────────────────────────────────────── */
+.ag-tone--success {
+  --ag-bg:         rgba(76, 175, 80, 0.05);
+  --ag-border:     rgba(76, 175, 80, 0.2);
+  --ag-icon-color: rgb(46, 135, 50);
+}
+
+/* ── Tone: Information ────────────────────────────────────── */
+.ag-tone--information {
+  --ag-bg:         rgba(38, 176, 255, 0.05);
+  --ag-border:     rgba(26, 116, 168, 0.2);
+  --ag-icon-color: rgb(26, 116, 168);
+}
+
+/* ── Tone: Neutral ────────────────────────────────────────── */
+.ag-tone--neutral {
+  --ag-bg:         var(--background-base, white);
+  --ag-border:     rgba(0, 17, 102, 0.1);
+  --ag-icon-color: rgba(0, 9, 51, 0.45);
+}
+
+/* ── Tone: Brand ──────────────────────────────────────────── */
+.ag-tone--brand {
+  --ag-bg:         rgba(21, 31, 71, 0.05);
+  --ag-border:     rgba(21, 31, 71, 0.2);
+  --ag-icon-color: #151f47;
+  --ag-btn-border: rgba(21, 31, 71, 0.8);
+  --ag-btn-text:   #151f47;
+}
+
+/* ── Tone: Inverse neutral ────────────────────────────────── */
+.ag-tone--inverse-neutral {
+  --ag-bg:         var(--background-inverse, #12131a);
+  --ag-border:     transparent;
+  --ag-text:       rgba(255, 255, 255, 0.9);
+  --ag-icon-color: rgba(255, 255, 255, 0.7);
+  --ag-btn-border: rgba(255, 255, 255, 0.6);
+  --ag-btn-text:   white;
+}
+
+.ag-tone--inverse-neutral .ag-dismiss:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Tone: Inverse brand ──────────────────────────────────── */
+.ag-tone--inverse-brand {
+  --ag-bg:         var(--fill-brand-strong, #151f47);
+  --ag-border:     transparent;
+  --ag-text:       rgba(255, 255, 255, 0.9);
+  --ag-icon-color: rgba(255, 255, 255, 0.7);
+  --ag-btn-border: rgba(255, 255, 255, 0.6);
+  --ag-btn-text:   white;
+}
+
+.ag-tone--inverse-brand .ag-dismiss:hover {
+  background-color: rgba(255, 255, 255, 0.08);
 }
