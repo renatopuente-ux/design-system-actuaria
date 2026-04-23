@@ -1,37 +1,41 @@
-/* BadgeDot — small status indicator dot
-   Prefix: bdd-
-   pulse: keyframe animation that scales + fades to signal activity
-   All colors via CSS custom properties — no raw hex values */
-
-@keyframes bdd-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.6);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+/* ═══════════════════════════════════════════════════════════════
+   BadgeDot — Actuaria Design System
+   Figma node: 6412:85981  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
 
 .bdd-root {
-  display: inline-block;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  /* Default color: brand interactive — overridable via inline style */
-  background-color: var(--interactive-action, #4c64d9);
   flex-shrink: 0;
+  background-color: var(--bdd-bg, transparent);
+  box-sizing: border-box;
 }
 
-/* pulse variant: periodic breathe animation indicating live/active state */
-.bdd-root--pulse {
-  animation: bdd-pulse 1.8s ease-in-out infinite;
+/* ── Sizes ────────────────────────────────────────────────────── */
+.bdd-size--large  { width: 16px; height: 16px; }
+.bdd-size--medium { width: 12px; height: 12px; }
+.bdd-size--small  { width: 8px;  height: 8px;  }
+
+/* ── Outline — white ring for colored/image surfaces ─────────── */
+.bdd--outline {
+  box-shadow: 0 0 0 2px var(--background-base, white);
 }
 
-/* ── dark mode ── */
-[data-theme='dark'] .bdd-root {
-  background-color: var(--interactive-action, #4c64d9);
+/* ── Per-type colors ──────────────────────────────────────────── */
+.bdd-type--online       { --bdd-bg: #4caf50; }
+.bdd-type--busy         { --bdd-bg: var(--fill-error-strong, #c73a3a); }
+.bdd-type--away         { --bdd-bg: #f59e0b; }
+.bdd-type--offline      { --bdd-bg: rgba(0, 9, 51, 0.2); }
+.bdd-type--notification { --bdd-bg: var(--fill-error-strong, #c73a3a); }
+
+/* ── Icon — fills the inset area (2px padding from dot edge) ──── */
+.bdd-icon {
+  position: absolute;
+  inset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
