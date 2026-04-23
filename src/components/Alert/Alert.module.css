@@ -1,106 +1,278 @@
-.alt-root {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-12);
-  padding: var(--spacing-12) var(--spacing-16);
-  border-radius: 8px;
-  border-left: 4px solid transparent;
-  background-color: var(--fill-weaker);
+/* ═══════════════════════════════════════════════════════════════
+   Alert — Actuaria Design System
+   Figma node: 3482:58557  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
+
+.al-root {
+  /* Shared structural tokens */
+  --al-font-family:    var(--font-family-body, 'Nunito', sans-serif);
+  --al-radius:         var(--radius-md, 8px);
+  --al-spacing-8:      var(--spacing-8,  8px);
+  --al-spacing-12:     var(--spacing-12, 12px);
+  --al-spacing-16:     var(--spacing-16, 16px);
+  --al-spacing-24:     var(--spacing-24, 24px);
+  --al-bar-width:      4px;
+  --al-transition:     200ms ease;
+
+  /* Per-tone tokens — overridden by .al-tone--* below */
+  --al-bg:             transparent;
+  --al-border:         transparent;
+  --al-bar-color:      transparent;
+  --al-text:           var(--text-strong, rgba(0, 6, 38, 0.9));
+  --al-icon-color:     currentColor;
+
   position: relative;
-  font-family: var(--font-family-body);
-}
-
-.alt-root--info {
-  border-left-color: var(--color-info);
-  background-color: var(--fill-brand-weak);
-}
-
-.alt-root--success {
-  border-left-color: var(--color-success);
-  background-color: rgba(16, 185, 129, 0.08);
-}
-
-.alt-root--warning {
-  border-left-color: var(--color-warning);
-  background-color: rgba(245, 158, 11, 0.08);
-}
-
-.alt-root--error {
-  border-left-color: var(--color-error);
-  background-color: rgba(239, 68, 68, 0.08);
-}
-
-.alt-icon {
-  flex-shrink: 0;
   display: flex;
-  align-items: center;
-  font-size: var(--font-size-small);
-  margin-top: 1px;
+  flex-direction: row;
+  align-items: stretch;
+  font-family: var(--al-font-family);
+  background-color: var(--al-bg);
+  border: 1px solid var(--al-border);
+  border-radius: var(--al-radius);
+  overflow: hidden;
+  color: var(--al-text);
+  width: 100%;
 }
 
-.alt-body {
+/* ── Left accent bar ──────────────────────────────────────── */
+.al-bar {
+  flex-shrink: 0;
+  width: var(--al-bar-width);
+  background-color: var(--al-bar-color);
+  border-radius: var(--al-radius) 0 0 var(--al-radius);
+  align-self: stretch;
+}
+
+/* ── Main content wrapper ─────────────────────────────────── */
+.al-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--al-spacing-12);
+  padding: var(--al-spacing-16);
   flex: 1;
   min-width: 0;
 }
 
-.alt-title {
-  margin: 0 0 4px 0;
-  font-size: var(--font-size-small);
-  font-weight: 600;
-  color: var(--text-strong);
-  line-height: 1.4;
+/* When dismiss is absolute (small+vertical), content goes column */
+.al-content--col {
+  flex-direction: column;
 }
 
-.alt-message {
-  margin: 0;
-  font-size: var(--font-size-tiny);
-  font-weight: 400;
-  color: var(--text-weak);
+/* ── Icon ─────────────────────────────────────────────────── */
+.al-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--al-icon-color);
+  margin-top: 1px; /* optical alignment to heading cap-height */
+}
+
+/* Pill-container variant */
+.al-icon-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--al-bar-color) 12%, transparent);
+  color: var(--al-icon-color);
+}
+
+/* ── Text stack ───────────────────────────────────────────── */
+.al-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--al-spacing-8);
+  font-size: 16px;
   line-height: 1.5;
 }
 
-.alt-dismiss {
+.al-text--small {
+  font-size: 14px;
+}
+
+.al-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--al-text);
+  line-height: 1.4;
+}
+
+.al-body {
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.al-link {
+  display: inline-flex;
+}
+
+.al-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--al-spacing-8);
+}
+
+/* ── Dismiss button ───────────────────────────────────────── */
+.al-dismiss {
   flex-shrink: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-  color: var(--text-weak);
-  padding: 0;
-  margin-left: var(--spacing-8);
   display: flex;
   align-items: center;
-  transition: color 0.15s ease;
-}
-
-.alt-dismiss:hover {
-  color: var(--text-strong);
-}
-
-.alt-dismiss:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
   border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  transition: background-color var(--al-transition), color var(--al-transition);
+  margin-top: -2px; /* align with heading */
 }
 
-/* Dark mode */
-[data-theme='dark'] .alt-root {
-  background-color: rgba(255, 255, 255, 0.04);
+.al-dismiss:hover {
+  background-color: rgba(0, 17, 102, 0.06);
 }
 
-[data-theme='dark'] .alt-root--info {
-  background-color: rgba(76, 100, 217, 0.12);
+.al-dismiss:active {
+  background-color: rgba(0, 17, 102, 0.10);
 }
 
-[data-theme='dark'] .alt-root--success {
-  background-color: rgba(16, 185, 129, 0.12);
+.al-dismiss:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--stroke-focus, #151f47);
 }
 
-[data-theme='dark'] .alt-root--warning {
-  background-color: rgba(245, 158, 11, 0.12);
+/* Absolute-positioned dismiss for small+vertical non-inverse */
+.al-dismiss--abs {
+  position: absolute;
+  top: var(--al-spacing-8);
+  right: var(--al-spacing-8);
+  margin-top: 0;
 }
 
-[data-theme='dark'] .alt-root--error {
-  background-color: rgba(239, 68, 68, 0.12);
+/* ── Size modifiers ───────────────────────────────────────── */
+.al-size--large .al-content {
+  padding: var(--al-spacing-16);
+}
+
+.al-size--small .al-content {
+  padding: var(--al-spacing-12);
+  gap: var(--al-spacing-8);
+}
+
+/* ── Layout modifiers ─────────────────────────────────────── */
+.al-layout--horizontal .al-content {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.al-layout--vertical .al-content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ── Tone: Error ──────────────────────────────────────────── */
+.al-tone--error {
+  --al-bg:         rgba(255, 74, 74, 0.05);
+  --al-border:     rgba(199, 58, 58, 0.14);
+  --al-bar-color:  rgba(199, 58, 58, 0.8);
+  --al-icon-color: rgb(199, 58, 58);
+}
+
+/* ── Tone: Warning ────────────────────────────────────────── */
+.al-tone--warning {
+  --al-bg:         rgba(255, 152, 0, 0.05);
+  --al-border:     rgba(255, 152, 0, 0.2);
+  --al-bar-color:  rgba(255, 152, 0, 0.8);
+  --al-icon-color: rgb(200, 118, 0);
+}
+
+/* ── Tone: Success ────────────────────────────────────────── */
+.al-tone--success {
+  --al-bg:         rgba(76, 175, 80, 0.05);
+  --al-border:     rgba(76, 175, 80, 0.2);
+  --al-bar-color:  rgba(76, 175, 80, 0.8);
+  --al-icon-color: rgb(46, 135, 50);
+}
+
+/* ── Tone: Information ────────────────────────────────────── */
+.al-tone--information {
+  --al-bg:         rgba(38, 176, 255, 0.05);
+  --al-border:     rgba(26, 116, 168, 0.2);
+  --al-bar-color:  rgba(26, 116, 168, 0.8);
+  --al-icon-color: rgb(26, 116, 168);
+}
+
+/* ── Tone: Neutral ────────────────────────────────────────── */
+.al-tone--neutral {
+  --al-bg:         rgba(0, 21, 128, 0.02);
+  --al-border:     rgba(0, 17, 102, 0.1);
+  --al-bar-color:  rgba(0, 17, 102, 0.4);
+  --al-icon-color: rgba(0, 9, 51, 0.65);
+}
+
+/* ── Tone: Brand ──────────────────────────────────────────── */
+.al-tone--brand {
+  --al-bg:         rgba(21, 31, 71, 0.05);
+  --al-border:     rgba(21, 31, 71, 0.2);
+  --al-bar-color:  #151f47;
+  --al-icon-color: #151f47;
+}
+
+/* ── Tone: Inverse neutral ────────────────────────────────── */
+.al-tone--inverse-neutral {
+  --al-bg:         #12131a;
+  --al-border:     rgba(255, 255, 255, 0.12);
+  --al-bar-color:  rgba(255, 255, 255, 0.6);
+  --al-text:       rgba(255, 255, 255, 0.9);
+  --al-icon-color: rgba(255, 255, 255, 0.7);
+}
+
+.al-tone--inverse-neutral .al-body {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.al-tone--inverse-neutral .al-dismiss {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.al-tone--inverse-neutral .al-dismiss:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.al-tone--inverse-neutral .al-dismiss:active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Tone: Inverse brand ──────────────────────────────────── */
+.al-tone--inverse-brand {
+  --al-bg:         #151f47;
+  --al-border:     rgba(255, 255, 255, 0.12);
+  --al-bar-color:  rgba(255, 255, 255, 0.6);
+  --al-text:       rgba(255, 255, 255, 0.9);
+  --al-icon-color: rgba(255, 255, 255, 0.7);
+}
+
+.al-tone--inverse-brand .al-body {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.al-tone--inverse-brand .al-dismiss {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.al-tone--inverse-brand .al-dismiss:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.al-tone--inverse-brand .al-dismiss:active {
+  background-color: rgba(255, 255, 255, 0.12);
 }
