@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { BadgeCount } from './BadgeCount';
+import type { BadgeCountEmphasis } from './BadgeCount';
 
 const meta: Meta<typeof BadgeCount> = {
   title: 'Components/BadgeCount',
@@ -8,56 +9,74 @@ const meta: Meta<typeof BadgeCount> = {
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   argTypes: {
+    emphasis: {
+      control: 'radio',
+      options: ['Strong', 'Moderate', 'Weak'],
+    },
     count: { control: { type: 'number', min: 0, max: 200 } },
-    max: { control: { type: 'number', min: 1, max: 999 } },
-    color: { control: 'color' },
+    max:   { control: { type: 'number', min: 1,   max: 999 } },
   },
 };
 export default meta;
 type Story = StoryObj<typeof BadgeCount>;
 
+const EMPHASES: BadgeCountEmphasis[] = ['Strong', 'Moderate', 'Weak'];
+
+// ── Default / playground ───────────────────────────────────────
 export const Default: Story = {
-  args: {
-    count: 5,
-    max: 99,
-  },
+  args: { count: 8, emphasis: 'Strong' },
 };
 
-export const OverMax: Story = {
-  args: {
-    count: 142,
-    max: 99,
-  },
-};
-
-export const SingleDigit: Story = {
-  args: {
-    count: 3,
-  },
-};
-
-export const Zero: Story = {
-  args: {
-    count: 0,
-  },
-};
-
-/** Simulates unread alerts in the dashboard notification center */
-export const UnreadAlerts: Story = {
+// ── All emphasis levels ────────────────────────────────────────
+export const AllEmphases: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-      <span style={{ fontSize: 14 }}>Alertas de reserva</span>
-      <BadgeCount count={7} />
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      {EMPHASES.map((emphasis) => (
+        <BadgeCount key={emphasis} count={8} emphasis={emphasis} />
+      ))}
     </div>
   ),
 };
 
-/** Simulates pending policy renewals counter in sidebar nav */
-export const PendingRenewals: Story = {
+// ── Over max ───────────────────────────────────────────────────
+export const OverMax: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-      <span style={{ fontSize: 14 }}>Renovaciones pendientes</span>
-      <BadgeCount count={134} max={99} />
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      {EMPHASES.map((emphasis) => (
+        <BadgeCount key={emphasis} count={142} max={99} emphasis={emphasis} />
+      ))}
+    </div>
+  ),
+};
+
+// ── Individual stories ─────────────────────────────────────────
+export const Strong: Story = {
+  args: { count: 8, emphasis: 'Strong' },
+};
+
+export const Moderate: Story = {
+  args: { count: 8, emphasis: 'Moderate' },
+};
+
+export const Weak: Story = {
+  args: { count: 8, emphasis: 'Weak' },
+};
+
+// ── Usage: notification badge in nav ──────────────────────────
+export const NavNotification: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'Nunito, sans-serif', fontSize: 14 }}>
+      <span>Alertas de reserva</span>
+      <BadgeCount count={7} emphasis="Strong" />
+    </div>
+  ),
+};
+
+export const NavPending: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'Nunito, sans-serif', fontSize: 14 }}>
+      <span>Renovaciones pendientes</span>
+      <BadgeCount count={134} max={99} emphasis="Moderate" />
     </div>
   ),
 };
