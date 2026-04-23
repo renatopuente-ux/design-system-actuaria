@@ -1,32 +1,32 @@
-.bg {
+/* ═══════════════════════════════════════════════════════════════
+   ButtonGroup — Actuaria Design System
+   Figma node: 3506:64616  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
+
+.bg-root {
   display: inline-flex;
-  gap: 0;
+  align-items: flex-start;
 }
 
-.bg--horizontal { flex-direction: row; }
-.bg--vertical { flex-direction: column; }
+/* ── Layout ───────────────────────────────────────────────────── */
+.bg-layout--horizontal { flex-direction: row; }
 
-/* Collapse borders between siblings */
-.bg--horizontal > :not(:first-child) > button,
-.bg--horizontal > :not(:first-child) {
-  border-left-width: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.bg--horizontal > :not(:last-child) > button,
-.bg--horizontal > :not(:last-child) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+.bg-layout--vertical {
+  flex-direction: column;
+  width: 364px;
 }
 
-.bg--vertical > :not(:first-child) > button,
-.bg--vertical > :not(:first-child) {
-  border-top-width: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+/* Full-width buttons in vertical layout */
+.bg-layout--vertical > * {
+  width: 100%;
 }
-.bg--vertical > :not(:last-child) > button,
-.bg--vertical > :not(:last-child) {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+
+/* ── Gap per size ─────────────────────────────────────────────── */
+.bg-size--large,
+.bg-size--medium {
+  gap: var(--spacing-16, 16px);
+}
+
+.bg-size--small {
+  gap: var(--spacing-8, 8px);
 }

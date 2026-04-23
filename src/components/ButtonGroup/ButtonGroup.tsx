@@ -1,31 +1,39 @@
+/* ═══════════════════════════════════════════════════════════════
+   ButtonGroup — Actuaria Design System
+   Figma node: 3506:64616  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
 import React from 'react';
 import styles from './ButtonGroup.module.css';
 
+export type ButtonGroupLayout = 'Horizontal' | 'Vertical';
+export type ButtonGroupSize   = 'Large' | 'Medium' | 'Small';
+
 export interface ButtonGroupProps {
-  children: React.ReactNode;
-  orientation?: 'horizontal' | 'vertical';
+  children:   React.ReactNode;
+  layout?:    ButtonGroupLayout;
+  size?:      ButtonGroupSize;
   className?: string;
 }
 
-export const ButtonGroup: React.FC<ButtonGroupProps> = ({
+export function ButtonGroup({
   children,
-  orientation = 'horizontal',
-  className = '',
-}) => {
+  layout    = 'Horizontal',
+  size      = 'Medium',
+  className,
+}: ButtonGroupProps) {
   return (
     <div
-      className={[
-        styles.bg,
-        styles[`bg--${orientation}`],
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
       role="group"
+      className={[
+        styles['bg-root'],
+        styles[`bg-layout--${layout.toLowerCase()}`],
+        styles[`bg-size--${size.toLowerCase()}`],
+        className,
+      ].filter(Boolean).join(' ')}
     >
       {children}
     </div>
   );
-};
+}
 
 export default ButtonGroup;
