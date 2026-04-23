@@ -1,52 +1,71 @@
-import React, { useId } from 'react';
+import React from 'react';
 import styles from './Avatar.module.css';
 
-type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarType = 'Photo' | 'Icon' | 'Initials' | 'Logo';
+export type AvatarSize = 'Small' | 'Medium' | 'Large';
 
-interface AvatarProps {
-  name?: string;
-  src?: string;
+export interface AvatarProps {
+  type?: AvatarType;
   size?: AvatarSize;
-  /** Override background color via a CSS color value (applied as inline style) */
-  color?: string;
+  src?: string;
+  initials?: string;
+  alt?: string;
+  status?: boolean;
+  notification?: boolean;
+  className?: string;
 }
 
-/** Extracts up to 2 initials from a full name string */
-function getInitials(name: string): string {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+function UserIcon(): React.ReactElement {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={styles['av-icon']}>
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
-  name,
+  type = 'Icon',
+  size = 'Small',
   src,
-  size = 'md',
-  color,
+  initials = 'AD',
+  alt,
+  status,
+  notification,
+  className,
 }) => {
-  const labelId = useId();
-  const initials = name ? getInitials(name) : '?';
-  const ariaLabel = name ?? 'Avatar';
+  const rootClass = [
+    styles['av-root'],
+    styles[`av-root--${size.toLowerCase()}`],
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div
-      className={`${styles['av-root']} ${styles[`av-root--${size}`]}`}
-      style={color ? { backgroundColor: color } : undefined}
-      role="img"
-      aria-label={ariaLabel}
-      aria-labelledby={name ? labelId : undefined}
-    >
-      {src ? (
-        <img
-          className={styles['av-image']}
-          src={src}
-          alt={ariaLabel}
-          draggable={false}
+    <div className={styles['av-wrapper']}>
+      <div className={rootClass} role="img" aria-label={alt ?? initials}>
+        {(type === 'Photo' || type === 'Logo') && src ? (
+          <img src={src} alt={alt ?? ''} className={styles['av-img']} draggable={false} />
+        ) : type === 'Initials' ? (
+          <span className={styles[`av-initials--${size.toLowerCase()}`]} aria-hidden="true">
+            {initials}
+          </span>
+        ) : (
+          <UserIcon />
+        )}
+      </div>
+      {status && (
+        <span
+          className={[styles['av-dot'], styles['av-dot--status'], styles[`av-dot--status-${size.toLowerCase()}`]].join(' ')}
+          aria-label="En línea"
         />
-      ) : (
-        <span id={labelId} className={styles['av-initials']} aria-hidden="true">
-          {initials}
-        </span>
+      )}
+      {notification && (
+        <span
+          className={[styles['av-dot'], styles['av-dot--notif'], styles[`av-dot--notif-${size.toLowerCase()}`]].join(' ')}
+          aria-label="Notificación"
+        />
       )}
     </div>
   );

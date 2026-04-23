@@ -1,76 +1,63 @@
-.ad { position: relative; display: inline-block; }
-
-.ad__trigger {
-  width: 36px; height: 36px;
-  border-radius: 50%;
+.avd-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
   border: none;
+  background: none;
   cursor: pointer;
-  padding: 0;
-  overflow: hidden;
-  background: var(--interactive-action, #4c64d9);
-  transition: box-shadow 150ms ease;
-}
-.ad__trigger:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(76,100,217,0.25); }
-
-.ad__avatar { width: 100%; height: 100%; object-fit: cover; }
-.ad__avatar--lg { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
-
-.ad__initials {
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 100%;
+  border-radius: 8px;
   font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-tiny, 14px);
-  font-weight: 600;
-  color: white;
+  transition: background 100ms ease;
+  text-align: left;
 }
-.ad__initials--lg {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--interactive-action, #4c64d9);
+
+.avd-root--button {
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+}
+
+.avd-root--nav {
+  padding: var(--spacing-12, 12px) 24px;
+  width: 320px;
+}
+
+.avd-root:hover:not(:disabled) {
+  background: var(--fill-hover, rgba(21, 31, 71, 0.19));
+}
+
+.avd-root:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: -4px;
+  background: var(--fill-hover, rgba(21, 31, 71, 0.19));
+}
+
+.avd-root:active:not(:disabled) {
+  background: var(--fill-press, rgba(0, 17, 102, 0.1));
+}
+
+.avd-root--disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
+
+.avd-root--open {
+  background: var(--fill-hover, rgba(21, 31, 71, 0.19));
+}
+
+.avd-name {
+  flex: 1;
   font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.avd-chevron {
+  width: 24px;
+  height: 24px;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
   flex-shrink: 0;
 }
-
-.ad__menu {
-  position: absolute; top: calc(100% + 8px); right: 0;
-  min-width: 220px;
-  background: var(--background-base, white);
-  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
-  border-radius: var(--radius-card, 16px);
-  box-shadow: var(--shadow-overlay);
-  padding: var(--spacing-8, 8px);
-  animation: ad-open 150ms ease;
-  z-index: 200;
-}
-
-@keyframes ad-open {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.ad__header { display: flex; align-items: center; gap: var(--spacing-12, 12px); padding: var(--spacing-8, 8px); }
-.ad__name { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); font-weight: 600; color: var(--text-strong, rgba(0,6,38,0.9)); margin: 0; }
-.ad__role { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-tiny, 14px); font-weight: 400; color: var(--text-weak, rgba(0,9,51,0.65)); margin: 0; }
-
-.ad__divider { border: none; border-top: 1px solid var(--stroke-weak, rgba(0,17,102,0.1)); margin: var(--spacing-8, 8px) 0; }
-.ad__list { list-style: none; margin: 0; padding: 0; }
-
-.ad__item {
-  display: flex; align-items: center; gap: var(--spacing-8, 8px);
-  width: 100%; padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
-  border: none; background: none; cursor: pointer;
-  border-radius: 10px;
-  font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-small, 16px); font-weight: 400;
-  color: var(--text-strong, rgba(0,6,38,0.9));
-  text-align: left; transition: background 100ms ease;
-}
-.ad__item:hover { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
-.ad__item:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25) inset; }
-.ad__item--danger { color: #EF4444; }
-.ad__item--danger:hover { background: rgba(239,68,68,0.06); }
-.ad__item_icon { display: flex; align-items: center; width: 16px; height: 16px; }
-
-[data-theme='dark'] .ad__menu { background: #1e2030; border-color: rgba(255,255,255,0.1); }
-[data-theme='dark'] .ad__name { color: white; }
-[data-theme='dark'] .ad__item { color: rgba(255,255,255,0.85); }
-[data-theme='dark'] .ad__item:hover { background: rgba(255,255,255,0.06); }

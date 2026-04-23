@@ -1,71 +1,141 @@
-/* Avatar — av- prefix
-   Sizes: xs=24px sm=32px md=40px lg=48px xl=64px
-   Background defaults to --interactive-action; override via color prop */
+.av-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
 
 .av-root {
-  --av-color-bg: var(--interactive-action, #4c64d9);
-  --av-color-text: #ffffff;
-  --av-font-family: var(--font-family-body, 'Nunito', sans-serif);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background-color: var(--av-color-bg);
-  color: var(--av-color-text);
-  font-family: var(--av-font-family);
-  font-weight: 600;
+  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  background-color: var(--fill-weak, rgba(21, 31, 71, 0.19));
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
   overflow: hidden;
   flex-shrink: 0;
   user-select: none;
 }
 
-/* Size variants */
-.av-root--xs {
-  width: 24px;
-  height: 24px;
-  font-size: 10px;
-}
-
-.av-root--sm {
+.av-root--small {
   width: 32px;
   height: 32px;
-  font-size: 12px;
+  border-radius: 32px;
 }
 
-.av-root--md {
-  width: 40px;
-  height: 40px;
-  font-size: 14px;
-}
-
-.av-root--lg {
+.av-root--medium {
   width: 48px;
   height: 48px;
-  font-size: 16px;
+  border-radius: 48px;
 }
 
-.av-root--xl {
+.av-root--large {
   width: 64px;
   height: 64px;
-  font-size: 20px;
+  border-radius: 64px;
 }
 
-/* Image fills the full circle */
-.av-image {
+.av-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.av-initials {
-  line-height: 1;
-  letter-spacing: 0.02em;
+.av-icon {
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
 }
 
-/* Dark mode */
-[data-theme='dark'] .av-root {
-  --av-color-bg: var(--interactive-action, #4c64d9);
-  --av-color-text: #ffffff;
+.av-root--small .av-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.av-root--medium .av-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.av-root--large .av-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.av-initials--small {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.av-initials--medium {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.av-initials--large {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.av-dot {
+  position: absolute;
+  border-radius: 50%;
+  outline: 2px solid white;
+}
+
+.av-dot--status {
+  background-color: #22c55e;
+}
+
+.av-dot--notif {
+  background-color: #f97316;
+}
+
+.av-dot--status-small {
+  width: 12px;
+  height: 12px;
+  bottom: -3px;
+  right: -3px;
+}
+
+.av-dot--status-medium {
+  width: 12px;
+  height: 12px;
+  bottom: -1px;
+  right: -1px;
+}
+
+.av-dot--status-large {
+  width: 16px;
+  height: 16px;
+  bottom: -1px;
+  right: -1px;
+}
+
+.av-dot--notif-small {
+  width: 8px;
+  height: 8px;
+  top: -1px;
+  right: -1px;
+}
+
+.av-dot--notif-medium {
+  width: 12px;
+  height: 12px;
+  top: -1px;
+  right: -1px;
+}
+
+.av-dot--notif-large {
+  width: 16px;
+  height: 16px;
+  top: -1px;
+  right: -1px;
 }
