@@ -1,26 +1,18 @@
+/* ═══════════════════════════════════════════════════════════════
+   Breadcrumbs — Actuaria Design System
+   Figma node: 4993:5859  ·  fileKey: N1wh3u4sX3UGyUU5oWOaz6
+   ═══════════════════════════════════════════════════════════════ */
+
 .brc-root {
-  --brc-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --brc-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --brc-color-text-brand: var(--text-brand, #4c64d9);
-  --brc-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --brc-font-size: var(--font-size-tiny, 14px);
-  --brc-spacing-8: var(--spacing-8, 8px);
-  --brc-shadow-focus: var(--shadow-focus, 0 0 0 3px rgba(76, 100, 217, 0.25));
-
-  font-family: var(--brc-font-family);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
 }
 
-[data-theme='dark'] .brc-root {
-  --brc-color-text-strong: rgba(255, 255, 255, 0.9);
-  --brc-color-text-weak: rgba(255, 255, 255, 0.55);
-  --brc-color-text-brand: #7b93f0;
-}
-
+/* ── List ─────────────────────────────────────────────────────── */
 .brc-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--brc-spacing-8);
+  gap: var(--spacing-8, 8px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -29,41 +21,60 @@
 .brc-item {
   display: flex;
   align-items: center;
-  gap: var(--brc-spacing-8);
+  gap: var(--spacing-8, 8px);
 }
 
-/* Ancestor links: text-weak, hover transitions to text-brand */
-.brc-item__link {
-  font-size: var(--brc-font-size);
+/* ── Separator — /  (icon/neutral per Figma) ──────────────────── */
+.brc-separator {
+  font-size: var(--font-size-tiny, 14px);
   font-weight: 400;
-  color: var(--brc-color-text-weak);
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--icon-neutral, rgba(0, 13, 77, 0.45));
+  user-select: none;
+}
+
+/* ── Link / current — same visual weight per Figma ───────────── */
+.brc-link {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
   text-decoration: none;
   border-radius: 4px;
-  transition: color 160ms ease;
+  white-space: nowrap;
+  transition: color 0.15s ease;
 }
 
-.brc-item__link:hover {
-  color: var(--brc-color-text-brand);
+a.brc-link:hover {
+  color: var(--text-brand, #4c64d9);
   text-decoration: underline;
 }
 
-.brc-item__link:focus-visible {
+a.brc-link:focus-visible {
   outline: none;
-  box-shadow: var(--brc-shadow-focus);
+  box-shadow: 0 0 0 2px var(--stroke-focus, #151f47);
 }
 
-/* Current page: non-interactive, strong color */
-.brc-item__current {
-  font-size: var(--brc-font-size);
-  font-weight: 600;
-  color: var(--brc-color-text-strong);
-  pointer-events: none;
-}
-
-/* Separator rendered between items */
-.brc-separator {
-  font-size: var(--brc-font-size);
+/* ── Collapsed "…" button ─────────────────────────────────────── */
+.brc-collapsed-btn {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
   font-weight: 400;
-  color: var(--brc-color-text-weak);
-  user-select: none;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.brc-collapsed-btn:hover {
+  color: var(--text-brand, #4c64d9);
+}
+
+.brc-collapsed-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--stroke-focus, #151f47);
 }
