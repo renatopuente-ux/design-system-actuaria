@@ -1,112 +1,155 @@
-import React, { useId } from 'react';
+import React from 'react';
+import { PageSingle } from '../PageSingle/PageSingle';
 import styles from './Pagination.module.css';
+
+export type PaginationDevice = 'Desktop' | 'Mobile';
 
 export interface PaginationProps {
   page: number;
   totalPages: number;
-  onChange: (page: number) => void;
+  /** Used to compute count label: "Mostrando X - Y de totalItems" */
+  pageSize?: number;
+  totalItems?: number;
+  device?: PaginationDevice;
+  onPageChange: (page: number) => void;
+  /** @deprecated use onPageChange */
+  onChange?: (page: number) => void;
   siblingCount?: number;
+  className?: string;
 }
 
-// Returns the page range with ellipsis markers ('...')
 function buildRange(page: number, total: number, siblings: number): (number | '...')[] {
-  const delta = siblings + 2; // always show edges + siblings around current
-
-  if (total <= 2 * delta + 1) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
   const left = Math.max(2, page - siblings);
   const right = Math.min(total - 1, page + siblings);
-
   const pages: (number | '...')[] = [1];
-
   if (left > 2) pages.push('...');
   for (let i = left; i <= right; i++) pages.push(i);
   if (right < total - 1) pages.push('...');
   pages.push(total);
-
   return pages;
 }
 
-function ChevronLeft() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
-      <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const ChevronLeft20 = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path d="M12.5 15l-5-5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const ChevronRight20 = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path d="M7.5 5l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const ChevronLeft16 = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M10 13L5 8l5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const ChevronRight16 = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
-function ChevronRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
-      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+export const Pagination: React.FC<PaginationProps> = ({
+  page,
+  totalPages,
+  pageSize,
+  totalItems,
+  device = 'Desktop',
+  onPageChange,
+  onChange,
+  siblingCount = 1,
+  className,
+}) => {
+  const handleChange = onPageChange ?? onChange ?? (() => {});
+  const hasPrev = page > 1;
+  const hasNext = page < totalPages;
 
-export function Pagination({ page, totalPages, onChange, siblingCount = 1 }: PaginationProps) {
-  const uid = useId();
+  if (device === 'Mobile') {
+    return (
+      <nav
+        className={[styles['pg-root'], styles['pg-root--mobile'], className].filter(Boolean).join(' ')}
+        aria-label="Paginación"
+      >
+        <button
+          type="button"
+          className={styles['pg-arrow']}
+          onClick={() => hasPrev && handleChange(page - 1)}
+          disabled={!hasPrev}
+          aria-label="Página anterior"
+        >
+          <ChevronLeft16 />
+        </button>
+        <span className={styles['pg-mobile-label']}>{page} de {totalPages}</span>
+        <button
+          type="button"
+          className={styles['pg-arrow']}
+          onClick={() => hasNext && handleChange(page + 1)}
+          disabled={!hasNext}
+          aria-label="Página siguiente"
+        >
+          <ChevronRight16 />
+        </button>
+      </nav>
+    );
+  }
+
   const range = buildRange(page, totalPages, siblingCount);
-  const isPrevDisabled = page <= 1;
-  const isNextDisabled = page >= totalPages;
+  const start = pageSize ? (page - 1) * pageSize + 1 : undefined;
+  const end = pageSize ? Math.min(page * pageSize, totalItems ?? page * pageSize) : undefined;
 
   return (
     <nav
+      className={[styles['pg-root'], styles['pg-root--desktop'], className].filter(Boolean).join(' ')}
       aria-label="Paginación"
-      className={styles['pg-root']}
     >
-      {/* Previous button */}
-      <button
-        className={`${styles['pg-btn']} ${styles['pg-btn--nav']}`}
-        onClick={() => onChange(page - 1)}
-        disabled={isPrevDisabled}
-        aria-label="Página anterior"
-        type="button"
-      >
-        <ChevronLeft />
-      </button>
+      <div className={styles['pg-controls']}>
+        <button
+          type="button"
+          className={[styles['pg-prev-next'], !hasPrev ? styles['pg-prev-next--disabled'] : ''].filter(Boolean).join(' ')}
+          onClick={() => hasPrev && handleChange(page - 1)}
+          disabled={!hasPrev}
+          aria-label="Página anterior"
+        >
+          <ChevronLeft20 />
+          <span>Anterior</span>
+        </button>
 
-      {/* Page numbers */}
-      <ol className={styles['pg-list']} role="list">
-        {range.map((item, index) => {
-          if (item === '...') {
-            return (
-              <li key={`${uid}-ellipsis-${index}`} className={styles['pg-item']}>
-                <span className={styles['pg-ellipsis']} aria-hidden="true">
-                  …
-                </span>
-              </li>
-            );
-          }
+        <div className={styles['pg-pages']}>
+          {range.map((p, i) =>
+            p === '...' ? (
+              <span key={`ellipsis-${i}`} className={styles['pg-ellipsis']}>…</span>
+            ) : (
+              <PageSingle
+                key={p}
+                page={p}
+                selected={p === page}
+                onClick={() => handleChange(p as number)}
+              />
+            )
+          )}
+        </div>
 
-          const isActive = item === page;
-          return (
-            <li key={`${uid}-page-${item}`} className={styles['pg-item']}>
-              <button
-                className={`${styles['pg-btn']} ${isActive ? styles['pg-btn--active'] : ''}`}
-                onClick={() => !isActive && onChange(item)}
-                aria-label={`Página ${item}`}
-                aria-current={isActive ? 'page' : undefined}
-                type="button"
-              >
-                {item}
-              </button>
-            </li>
-          );
-        })}
-      </ol>
+        <button
+          type="button"
+          className={[styles['pg-prev-next'], !hasNext ? styles['pg-prev-next--disabled'] : ''].filter(Boolean).join(' ')}
+          onClick={() => hasNext && handleChange(page + 1)}
+          disabled={!hasNext}
+          aria-label="Página siguiente"
+        >
+          <span>Siguiente</span>
+          <ChevronRight20 />
+        </button>
+      </div>
 
-      {/* Next button */}
-      <button
-        className={`${styles['pg-btn']} ${styles['pg-btn--nav']}`}
-        onClick={() => onChange(page + 1)}
-        disabled={isNextDisabled}
-        aria-label="Página siguiente"
-        type="button"
-      >
-        <ChevronRight />
-      </button>
+      {start !== undefined && totalItems !== undefined && (
+        <span className={styles['pg-count']}>
+          Mostrando {start} – {end} de {totalItems}
+        </span>
+      )}
     </nav>
   );
-}
+};
+
+export default Pagination;

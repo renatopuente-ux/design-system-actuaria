@@ -67,7 +67,10 @@ export { Tabs } from './Tabs/Tabs';
 export type { TabsProps } from './Tabs/Tabs';
 
 export { Pagination } from './Pagination/Pagination';
-export type { PaginationProps } from './Pagination/Pagination';
+export type { PaginationProps, PaginationDevice } from './Pagination/Pagination';
+
+export { PageSingle } from './PageSingle/PageSingle';
+export type { PageSingleProps, PageSingleState } from './PageSingle/PageSingle';
 
 export { NavigationSide } from './NavigationSide/NavigationSide';
 export type { NavigationSideProps, NavigationSideType } from './NavigationSide/NavigationSide';

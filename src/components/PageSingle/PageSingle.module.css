@@ -1,0 +1,57 @@
+/* PageSingle — ps- prefix  (Figma spec: 3697:2197) */
+
+.ps-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 11px 10px;
+  border-radius: var(--spacing-8, 8px);
+  border: 1px solid transparent;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.12s ease;
+}
+
+/* ── State backgrounds ── */
+.ps-root:hover:not(:disabled) { background: var(--fill-hover, rgba(21,31,71,0.19)); }
+.ps-root:active:not(:disabled) { background: var(--fill-press, rgba(0,17,102,0.10)); }
+.ps-root--hover  { background: var(--fill-hover, rgba(21,31,71,0.19)); }
+.ps-root--press  { background: var(--fill-press, rgba(0,17,102,0.10)); }
+
+/* ── Selected border ── */
+.ps-root--selected                     { border-color: var(--stroke-strong, rgba(0,13,77,0.45)); }
+.ps-root--selected.ps-root--disabled   { border-color: rgba(0,17,102,0.10); }
+.ps-root--selected:disabled            { border-color: rgba(0,17,102,0.10); }
+
+/* ── Focus ring ── */
+.ps-root:focus-visible,
+.ps-root--focus {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+}
+
+/* ── Disabled ── */
+.ps-root:disabled,
+.ps-root--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* ── Label ── */
+.ps-label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  white-space: nowrap;
+}
+
+.ps-root:disabled .ps-label,
+.ps-root--disabled .ps-label {
+  color: rgba(0,17,102,0.10);
+}
