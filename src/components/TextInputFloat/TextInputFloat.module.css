@@ -1,0 +1,173 @@
+/* TextInputFloat — tif- prefix  (Figma spec: 629:857) */
+/* Floating label: label lives inside the 48px field, shrinks to top on focus/fill */
+
+.tif-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 4px);
+  width: 100%;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+}
+
+/* ── Error block ── */
+.tif-error-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  color: var(--text-error, #c73a3a);
+}
+
+.tif-error-icon {
+  flex-shrink: 0;
+}
+
+.tif-error-text {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-error, #c73a3a);
+}
+
+/* ── Field wrapper ── */
+.tif-wrap {
+  position: relative;
+  height: 48px;
+  background-color: #ffffff;
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: 8px;
+  transition: background-color 0.1s ease;
+}
+
+.tif-wrap:hover:not(.tif-wrap--disabled):not(.tif-wrap--error) {
+  background-color: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.tif-wrap--error {
+  border: 2px solid var(--stroke-error-strong, rgba(199,58,58,0.8));
+  background-color: var(--fill-error-weak, rgba(255,74,74,0.05));
+}
+
+.tif-wrap--disabled {
+  border-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
+}
+
+/* ── Input ── */
+.tif-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  padding-top: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  transition: padding-top 150ms ease;
+}
+
+/* When focused or filled: push input text down to make room for the floated label */
+.tif-input:focus,
+.tif-input:not(:placeholder-shown) {
+  padding-top: 20px;
+}
+
+/* Focus ring on the wrapper — use :focus-within to target parent */
+.tif-wrap:focus-within {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+
+.tif-wrap--error:focus-within {
+  outline-color: var(--stroke-error-strong, rgba(199,58,58,0.8));
+}
+
+/* ── Floating label ── */
+.tif-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-heading-4, 20px);
+  font-weight: 400;
+  line-height: var(--line-height-heading-4, 28px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 32px);
+  transition: top 150ms ease, transform 150ms ease, font-size 150ms ease, line-height 150ms ease, color 150ms ease;
+}
+
+/* Label floated: input focused OR has a value */
+.tif-input:focus ~ .tif-label,
+.tif-input:not(:placeholder-shown) ~ .tif-label {
+  top: 6px;
+  transform: none;
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+}
+
+.tif-required {
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.tif-optional {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+/* ── Disabled ── */
+.tif-wrap--disabled .tif-input {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
+}
+
+.tif-wrap--disabled .tif-label {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+}
+
+/* ── Hint ── */
+.tif-hint {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .tif-wrap {
+  background-color: var(--surface-raised, #1e2035);
+  border-color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .tif-wrap:hover:not(.tif-wrap--disabled):not(.tif-wrap--error) {
+  background-color: rgba(255,255,255,0.06);
+}
+
+[data-theme='dark'] .tif-input {
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .tif-label {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme='dark'] .tif-wrap--disabled .tif-input,
+[data-theme='dark'] .tif-wrap--disabled .tif-label {
+  color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .tif-hint {
+  color: rgba(255,255,255,0.55);
+}

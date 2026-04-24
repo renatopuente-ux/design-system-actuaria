@@ -1,92 +1,155 @@
-/* TextInput — prefix: ti- */
-/* All color values reference design tokens only; no raw hex. */
+/* TextInput — ti- prefix  (Figma spec: 3449:60714) */
 
 .ti-root {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4, 4px);
   width: 100%;
-  font-family: var(--font-family-body);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+}
+
+/* ── Label block ── */
+.ti-label-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .ti-label {
-  font-size: var(--font-size-tiny);
-  font-weight: 600;
-  color: var(--text-strong);
-  line-height: 1.4;
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+.ti-label--disabled {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
 }
 
 .ti-required {
-  color: var(--text-brand);
+  color: var(--text-weak, rgba(0,9,51,0.65));
 }
 
-.ti-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: var(--spacing-12) var(--spacing-16);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-small);
+.ti-optional {
+  font-size: var(--font-size-tiny, 14px);
   font-weight: 400;
-  color: var(--text-strong);
-  background-color: var(--background-base);
-  border: 1px solid var(--stroke-weak);
-  border-radius: var(--radius-card);
-  outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  appearance: none;
-}
-
-.ti-input::placeholder {
-  color: var(--text-weak);
-  font-weight: 400;
-}
-
-/* Focus ring — 3px brand indigo shadow per spec */
-.ti-input:focus-visible {
-  border-color: var(--stroke-brand-weak);
-  box-shadow: var(--shadow-focus);
-}
-
-/* Error state */
-.ti-input--error {
-  border-color: var(--color-error, rgba(220, 38, 38, 0.8));
-  background-color: var(--fill-error-weak, rgba(220, 38, 38, 0.04));
-}
-
-.ti-input--error:focus-visible {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
-}
-
-/* Disabled state */
-.ti-input--disabled,
-.ti-input:disabled {
-  background-color: var(--fill-weaker);
-  color: var(--text-weak);
-  cursor: not-allowed;
-  border-color: var(--stroke-weak);
+  color: var(--text-weak, rgba(0,9,51,0.65));
 }
 
 .ti-hint {
-  font-size: var(--font-size-tiny);
+  font-size: var(--font-size-tiny, 14px);
   font-weight: 400;
-  color: var(--text-weak);
-  line-height: 1.4;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
 }
 
-.ti-error {
-  font-size: var(--font-size-tiny);
+/* ── Error block ── */
+.ti-error-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  color: var(--text-error, #c73a3a);
+}
+
+.ti-error-icon {
+  flex-shrink: 0;
+}
+
+.ti-error-text {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-error, #c73a3a);
+}
+
+/* ── Field ── */
+.ti-field {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 16px;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  color: var(--color-error, rgba(220, 38, 38, 0.9));
-  line-height: 1.4;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  background-color: #ffffff;
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: 8px;
+  outline: none;
+  appearance: none;
+  transition: background-color 0.1s ease;
 }
 
-/* Dark mode overrides */
-[data-theme='dark'] .ti-input {
-  background-color: var(--fill-weaker);
-  border-color: var(--stroke-weak);
-  color: var(--text-strong);
+.ti-field::placeholder {
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  font-weight: 400;
 }
 
-[data-theme='dark'] .ti-input:focus-visible {
-  box-shadow: var(--shadow-focus);
+.ti-field:hover:not(:disabled):not(.ti-field--error) {
+  background-color: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.ti-field:active:not(:disabled) {
+  background-color: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+.ti-field:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+
+/* ── Error state ── */
+.ti-field--error {
+  border: 2px solid var(--stroke-error-strong, rgba(199,58,58,0.8));
+  background-color: var(--fill-error-weak, rgba(255,74,74,0.05));
+}
+
+.ti-field--error:focus-visible {
+  outline-color: var(--stroke-error-strong, rgba(199,58,58,0.8));
+}
+
+/* ── Disabled ── */
+.ti-field--disabled,
+.ti-field:disabled {
+  border-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
+  background-color: #ffffff;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .ti-label {
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .ti-label--disabled {
+  color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .ti-required,
+[data-theme='dark'] .ti-optional,
+[data-theme='dark'] .ti-hint {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme='dark'] .ti-field {
+  background-color: var(--surface-raised, #1e2035);
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .ti-field:hover:not(:disabled):not(.ti-field--error) {
+  background-color: rgba(255,255,255,0.06);
+}
+
+[data-theme='dark'] .ti-field:active:not(:disabled) {
+  background-color: rgba(255,255,255,0.04);
+}
+
+[data-theme='dark'] .ti-field:disabled {
+  border-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.2);
+  background-color: transparent;
 }

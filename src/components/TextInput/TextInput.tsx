@@ -1,89 +1,121 @@
 import React, { useId } from 'react';
 import styles from './TextInput.module.css';
 
+const XOctagonIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={styles['ti-error-icon']}>
+    <path
+      d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 export interface TextInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   label?: string;
-  error?: string;
   hint?: string;
-  disabled?: boolean;
+  error?: string;
   required?: boolean;
-  id?: string;
+  optional?: boolean;
+  disabled?: boolean;
+  type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'search' | 'url';
+  className?: string;
 }
 
-/**
- * TextInput — single-line text field for actuarial data entry.
- * Error state communicates validation failures (e.g. invalid premium rate).
- * Uses useId() for SSR-safe label association.
- */
-export const TextInput: React.FC<TextInputProps> = ({
-  value,
-  onChange,
-  placeholder,
-  label,
-  error,
-  hint,
-  disabled = false,
-  required = false,
-  id,
-}) => {
-  const generatedId = useId();
-  const inputId = id ?? generatedId;
-  const hintId = `${inputId}-hint`;
-  const errorId = `${inputId}-error`;
+export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  (
+    {
+      value,
+      onChange,
+      placeholder,
+      label,
+      hint,
+      error,
+      required,
+      optional,
+      disabled = false,
+      type = 'text',
+      className = '',
+    },
+    ref,
+  ) => {
+    const id = useId();
+    const hintId = `${id}-hint`;
+    const errorId = `${id}-error`;
 
-  const describedBy = [error ? errorId : null, hint ? hintId : null]
-    .filter(Boolean)
-    .join(' ');
+    const describedBy = [
+      error ? errorId : null,
+      hint && !error ? hintId : null,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  return (
-    <div className={styles['ti-root']}>
-      {label && (
-        <label
-          htmlFor={inputId}
-          className={styles['ti-label']}
-        >
-          {label}
-          {required && (
-            <span className={styles['ti-required']} aria-hidden="true">
-              {' '}*
-            </span>
-          )}
-        </label>
-      )}
+    return (
+      <div className={[styles['ti-root'], className].filter(Boolean).join(' ')}>
+        {label && (
+          <div className={styles['ti-label-block']}>
+            <label
+              htmlFor={id}
+              className={[
+                styles['ti-label'],
+                disabled ? styles['ti-label--disabled'] : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              {label}
+              {required && (
+                <span className={styles['ti-required']} aria-hidden="true">
+                  {' '}*
+                </span>
+              )}
+              {optional && !required && (
+                <span className={styles['ti-optional']}> (opcional)</span>
+              )}
+            </label>
+            {hint && (
+              <span id={hintId} className={styles['ti-hint']}>
+                {hint}
+              </span>
+            )}
+          </div>
+        )}
 
-      <input
-        id={inputId}
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        disabled={disabled}
-        required={required}
-        aria-invalid={!!error}
-        aria-describedby={describedBy || undefined}
-        className={[
-          styles['ti-input'],
-          error ? styles['ti-input--error'] : '',
-          disabled ? styles['ti-input--disabled'] : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      />
+        {error && (
+          <div className={styles['ti-error-block']} id={errorId} role="alert">
+            <XOctagonIcon />
+            <span className={styles['ti-error-text']}>{error}</span>
+          </div>
+        )}
 
-      {hint && !error && (
-        <span id={hintId} className={styles['ti-hint']}>
-          {hint}
-        </span>
-      )}
+        <input
+          ref={ref}
+          id={id}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
+          aria-invalid={!!error}
+          aria-describedby={describedBy || undefined}
+          className={[
+            styles['ti-field'],
+            error ? styles['ti-field--error'] : '',
+            disabled ? styles['ti-field--disabled'] : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
+      </div>
+    );
+  },
+);
 
-      {error && (
-        <span id={errorId} className={styles['ti-error']} role="alert">
-          {error}
-        </span>
-      )}
-    </div>
-  );
-};
+TextInput.displayName = 'TextInput';
+
+export default TextInput;

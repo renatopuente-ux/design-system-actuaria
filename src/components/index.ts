@@ -2,6 +2,9 @@
 export { TextInput } from './TextInput/TextInput';
 export type { TextInputProps } from './TextInput/TextInput';
 
+export { TextInputFloat } from './TextInputFloat/TextInputFloat';
+export type { TextInputFloatProps } from './TextInputFloat/TextInputFloat';
+
 export { TextArea } from './TextArea/TextArea';
 export type { TextAreaProps } from './TextArea/TextArea';
 
