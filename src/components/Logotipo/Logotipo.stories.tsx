@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Logotipo } from './Logotipo';
+import type { LogotipoVariant } from './Logotipo';
 
 const meta: Meta<typeof Logotipo> = {
   title: 'Components/Logotipo',
@@ -8,49 +9,85 @@ const meta: Meta<typeof Logotipo> = {
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['full', 'icon'] },
-    theme: { control: 'select', options: ['light', 'dark'] },
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    variant: {
+      control: 'select',
+      options: [
+        'Color',
+        'Negativo',
+        'Black',
+        'ColorAlt',
+        'ActuariaPlus',
+        'ActuariaPlusNegativo',
+        'IsoActuariaPlusColor',
+        'IsoActuariaPlusNegativo',
+      ] satisfies LogotipoVariant[],
+    },
+    width: { control: 'text' },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Logotipo>;
 
-export const FullLight: Story = {
-  args: { variant: 'full', theme: 'light', size: 'md' },
+// ── Single variant controls ──────────────────────────────────────────────────
+
+export const Playground: Story = {
+  args: { variant: 'Color', width: 160 },
 };
 
-export const FullDark: Story = {
-  args: { variant: 'full', theme: 'dark', size: 'md' },
-  decorators: [
-    (Story) => (
-      <div style={{ background: '#151f47', padding: 24, borderRadius: 12 }}>
-        <Story />
+// ── All 8 variants in a grid ─────────────────────────────────────────────────
+
+const LIGHT_VARIANTS: LogotipoVariant[] = ['Color', 'Black', 'ColorAlt', 'ActuariaPlus', 'IsoActuariaPlusColor'];
+const DARK_VARIANTS: LogotipoVariant[] = ['Negativo', 'ActuariaPlusNegativo', 'IsoActuariaPlusNegativo'];
+
+export const AllVariants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 32, fontFamily: 'sans-serif' }}>
+      {/* Light-background group */}
+      <div style={{ background: '#ffffff', padding: 24, borderRadius: 12, display: 'flex', flexWrap: 'wrap', gap: 32, alignItems: 'center' }}>
+        {LIGHT_VARIANTS.map((v) => (
+          <div key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <Logotipo variant={v} width={160} />
+            <span style={{ fontSize: 11, color: '#555' }}>{v}</span>
+          </div>
+        ))}
       </div>
-    ),
-  ],
-};
 
-export const IconOnly: Story = {
-  args: { variant: 'icon', theme: 'light', size: 'md' },
-};
-
-export const AllSizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-      {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Logotipo key={size} variant="full" theme="light" size={size} />
-      ))}
+      {/* Dark-background group */}
+      <div style={{ background: '#151f47', padding: 24, borderRadius: 12, display: 'flex', flexWrap: 'wrap', gap: 32, alignItems: 'center' }}>
+        {DARK_VARIANTS.map((v) => (
+          <div key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <Logotipo variant={v} width={160} />
+            <span style={{ fontSize: 11, color: '#aab' }}>{v}</span>
+          </div>
+        ))}
+      </div>
     </div>
   ),
 };
 
-export const IconAllSizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-      {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Logotipo key={size} variant="icon" theme="light" size={size} />
-      ))}
-    </div>
-  ),
+// ── Individual named stories ─────────────────────────────────────────────────
+
+export const Color: Story = { args: { variant: 'Color', width: 160 } };
+
+export const Negativo: Story = {
+  args: { variant: 'Negativo', width: 160 },
+  decorators: [(Story) => <div style={{ background: '#151f47', padding: 24, borderRadius: 12 }}><Story /></div>],
+};
+
+export const Black: Story = { args: { variant: 'Black', width: 160 } };
+
+export const ColorAlt: Story = { args: { variant: 'ColorAlt', width: 160 } };
+
+export const ActuariaPlus: Story = { args: { variant: 'ActuariaPlus', width: 160 } };
+
+export const ActuariaPlusNegativo: Story = {
+  args: { variant: 'ActuariaPlusNegativo', width: 160 },
+  decorators: [(Story) => <div style={{ background: '#151f47', padding: 24, borderRadius: 12 }}><Story /></div>],
+};
+
+export const IsoActuariaPlusColor: Story = { args: { variant: 'IsoActuariaPlusColor', width: 48 } };
+
+export const IsoActuariaPlusNegativo: Story = {
+  args: { variant: 'IsoActuariaPlusNegativo', width: 48 },
+  decorators: [(Story) => <div style={{ background: '#151f47', padding: 24, borderRadius: 12 }}><Story /></div>],
 };

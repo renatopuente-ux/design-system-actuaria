@@ -176,7 +176,7 @@ export { Actuarin } from './Actuarin/Actuarin';
 export type { ActuarinProps } from './Actuarin/Actuarin';
 
 export { Logotipo } from './Logotipo/Logotipo';
-export type { LogotipoProps } from './Logotipo/Logotipo';
+export type { LogotipoProps, LogotipoVariant } from './Logotipo/Logotipo';
 
 export { SegmentedControl } from './SegmentedControl/SegmentedControl';
 export type { SegmentedControlProps } from './SegmentedControl/SegmentedControl';

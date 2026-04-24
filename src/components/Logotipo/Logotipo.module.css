@@ -1,16 +1,9 @@
 /* Logotipo — lo- prefix
-   Inline SVG logo. Size controlled via height prop; CSS just handles display. */
+   Image-based logo. Width controlled via prop; height scales proportionally. */
 
 .lo-root {
   display: inline-block;
   flex-shrink: 0;
-  /* Height driven by SVG height attribute; width scales proportionally */
+  height: auto;
+  max-width: 100%;
 }
-
-/* Ensure crisp rendering at small sizes */
-.lo-root--sm {
-  image-rendering: crisp-edges;
-}
-
-/* Dark mode: relies on theme prop passed to component; no additional overrides needed
-   since colors are embedded in SVG fills/strokes. */
