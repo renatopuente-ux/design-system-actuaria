@@ -1,65 +1,118 @@
-/* Select — prefix: sl- */
-/* All color values reference design tokens only; no raw hex. */
+/* Select — sl- prefix  (Figma spec: 3449:61082) */
 
 .sl-root {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4, 4px);
   width: 100%;
-  font-family: var(--font-family-body);
+  max-width: 364px;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+}
+
+/* ── Label row ── */
+.sl-label-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .sl-label {
-  font-size: var(--font-size-tiny);
-  font-weight: 600;
-  color: var(--text-strong);
-  line-height: 1.4;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  white-space: nowrap;
 }
 
-/* Trigger button mimics the TextInput visual style */
+.sl-required {
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.sl-optional {
+  font-size: var(--font-size-tiny, 14px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.sl-hint {
+  margin: 0;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+/* ── Error block ── */
+.sl-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8, 8px);
+  padding: var(--spacing-4, 4px) 0;
+  border-radius: var(--spacing-4, 4px);
+}
+
+.sl-error-text {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-error, #c73a3a);
+}
+
+/* ── Trigger (field button) ── */
 .sl-trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 48px;
+  padding: 0 var(--spacing-16, 16px);
   box-sizing: border-box;
-  padding: var(--spacing-12) var(--spacing-16);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-small);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  color: var(--text-strong);
-  background-color: var(--background-base);
-  border: 1px solid var(--stroke-weak);
-  border-radius: var(--radius-card);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  background: var(--fill-inverse-strong, white);
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: var(--corner-radius-8, 8px);
   cursor: pointer;
   text-align: left;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.12s ease;
 }
 
-.sl-trigger:focus-visible {
-  border-color: var(--stroke-brand-weak);
-  box-shadow: var(--shadow-focus);
+.sl-trigger:hover:not(:disabled):not(.sl-trigger--error) {
+  border-color: var(--fill-brand-strong, #151f47);
 }
 
-.sl-trigger--open {
-  border-color: var(--stroke-brand-weak);
-  box-shadow: var(--shadow-focus);
+.sl-trigger:focus-visible:not(.sl-trigger--error) {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+}
+
+.sl-trigger--open:not(.sl-trigger--error) {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
 }
 
 .sl-trigger--error {
-  border-color: var(--color-error, rgba(220, 38, 38, 0.8));
+  border: 2px solid rgba(199,58,58,0.8);
+  background: var(--fill-error-weak, rgba(255,74,74,0.05));
 }
 
 .sl-trigger--disabled {
-  background-color: var(--fill-weaker);
-  color: var(--text-weak);
+  border-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+  color: var(--text-disabled, rgba(0,17,102,0.1));
   cursor: not-allowed;
+  background: white;
 }
 
 .sl-trigger--placeholder .sl-trigger-text {
-  color: var(--text-weak);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.sl-trigger--disabled .sl-trigger-text,
+.sl-trigger--disabled .sl-chevron {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
 }
 
 .sl-trigger-text {
@@ -70,80 +123,72 @@
 }
 
 .sl-chevron {
-  color: var(--text-weak);
   flex-shrink: 0;
-  transition: transform 0.15s ease;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  display: flex;
+  align-items: center;
 }
 
-.sl-chevron--open {
-  transform: rotate(180deg);
-}
-
-/* Dropdown list */
+/* ── Dropdown list ── */
 .sl-list {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 200;
   list-style: none;
   margin: 0;
-  padding: var(--spacing-8) 0;
-  background-color: var(--background-base);
-  border: 1px solid var(--stroke-weak);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-overlay);
-  max-height: 240px;
+  padding: var(--spacing-8, 8px) 1px;
+  background: var(--background-overlay, white);
+  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--corner-radius-8, 8px);
+  box-shadow: 0px 20px 24px rgba(0,0,0,0.08), 0px 8px 8px rgba(0,0,0,0.04);
+  max-height: 280px;
   overflow-y: auto;
+  overflow-x: hidden;
   outline: none;
 }
 
+/* ── Option items ── */
 .sl-option {
-  padding: var(--spacing-8) var(--spacing-16);
-  font-size: var(--font-size-small);
+  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  color: var(--text-strong);
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
   cursor: pointer;
   transition: background-color 0.1s ease;
+  border-radius: var(--corner-radius-8, 8px);
 }
 
-.sl-option:hover {
-  background-color: var(--fill-weaker);
+.sl-option:hover { background: rgba(21,31,71,0.04); }
+
+.sl-option--focused {
+  background: rgba(21,31,71,0.06);
+  outline: none;
 }
 
 .sl-option--selected {
-  background-color: var(--fill-brand-weak);
-  color: var(--text-brand);
   font-weight: 600;
+  color: var(--text-brand, #151f47);
+  background: rgba(21,31,71,0.04);
 }
 
-.sl-option--focused {
-  background-color: var(--fill-weaker);
-  outline: none;
-}
-
-.sl-option--selected.sl-option--focused {
-  background-color: var(--fill-brand-weak);
-}
-
-.sl-error {
-  font-size: var(--font-size-tiny);
-  font-weight: 400;
-  color: var(--color-error, rgba(220, 38, 38, 0.9));
-  line-height: 1.4;
-}
-
+/* ── Dark mode ── */
 [data-theme='dark'] .sl-trigger {
-  background-color: var(--fill-weaker);
-  border-color: var(--stroke-weak);
-  color: var(--text-strong);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.9);
 }
-
 [data-theme='dark'] .sl-list {
-  background-color: var(--fill-weaker);
-  border-color: var(--stroke-weak);
+  background: rgba(18,19,26,0.98);
+  border-color: rgba(255,255,255,0.08);
 }
-
-[data-theme='dark'] .sl-option:hover {
-  background-color: var(--fill-brand-weak);
-}
+[data-theme='dark'] .sl-option { color: rgba(255,255,255,0.9); }
+[data-theme='dark'] .sl-option:hover,
+[data-theme='dark'] .sl-option--focused { background: rgba(255,255,255,0.06); }
+[data-theme='dark'] .sl-label { color: rgba(255,255,255,0.9); }
+[data-theme='dark'] .sl-hint,
+[data-theme='dark'] .sl-required,
+[data-theme='dark'] .sl-optional { color: rgba(255,255,255,0.6); }

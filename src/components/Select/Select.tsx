@@ -7,29 +7,55 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
-  value: string;
-  onChange: (value: string) => void;
   options: SelectOption[];
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   label?: string;
+  required?: boolean;
+  optional?: boolean;
+  hint?: string;
+  valid?: boolean;
+  errorMessage?: string;
+  /** @deprecated use valid=false + errorMessage */
   error?: string;
   disabled?: boolean;
+  className?: string;
 }
 
-/**
- * Select — custom dropdown replacing the native <select>.
- * Outside-click closes the list via a document-level mousedown listener.
- * Keyboard: Enter/Space open, ArrowUp/Down navigate, Enter selects, Escape closes.
- * Accessible: combobox role + aria-expanded + aria-activedescendant.
- */
+const ChevronDown = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const ChevronUp = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M18 15l-6-6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const XOctagonIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+    <path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2Z" stroke="#c73a3a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 8v4M12 16h.01" stroke="#c73a3a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 export const Select: React.FC<SelectProps> = ({
-  value,
-  onChange,
   options,
-  placeholder = 'Selecciona una opción',
+  value = '',
+  onChange,
+  placeholder = 'Seleccionar',
   label,
+  required = false,
+  optional = false,
+  hint,
+  valid = true,
+  errorMessage,
   error,
   disabled = false,
+  className,
 }) => {
   const id = useId();
   const triggerId = `${id}-trigger`;
@@ -44,73 +70,83 @@ export const Select: React.FC<SelectProps> = ({
 
   const selectedOption = options.find((o) => o.value === value);
 
-  const close = useCallback(() => {
+  // Resolve error state — support legacy `error` prop
+  const hasError = !valid || !!error;
+  const errorText = errorMessage ?? error ?? 'Error message';
+
+  const closeDropdown = useCallback(() => {
     setIsOpen(false);
     setFocusedIndex(-1);
   }, []);
 
-  const open = useCallback(() => {
+  const openDropdown = useCallback(() => {
     if (disabled) return;
     const currentIndex = options.findIndex((o) => o.value === value);
     setFocusedIndex(currentIndex >= 0 ? currentIndex : 0);
     setIsOpen(true);
   }, [disabled, options, value]);
 
-  // Close on outside click — prevents stale event refs by using refs in handler
   useEffect(() => {
     if (!isOpen) return;
     const handleOutside = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
-        close();
-      }
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) closeDropdown();
     };
     document.addEventListener('mousedown', handleOutside);
     return () => document.removeEventListener('mousedown', handleOutside);
-  }, [isOpen, close]);
+  }, [isOpen, closeDropdown]);
 
   const handleTriggerKeyDown = (e: React.KeyboardEvent) => {
     if (disabled) return;
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
       e.preventDefault();
-      open();
+      isOpen ? closeDropdown() : openDropdown();
     }
+    if (e.key === 'Escape') closeDropdown();
   };
 
   const handleListKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      close();
-      triggerRef.current?.focus();
-    } else if (e.key === 'ArrowDown') {
+    if (e.key === 'Escape') { closeDropdown(); triggerRef.current?.focus(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); setFocusedIndex((i) => Math.min(i + 1, options.length - 1)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setFocusedIndex((i) => Math.max(i - 1, 0)); }
+    else if (e.key === 'Enter' && focusedIndex >= 0) {
       e.preventDefault();
-      setFocusedIndex((i) => Math.min(i + 1, options.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setFocusedIndex((i) => Math.max(i - 1, 0));
-    } else if (e.key === 'Enter' && focusedIndex >= 0) {
-      e.preventDefault();
-      onChange(options[focusedIndex].value);
-      close();
+      onChange?.(options[focusedIndex].value);
+      closeDropdown();
       triggerRef.current?.focus();
     }
   };
 
   const handleOptionClick = (optValue: string) => {
-    onChange(optValue);
-    close();
+    onChange?.(optValue);
+    closeDropdown();
     triggerRef.current?.focus();
   };
 
-  const activeDescendant =
-    isOpen && focusedIndex >= 0 ? `${listId}-option-${focusedIndex}` : undefined;
+  const activeDescendant = isOpen && focusedIndex >= 0 ? `${listId}-option-${focusedIndex}` : undefined;
 
   return (
-    <div className={styles['sl-root']} ref={rootRef}>
+    <div ref={rootRef} className={[styles['sl-root'], className].filter(Boolean).join(' ')}>
+      {/* Label row */}
       {label && (
-        <label id={`${id}-label`} className={styles['sl-label']}>
-          {label}
-        </label>
+        <div className={styles['sl-label-row']}>
+          <label id={`${id}-label`} htmlFor={triggerId} className={styles['sl-label']}>
+            {label}
+            {required && <span className={styles['sl-required']}> *</span>}
+            {optional && <span className={styles['sl-optional']}> (opcional)</span>}
+          </label>
+          {hint && <p className={styles['sl-hint']}>{hint}</p>}
+        </div>
       )}
 
+      {/* Error block */}
+      {hasError && (
+        <div id={errorId} className={styles['sl-error']} role="alert">
+          <XOctagonIcon />
+          <span className={styles['sl-error-text']}>{errorText}</span>
+        </div>
+      )}
+
+      {/* Trigger button */}
       <button
         ref={triggerRef}
         id={triggerId}
@@ -121,47 +157,28 @@ export const Select: React.FC<SelectProps> = ({
         aria-controls={listId}
         aria-labelledby={label ? `${id}-label ${triggerId}` : triggerId}
         aria-activedescendant={activeDescendant}
-        aria-invalid={!!error}
-        aria-describedby={error ? errorId : undefined}
+        aria-invalid={hasError}
+        aria-describedby={hasError ? errorId : undefined}
         disabled={disabled}
-        onClick={() => (isOpen ? close() : open())}
+        onClick={() => (isOpen ? closeDropdown() : openDropdown())}
         onKeyDown={handleTriggerKeyDown}
         className={[
           styles['sl-trigger'],
           isOpen ? styles['sl-trigger--open'] : '',
-          error ? styles['sl-trigger--error'] : '',
+          hasError ? styles['sl-trigger--error'] : '',
           disabled ? styles['sl-trigger--disabled'] : '',
           !selectedOption ? styles['sl-trigger--placeholder'] : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        ].filter(Boolean).join(' ')}
       >
         <span className={styles['sl-trigger-text']}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <svg
-          className={[
-            styles['sl-chevron'],
-            isOpen ? styles['sl-chevron--open'] : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M4 6L8 10L12 6"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <span className={styles['sl-chevron']}>
+          {isOpen ? <ChevronUp /> : <ChevronDown />}
+        </span>
       </button>
 
+      {/* Dropdown list */}
       {isOpen && (
         <ul
           id={listId}
@@ -182,21 +199,15 @@ export const Select: React.FC<SelectProps> = ({
                 styles['sl-option'],
                 opt.value === value ? styles['sl-option--selected'] : '',
                 idx === focusedIndex ? styles['sl-option--focused'] : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              ].filter(Boolean).join(' ')}
             >
               {opt.label}
             </li>
           ))}
         </ul>
       )}
-
-      {error && (
-        <span id={errorId} className={styles['sl-error']} role="alert">
-          {error}
-        </span>
-      )}
     </div>
   );
 };
+
+export default Select;

@@ -15,7 +15,7 @@ export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';
 
 export { Select } from './Select/Select';
-export type { SelectProps } from './Select/Select';
+export type { SelectProps, SelectOption } from './Select/Select';
 
 export { Slider } from './Slider/Slider';
 export type { SliderProps } from './Slider/Slider';
