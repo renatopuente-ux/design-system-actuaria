@@ -45,7 +45,7 @@ export type { RadioButtonGroupProps, RadioOption } from './RadioButtonGroup/Radi
 
 // Dropdowns & menus
 export { DropdownMenu } from './DropdownMenu/DropdownMenu';
-export type { DropdownMenuProps, DropdownItem } from './DropdownMenu/DropdownMenu';
+export type { DropdownMenuProps, DropdownItem, DropdownItemType } from './DropdownMenu/DropdownMenu';
 
 export { SearchInput } from './SearchInput/SearchInput';
 export type { SearchInputProps } from './SearchInput/SearchInput';
