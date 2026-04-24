@@ -1,100 +1,108 @@
-.tt-wrapper {
-  position: relative;
+/* Tooltip — tt- prefix  (Figma spec: 3550:142326) */
+
+.tt-root {
   display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+}
+
+/* ── Layout ── */
+.tt-root--bottom {
+  flex-direction: column;
+}
+
+.tt-root--side {
+  flex-direction: row;
   align-items: center;
 }
 
+/* ── Bubble ── */
 .tt-bubble {
-  position: absolute;
-  z-index: 1200;
-  background-color: var(--text-strong);
+  background-color: #12131a;
+  border-radius: 12px;
+  box-shadow: 0 8px 8px 0 rgba(0,0,0,0.04), 0 20px 24px 0 rgba(0,0,0,0.08);
   color: #ffffff;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-tiny);
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
   font-weight: 400;
-  line-height: 1.4;
-  padding: 6px var(--spacing-12);
-  border-radius: 8px;
+}
+
+/* Small: nowrap + per-type padding */
+.tt-bubble--small {
   white-space: nowrap;
-  max-width: 240px;
+}
+
+.tt-bubble--small.tt-bubble--bottom-left {
+  padding: 8px 16px;
+}
+
+.tt-bubble--small.tt-bubble--bottom-right {
+  padding: 12px 8px;
+}
+
+.tt-bubble--small.tt-bubble--bottom-centre {
+  padding: 12px 8px;
+}
+
+.tt-bubble--small.tt-bubble--left {
+  padding: 16px 8px;
+}
+
+.tt-bubble--small.tt-bubble--right {
+  padding: 16px 8px;
+}
+
+/* Large: column layout, 300px wide */
+.tt-bubble--large {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  width: 300px;
   white-space: normal;
-  pointer-events: none;
-  /* Animate in */
-  animation: tt-fadein 0.1s ease;
 }
 
-@keyframes tt-fadein {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
+/* ── Text elements (Large) ── */
+.tt-heading {
+  font-weight: 600;
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  color: #ffffff;
 }
 
-/* Placement: top (default) */
-.tt-bubble--top {
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+.tt-body {
+  font-weight: 400;
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  color: rgba(255, 255, 255, 0.78);
 }
 
-/* Placement: bottom */
-.tt-bubble--bottom {
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Placement: left */
-.tt-bubble--left {
-  right: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Placement: right */
-.tt-bubble--right {
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Arrow */
+/* ── Arrow container ── */
 .tt-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
+  display: flex;
+  flex-shrink: 0;
 }
 
-.tt-arrow--top {
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid var(--text-strong);
+/* Bottom arrows: full width row so justify-content aligns the SVG */
+.tt-root--bottom .tt-arrow {
+  width: 100%;
 }
 
-.tt-arrow--bottom {
-  top: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 4px solid var(--text-strong);
+.tt-arrow--bottom-left {
+  justify-content: flex-start;
+  padding-left: 16px;
 }
 
-.tt-arrow--left {
-  right: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 4px solid var(--text-strong);
+.tt-arrow--bottom-right {
+  justify-content: flex-end;
+  padding-right: 16px;
 }
 
-.tt-arrow--right {
-  left: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-right: 4px solid var(--text-strong);
+.tt-arrow--bottom-centre {
+  justify-content: center;
+}
+
+/* Side arrows: vertically centred by parent flex align-items: center */
+.tt-root--side .tt-arrow {
+  align-self: center;
 }

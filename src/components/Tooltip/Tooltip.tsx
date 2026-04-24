@@ -1,59 +1,119 @@
-import React, { useId, useRef, useState } from 'react';
+import React from 'react';
 import styles from './Tooltip.module.css';
 
-export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
+export type TooltipType =
+  | 'Bottom left'
+  | 'Bottom right'
+  | 'Bottom centre'
+  | 'Left'
+  | 'Right';
 
 export interface TooltipProps {
-  content: string;
-  children: React.ReactNode;
-  placement?: TooltipPlacement;
-  delay?: number;
+  type?: TooltipType;
+  size?: 'Small' | 'Large';
+  heading?: boolean;
+  headingText?: string;
+  bodyText?: string;
+  children?: React.ReactNode;
+  className?: string;
 }
 
+const ArrowDown: React.FC = () => (
+  <svg width="32" height="16" viewBox="0 0 32 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 0H32L16 16L0 0Z" fill="#12131a" />
+  </svg>
+);
+
+const ArrowLeft: React.FC = () => (
+  <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M16 0V32L0 16L16 0Z" fill="#12131a" />
+  </svg>
+);
+
+const ArrowRight: React.FC = () => (
+  <svg width="16" height="32" viewBox="0 0 16 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 0V32L16 16L0 0Z" fill="#12131a" />
+  </svg>
+);
+
+const typeSlug = (t: TooltipType) => t.toLowerCase().replace(/\s+/g, '-');
+
 export const Tooltip: React.FC<TooltipProps> = ({
-  content,
+  type = 'Bottom centre',
+  size = 'Small',
+  heading = false,
+  headingText,
+  bodyText,
   children,
-  placement = 'top',
-  delay = 200,
+  className = '',
 }) => {
-  const [visible, setVisible] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const tooltipId = useId();
+  const isBottom = type.startsWith('Bottom');
+  const slug = typeSlug(type);
 
-  const show = () => {
-    timerRef.current = setTimeout(() => setVisible(true), delay);
-  };
+  const bubble = (
+    <span
+      role="tooltip"
+      className={[
+        styles['tt-bubble'],
+        styles[`tt-bubble--${size === 'Small' ? 'small' : 'large'}`],
+        styles[`tt-bubble--${slug}`],
+      ].filter(Boolean).join(' ')}
+    >
+      {size === 'Large' ? (
+        <>
+          {heading && headingText && (
+            <span className={styles['tt-heading']}>{headingText}</span>
+          )}
+          {bodyText && <span className={styles['tt-body']}>{bodyText}</span>}
+          {children}
+        </>
+      ) : (
+        <>{bodyText ?? children}</>
+      )}
+    </span>
+  );
 
-  const hide = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setVisible(false);
-  };
+  const arrowDown = (
+    <span
+      className={[styles['tt-arrow'], styles[`tt-arrow--${slug}`]].join(' ')}
+      aria-hidden="true"
+    >
+      <ArrowDown />
+    </span>
+  );
+
+  const arrowSide = (
+    <span className={styles['tt-arrow']} aria-hidden="true">
+      {type === 'Left' ? <ArrowLeft /> : <ArrowRight />}
+    </span>
+  );
 
   return (
     <span
-      className={styles['tt-wrapper']}
-      onMouseEnter={show}
-      onMouseLeave={hide}
-      onFocus={show}
-      onBlur={hide}
+      className={[
+        styles['tt-root'],
+        isBottom ? styles['tt-root--bottom'] : styles['tt-root--side'],
+        className,
+      ].filter(Boolean).join(' ')}
     >
-      {/* Render children with aria-describedby pointing to the tooltip */}
-      {React.isValidElement(children)
-        ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-            'aria-describedby': visible ? tooltipId : undefined,
-          })
-        : children}
-
-      {visible && (
-        <span
-          id={tooltipId}
-          role="tooltip"
-          className={`${styles['tt-bubble']} ${styles[`tt-bubble--${placement}`]}`}
-        >
-          {content}
-          <span className={`${styles['tt-arrow']} ${styles[`tt-arrow--${placement}`]}`} aria-hidden="true" />
-        </span>
+      {isBottom ? (
+        <>
+          {bubble}
+          {arrowDown}
+        </>
+      ) : type === 'Left' ? (
+        <>
+          {arrowSide}
+          {bubble}
+        </>
+      ) : (
+        <>
+          {bubble}
+          {arrowSide}
+        </>
       )}
     </span>
   );
 };
+
+export default Tooltip;
