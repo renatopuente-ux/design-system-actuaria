@@ -1,86 +1,146 @@
 import React, { useId } from 'react';
 import styles from './Stepper.module.css';
 
-export interface StepItem {
-  id: string;
-  label: string;
-  description?: string;
-}
+const MinusIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const XOctagonIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+    <path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2Z" stroke="#c73a3a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 8v4M12 16h.01" stroke="#c73a3a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
 export interface StepperProps {
-  steps: StepItem[];
-  currentStep: number; // 0-based index
-  orientation?: 'horizontal' | 'vertical';
+  value: number;
+  onChange: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  label?: string;
+  required?: boolean;
+  optional?: boolean;
+  hint?: string;
+  valid?: boolean;
+  errorMessage?: string;
+  disabled?: boolean;
+  className?: string;
 }
 
-type StepStatus = 'completed' | 'current' | 'upcoming';
+export const Stepper: React.FC<StepperProps> = ({
+  value,
+  onChange,
+  min = 0,
+  max = Infinity,
+  step = 1,
+  label,
+  required = false,
+  optional = false,
+  hint,
+  valid = true,
+  errorMessage,
+  disabled = false,
+  className = '',
+}) => {
+  const id = useId();
+  const errorId = `${id}-error`;
+  const hasError = !valid;
 
-function CheckIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
-      <path d="M2.5 7l3.5 3.5 5.5-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+  const handleDecrement = () => {
+    if (disabled) return;
+    onChange(Math.max(min, value - step));
+  };
 
-interface StepIndicatorProps {
-  status: StepStatus;
-  stepNumber: number;
-}
+  const handleIncrement = () => {
+    if (disabled) return;
+    onChange(Math.min(max === Infinity ? value + step : max, value + step));
+  };
 
-function StepIndicator({ status, stepNumber }: StepIndicatorProps) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const num = parseInt(e.target.value, 10);
+    if (!isNaN(num)) onChange(Math.min(max === Infinity ? num : max, Math.max(min, num)));
+  };
+
   return (
     <div
-      className={`${styles['stp-indicator']} ${styles[`stp-indicator--${status}`]}`}
-      aria-hidden="true"
+      className={[
+        styles['stp-root'],
+        disabled ? styles['stp-root--disabled'] : '',
+        className,
+      ].filter(Boolean).join(' ')}
     >
-      {status === 'completed' ? <CheckIcon /> : <span>{stepNumber + 1}</span>}
+      {label && (
+        <div className={styles['stp-text']}>
+          <div className={styles['stp-label-row']}>
+            <label htmlFor={id} className={styles['stp-label']}>
+              {label}
+            </label>
+            {required && <span className={styles['stp-required']}> *</span>}
+            {optional && <span className={styles['stp-optional']}> (opcional)</span>}
+          </div>
+          {hint && <p className={styles['stp-hint']}>{hint}</p>}
+        </div>
+      )}
+
+      {hasError && !disabled && (
+        <div id={errorId} className={styles['stp-error']} role="alert">
+          <XOctagonIcon />
+          <span className={styles['stp-error-text']}>{errorMessage ?? 'Error message'}</span>
+        </div>
+      )}
+
+      <div
+        className={[
+          styles['stp-field'],
+          hasError && !disabled ? styles['stp-field--error'] : '',
+          disabled ? styles['stp-field--disabled'] : '',
+        ].filter(Boolean).join(' ')}
+        aria-describedby={hasError && !disabled ? errorId : undefined}
+      >
+        <button
+          type="button"
+          className={[styles['stp-btn'], styles['stp-btn--minus']].join(' ')}
+          onClick={handleDecrement}
+          disabled={disabled || value <= min}
+          aria-label="Decrementar"
+        >
+          <MinusIcon />
+        </button>
+
+        <input
+          id={id}
+          type="number"
+          className={styles['stp-input']}
+          value={value}
+          onChange={handleInputChange}
+          min={min}
+          max={max === Infinity ? undefined : max}
+          step={step}
+          disabled={disabled}
+          aria-invalid={hasError}
+        />
+
+        <button
+          type="button"
+          className={[styles['stp-btn'], styles['stp-btn--plus']].join(' ')}
+          onClick={handleIncrement}
+          disabled={disabled || value >= max}
+          aria-label="Incrementar"
+        >
+          <PlusIcon />
+        </button>
+      </div>
     </div>
   );
-}
+};
 
-export function Stepper({ steps, currentStep, orientation = 'horizontal' }: StepperProps) {
-  const uid = useId();
-
-  function getStatus(index: number): StepStatus {
-    if (index < currentStep) return 'completed';
-    if (index === currentStep) return 'current';
-    return 'upcoming';
-  }
-
-  return (
-    <ol
-      className={`${styles['stp-root']} ${styles[`stp-root--${orientation}`]}`}
-      aria-label="Progreso del proceso"
-    >
-      {steps.map((step, index) => {
-        const status = getStatus(index);
-        const isLast = index === steps.length - 1;
-        const stepId = `${uid}-step-${step.id}`;
-
-        return (
-          <li
-            key={step.id}
-            id={stepId}
-            className={`${styles['stp-step']} ${styles[`stp-step--${status}`]} ${isLast ? styles['stp-step--last'] : ''}`}
-            aria-current={status === 'current' ? 'step' : undefined}
-          >
-            <div className={styles['stp-step__body']}>
-              <StepIndicator status={status} stepNumber={index} />
-
-              <div className={styles['stp-step__text']}>
-                <span className={styles['stp-step__label']}>{step.label}</span>
-                {step.description && (
-                  <span className={styles['stp-step__description']}>{step.description}</span>
-                )}
-              </div>
-            </div>
-
-            {/* Connector line between steps — omitted on last item */}
-            {!isLast && <div className={`${styles['stp-connector']} ${styles[`stp-connector--${status}`]}`} aria-hidden="true" />}
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
+export default Stepper;

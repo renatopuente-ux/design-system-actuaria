@@ -1,173 +1,230 @@
+/* Stepper — stp- prefix  (Figma spec: 3619:22570) */
+/* Numeric input stepper: [−] value [+] */
+
 .stp-root {
-  --stp-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --stp-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --stp-color-text-brand: var(--text-brand, #4c64d9);
-  --stp-color-action: var(--interactive-action, #4c64d9);
-  --stp-color-stroke-brand: var(--stroke-brand-weak, rgba(76, 100, 217, 0.2));
-  --stp-color-stroke-weak: var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  --stp-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --stp-font-size: var(--font-size-tiny, 14px);
-  --stp-spacing-8: var(--spacing-8, 8px);
-  --stp-spacing-12: var(--spacing-12, 12px);
-  --stp-spacing-16: var(--spacing-16, 16px);
-  --stp-indicator-size: 32px;
-  --stp-connector-thickness: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 4px);
+  align-items: flex-start;
+  width: 100%;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+}
 
-  font-family: var(--stp-font-family);
-  list-style: none;
+/* ── Label block ── */
+.stp-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.stp-label-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-4, 4px);
+  white-space: nowrap;
+}
+
+.stp-label {
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  cursor: pointer;
+}
+
+.stp-required {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.stp-optional {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.stp-hint {
   margin: 0;
-  padding: 0;
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
 }
 
-[data-theme='dark'] .stp-root {
-  --stp-color-text-strong: rgba(255, 255, 255, 0.9);
-  --stp-color-text-weak: rgba(255, 255, 255, 0.55);
-  --stp-color-stroke-weak: rgba(255, 255, 255, 0.15);
-}
-
-/* === Horizontal layout === */
-.stp-root--horizontal {
+/* ── Error block ── */
+.stp-error {
   display: flex;
-  align-items: flex-start;
-}
-
-.stp-root--horizontal .stp-step {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  flex: 1;
+  gap: var(--spacing-8, 8px);
+  padding: var(--spacing-4, 4px) 0;
+}
+
+.stp-error-text {
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-error, #c73a3a);
+}
+
+/* ── Field ── */
+.stp-field {
   position: relative;
-}
-
-.stp-root--horizontal .stp-step__body {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--stp-spacing-8);
-  z-index: 1;
+  height: 48px;
+  width: 100%;
+  background: var(--background-base, white);
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: var(--corner-radius-8, 8px);
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.08), 0px 4px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
 }
 
-.stp-root--horizontal .stp-step__text {
+/* Focus ring — shown when any child is focused */
+.stp-field:focus-within {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 5px;
+  border-radius: var(--corner-radius-12, 12px);
+}
+
+/* Error field */
+.stp-field--error {
+  border: 2px solid var(--stroke-error-strong, rgba(199,58,58,0.8));
+  background: var(--fill-error-weak, rgba(255,74,74,0.05));
+}
+
+.stp-field--error:focus-within {
+  outline-offset: 6px;
+}
+
+/* Disabled field */
+.stp-field--disabled {
+  border-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+  box-shadow: none;
+}
+
+/* ── Buttons ── */
+.stp-btn {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-/* Horizontal connector: extends from indicator to the next step */
-.stp-root--horizontal .stp-connector {
-  position: absolute;
-  top: calc(var(--stp-indicator-size) / 2);
-  left: 50%;
-  right: calc(-50%);
-  height: var(--stp-connector-thickness);
-  background-color: var(--stp-color-stroke-weak);
-}
-
-.stp-root--horizontal .stp-connector--completed {
-  background-color: var(--stp-color-action);
-}
-
-/* === Vertical layout === */
-.stp-root--vertical {
-  display: flex;
-  flex-direction: column;
-}
-
-.stp-root--vertical .stp-step {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  position: relative;
-  padding-bottom: var(--stp-spacing-16);
-}
-
-.stp-root--vertical .stp-step--last {
-  padding-bottom: 0;
-}
-
-.stp-root--vertical .stp-step__body {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--stp-spacing-12);
-}
-
-.stp-root--vertical .stp-step__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-top: 6px;
-}
-
-/* Vertical connector: runs from below the indicator down to the next step */
-.stp-root--vertical .stp-connector {
-  position: absolute;
-  left: calc(var(--stp-indicator-size) / 2);
-  top: var(--stp-indicator-size);
-  bottom: 0;
-  width: var(--stp-connector-thickness);
-  background-color: var(--stp-color-stroke-weak);
-  transform: translateX(-50%);
-}
-
-.stp-root--vertical .stp-connector--completed {
-  background-color: var(--stp-color-action);
-}
-
-/* === Step indicator circle === */
-.stp-indicator {
-  flex-shrink: 0;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--stp-indicator-size);
-  height: var(--stp-indicator-size);
-  border-radius: 50%;
-  border: 2px solid var(--stp-color-stroke-weak);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--stp-color-text-weak);
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--fill-inverse-strong, white);
+  border: none;
+  cursor: pointer;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  transition: background 0.1s ease;
+  outline: none;
+}
+
+.stp-btn:hover:not(:disabled) {
+  background: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.stp-btn:active:not(:disabled) {
+  background: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+.stp-btn:disabled {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
+  background: var(--fill-inverse-strong, white);
+}
+
+/* Minus: right divider */
+.stp-btn--minus {
+  border-right: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: var(--corner-radius-8, 8px) 0 0 var(--corner-radius-8, 8px);
+}
+
+/* Plus: left divider */
+.stp-btn--plus {
+  border-left: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: 0 var(--corner-radius-8, 8px) var(--corner-radius-8, 8px) 0;
+}
+
+/* Error state — thicker dividers to match 2px outer border */
+.stp-field--error .stp-btn--minus {
+  border-right: 1px solid var(--stroke-error-strong, rgba(199,58,58,0.8));
+}
+
+.stp-field--error .stp-btn--plus {
+  border-left: 1px solid var(--stroke-error-strong, rgba(199,58,58,0.8));
+}
+
+/* Disabled dividers */
+.stp-field--disabled .stp-btn--minus {
+  border-right-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+}
+
+.stp-field--disabled .stp-btn--plus {
+  border-left-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+}
+
+/* ── Number input ── */
+.stp-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
   background: transparent;
-  transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease;
-  z-index: 1;
-}
-
-/* Completed: filled brand background with checkmark */
-.stp-indicator--completed {
-  background-color: var(--stp-color-action);
-  border-color: var(--stp-color-action);
-  color: #ffffff;
-}
-
-/* Current: outlined brand ring */
-.stp-indicator--current {
-  border-color: var(--stp-color-action);
-  color: var(--stp-color-text-brand);
-  background: transparent;
-}
-
-/* Upcoming: muted grey ring */
-.stp-indicator--upcoming {
-  border-color: var(--stp-color-stroke-weak);
-  color: var(--stp-color-text-weak);
-}
-
-/* === Step text === */
-.stp-step__label {
-  font-size: var(--stp-font-size);
-  font-weight: 600;
-  color: var(--stp-color-text-strong);
-}
-
-.stp-step--upcoming .stp-step__label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  color: var(--stp-color-text-weak);
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  text-align: center;
+  padding: 0 var(--spacing-16, 16px);
 }
 
-.stp-step__description {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--stp-color-text-weak);
-  line-height: 1.4;
+.stp-input:disabled {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
 }
+
+/* Remove native number spinners */
+.stp-input::-webkit-outer-spin-button,
+.stp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.stp-input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* ── Disabled root ── */
+.stp-root--disabled .stp-label,
+.stp-root--disabled .stp-required,
+.stp-root--disabled .stp-optional,
+.stp-root--disabled .stp-hint {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .stp-field {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .stp-btn {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .stp-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.12);
+}
+
+[data-theme='dark'] .stp-btn--minus { border-right-color: rgba(255,255,255,0.2); }
+[data-theme='dark'] .stp-btn--plus  { border-left-color:  rgba(255,255,255,0.2); }
+
+[data-theme='dark'] .stp-input { color: rgba(255,255,255,0.9); }
+[data-theme='dark'] .stp-label { color: rgba(255,255,255,0.9); }
+[data-theme='dark'] .stp-required,
+[data-theme='dark'] .stp-hint   { color: rgba(255,255,255,0.55); }
