@@ -129,7 +129,13 @@ export { Divider } from './Divider/Divider';
 export type { DividerProps, DividerType } from './Divider/Divider';
 
 export { Table } from './Table/Table';
-export type { TableProps } from './Table/Table';
+export type { TableProps, TableColumn } from './Table/Table';
+
+export { TableHeadingCell } from './TableHeadingCell/TableHeadingCell';
+export type { TableHeadingCellProps, TableHeadingCellType, TableSortable } from './TableHeadingCell/TableHeadingCell';
+
+export { TableDataCell } from './TableDataCell/TableDataCell';
+export type { TableDataCellProps, TableDataCellType, TableDataCellColour } from './TableDataCell/TableDataCell';
 
 export { SummaryList } from './SummaryList/SummaryList';
 export type { SummaryListProps, SummaryListRow } from './SummaryList/SummaryList';

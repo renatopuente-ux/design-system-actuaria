@@ -1,0 +1,115 @@
+/* TableHeadingCell — thc- prefix  (Figma spec: 5425:56178) */
+
+.thc-root {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 var(--spacing-24, 24px);
+  border-top: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-bottom: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  background: var(--background-base, white);
+  box-sizing: border-box;
+  transition: background 0.1s ease;
+}
+
+.thc-root:hover,
+.thc-root--hover {
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
+}
+
+.thc-root--right {
+  justify-content: flex-end;
+}
+
+/* ── Label ── */
+.thc-label {
+  flex: 1 0 0;
+  min-width: 0;
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thc-label--right {
+  text-align: right;
+}
+
+/* ── Sort button: full-width, resets all button styles ── */
+.thc-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  font-family: inherit;
+  text-align: left;
+}
+
+.thc-sort-btn--right {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.thc-sort-btn--right .thc-label {
+  text-align: right;
+}
+
+.thc-sort-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4, 4px);
+}
+
+/* ── Checkbox input ── */
+.thc-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: var(--corner-radius-4, 4px);
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--fill-inverse-strong, white);
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.thc-checkbox:checked {
+  background: var(--fill-selected, #151f47);
+  border-color: var(--fill-selected, #151f47);
+}
+
+.thc-checkbox:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 3px;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .thc-root {
+  background: transparent;
+  border-color: rgba(255,255,255,0.08);
+}
+
+[data-theme='dark'] .thc-root:hover,
+[data-theme='dark'] .thc-root--hover {
+  background: rgba(255,255,255,0.04);
+}
+
+[data-theme='dark'] .thc-label,
+[data-theme='dark'] .thc-sort-btn {
+  color: rgba(255,255,255,0.5);
+}
+
+[data-theme='dark'] .thc-checkbox {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06);
+}

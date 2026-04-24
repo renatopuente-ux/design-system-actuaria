@@ -1,0 +1,74 @@
+/* TableDataCell — tdc- prefix  (Figma spec: 5564:81989) */
+
+.tdc-root {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 var(--spacing-24, 24px);
+  border-bottom: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  box-sizing: border-box;
+}
+
+/* Alternate row background */
+.tdc-root--alternate {
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
+}
+
+/* Number: right-aligned with gap for trend icon */
+.tdc-root--number {
+  justify-content: flex-end;
+  gap: var(--spacing-8, 8px);
+}
+
+/* Action icons / links: right-aligned */
+.tdc-root--actions {
+  justify-content: flex-end;
+}
+
+/* ── Content ── */
+.tdc-content {
+  flex: 1 0 0;
+  min-width: 0;
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tdc-content--bold {
+  font-weight: 600;
+}
+
+/* Number: text is right-aligned within its flex item */
+.tdc-content--number {
+  text-align: right;
+}
+
+/* Link: underlined, brand color */
+.tdc-content--link {
+  color: var(--text-brand, #4c64d9);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .tdc-root {
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+[data-theme='dark'] .tdc-root--alternate {
+  background: rgba(255,255,255,0.03);
+}
+
+[data-theme='dark'] .tdc-content {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme='dark'] .tdc-content--link {
+  color: rgba(76,100,217,0.9);
+}

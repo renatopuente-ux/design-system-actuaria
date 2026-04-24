@@ -1,91 +1,121 @@
-/* Table — full-width data table with optional striping and hover
-   Prefix: tbl-
-   Font-weight: 400 for cells, 600 for headers per design system
-   All colors via CSS custom properties — no raw hex values */
+/* Table — tbl- prefix  (Figma spec: 6354:25881) */
 
 .tbl-wrapper {
   width: 100%;
   overflow-x: auto;
-  border-radius: var(--radius-card, 16px);
-  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
 }
 
 .tbl-root {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-tiny, 14px);
-  color: var(--text-strong, rgba(0, 6, 38, 0.9));
-  background-color: var(--background-base, #ffffff);
+  background: var(--background-base, white);
 }
 
-/* ── header ── */
-.tbl-head {
-  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-}
-
+/* ── Header cells: 48px, border-top + border-bottom ── */
 .tbl-th {
-  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
-  font-weight: 600;
+  height: 48px;
+  padding: 0 var(--spacing-24, 24px);
   font-size: var(--font-size-tiny, 14px);
-  color: var(--text-weak, rgba(0, 9, 51, 0.65));
-  border-bottom: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  font-weight: 600;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  border-top: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-bottom: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
   white-space: nowrap;
+  text-align: left;
+  transition: background 0.1s ease;
 }
 
-/* ── cells ── */
+.tbl-th--right {
+  text-align: right;
+}
+
+.tbl-th:hover {
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
+}
+
+/* ── Sort button ── */
+.tbl-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.tbl-sort-btn--right {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.tbl-sort-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4, 4px);
+}
+
+/* ── Data cells: 80px, border-bottom ── */
 .tbl-td {
-  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  height: 80px;
+  padding: 0 var(--spacing-24, 24px);
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  border-bottom: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  /* Prevents last row bottom border doubling with wrapper border */
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  border-bottom: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tbl-td--right {
+  text-align: right;
 }
 
 .tbl-tr:last-child .tbl-td {
   border-bottom: none;
 }
 
-/* ── striped rows — every odd body row (0-indexed: even) gets fill-weaker ── */
+/* ── Striped rows ── */
 .tbl-tr--striped {
-  background-color: var(--fill-weaker, rgba(0, 17, 102, 0.04));
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
 }
 
-/* ── hoverable rows ── */
-.tbl-tr--hoverable {
-  transition: background-color 100ms ease;
-}
-
-.tbl-tr--hoverable:hover {
-  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
-}
-
-/* ── dark mode ── */
+/* ── Dark mode ── */
 [data-theme='dark'] .tbl-root {
-  background-color: rgba(0, 0, 0, 0.3);
-  color: rgba(255, 255, 255, 0.85);
-}
-
-[data-theme='dark'] .tbl-head {
-  background-color: rgba(255, 255, 255, 0.04);
+  background: transparent;
+  color: rgba(255,255,255,0.85);
 }
 
 [data-theme='dark'] .tbl-th {
-  color: rgba(255, 255, 255, 0.5);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255,255,255,0.5);
+  border-top-color: rgba(255,255,255,0.08);
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+[data-theme='dark'] .tbl-th:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+[data-theme='dark'] .tbl-sort-btn {
+  color: rgba(255,255,255,0.5);
 }
 
 [data-theme='dark'] .tbl-td {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255,255,255,0.55);
+  border-bottom-color: rgba(255,255,255,0.08);
 }
 
 [data-theme='dark'] .tbl-tr--striped {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-[data-theme='dark'] .tbl-tr--hoverable:hover {
-  background-color: rgba(76, 100, 217, 0.12);
-}
-
-[data-theme='dark'] .tbl-wrapper {
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.03);
 }
