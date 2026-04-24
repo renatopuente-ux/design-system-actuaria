@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './EmptyState.module.css';
-import { Button } from '../Button/Button';
 
 export interface EmptyStateAction {
   label: string;
@@ -11,6 +10,13 @@ export interface EmptyStateProps {
   icon?: React.ReactNode;
   title: string;
   description?: string;
+  /** Primary CTA — navy bg, white text */
+  primaryAction?: EmptyStateAction;
+  /** Secondary CTA — outlined navy */
+  secondaryAction?: EmptyStateAction;
+  /** Ghost/link CTA — orange underlined, no border */
+  ghostAction?: EmptyStateAction;
+  /** @deprecated Use primaryAction instead */
   action?: EmptyStateAction;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
@@ -27,10 +33,16 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   icon,
   title,
   description,
+  primaryAction,
+  secondaryAction,
+  ghostAction,
   action,
   size = 'md',
   className = '',
 }) => {
+  const primary = primaryAction ?? action;
+  const hasActions = primary || secondaryAction || ghostAction;
+
   return (
     <div
       className={[styles.es, styles[`es--${size}`], className].filter(Boolean).join(' ')}
@@ -44,10 +56,24 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         <p className={styles.es__title}>{title}</p>
         {description && <p className={styles.es__description}>{description}</p>}
       </div>
-      {action && (
-        <Button variant="primary" size="md" onClick={action.onClick}>
-          {action.label}
-        </Button>
+      {hasActions && (
+        <div className={styles.es__actions}>
+          {primary && (
+            <button type="button" className={styles['es__btn--primary']} onClick={primary.onClick}>
+              {primary.label}
+            </button>
+          )}
+          {secondaryAction && (
+            <button type="button" className={styles['es__btn--secondary']} onClick={secondaryAction.onClick}>
+              {secondaryAction.label}
+            </button>
+          )}
+          {ghostAction && (
+            <button type="button" className={styles['es__btn--ghost']} onClick={ghostAction.onClick}>
+              {ghostAction.label}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
