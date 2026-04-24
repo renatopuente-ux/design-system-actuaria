@@ -154,7 +154,7 @@ export { TextBlock } from './TextBlock/TextBlock';
 export type { TextBlockProps } from './TextBlock/TextBlock';
 
 export { TextLink } from './TextLink/TextLink';
-export type { TextLinkProps } from './TextLink/TextLink';
+export type { TextLinkProps, TextLinkTone, TextLinkSize, TextLinkWeight } from './TextLink/TextLink';
 
 // Layout & content
 export { Card } from './Card/Card';

@@ -1,66 +1,130 @@
-/* TextLink — tl- prefix
-   Inline link component. Uses --text-brand for color, underlines on hover.
-   External variant appends ↗ icon via inline SVG.
-   Focus ring on :focus-visible only — avoids outline on mouse click (WCAG 2.4.7). */
+/* TextLink — tl- prefix  (Figma spec: 4783:91903) */
 
 .tl-root {
-  --tl-color: var(--text-brand, #4c64d9);
-  --tl-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --tl-font-size-md: var(--font-size-small, 16px);
-  --tl-font-size-sm: var(--font-size-tiny, 14px);
-
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  color: var(--tl-color);
-  font-family: var(--tl-font-family);
-  font-weight: 600;
-  text-decoration: none;
+  gap: var(--spacing-8, 8px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  text-decoration-skip-ink: none;
   cursor: pointer;
-  /* Reset button styles when rendered as <button> */
   background: none;
   border: none;
   padding: 0;
   margin: 0;
-  transition: text-decoration-color 0.15s ease, opacity 0.15s ease;
-  line-height: inherit;
+  transition: color 150ms ease, opacity 150ms ease;
+  white-space: nowrap;
 }
 
-/* Size variants */
-.tl-root--md {
-  font-size: var(--tl-font-size-md);
-  line-height: 24px;
+/* ── Sizes ── */
+.tl-root--small {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
 }
 
-.tl-root--sm {
-  font-size: var(--tl-font-size-sm);
-  line-height: 20px;
+.tl-root--tiny {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
 }
 
-/* Underline appears on hover, not by default — cleaner in dense layouts */
-.tl-root:hover {
+/* ── Weights ── */
+.tl-root--bold { font-weight: 600; }
+.tl-root--regular { font-weight: 400; }
+
+/* ── Underline ── */
+.tl-root--underline {
   text-decoration: underline;
-  text-decoration-color: var(--tl-color);
-  opacity: 0.82;
+  text-decoration-style: solid;
 }
 
-/* Focus ring: only on keyboard navigation, never on mouse click */
+/* ── Tones ── */
+
+/* Default → text-brand (navy) → hover indigo */
+.tl-root--default {
+  color: var(--text-brand, #151f47);
+}
+.tl-root--default:hover:not(.tl-root--disabled) {
+  color: var(--interactive-action, #4c64d9);
+}
+.tl-root--default:active:not(.tl-root--disabled) {
+  color: var(--interactive-action, #4c64d9);
+  opacity: 0.8;
+}
+
+/* Neutral strong → text-strong */
+.tl-root--neutral-strong {
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+.tl-root--neutral-strong:hover:not(.tl-root--disabled) {
+  opacity: 0.75;
+}
+.tl-root--neutral-strong:active:not(.tl-root--disabled) {
+  opacity: 0.6;
+}
+
+/* Neutral weak → text-weak */
+.tl-root--neutral-weak {
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+.tl-root--neutral-weak:hover:not(.tl-root--disabled) {
+  opacity: 0.75;
+}
+.tl-root--neutral-weak:active:not(.tl-root--disabled) {
+  opacity: 0.55;
+}
+
+/* Destructive → text-error */
+.tl-root--destructive {
+  color: var(--text-error, #c73a3a);
+}
+.tl-root--destructive:hover:not(.tl-root--disabled) {
+  opacity: 0.8;
+}
+.tl-root--destructive:active:not(.tl-root--disabled) {
+  opacity: 0.65;
+}
+
+/* Inverse strong → white 90% (for dark backgrounds) */
+.tl-root--inverse-strong {
+  color: rgba(255,255,255,0.9);
+}
+.tl-root--inverse-strong:hover:not(.tl-root--disabled) {
+  color: rgba(255,255,255,1);
+}
+.tl-root--inverse-strong:active:not(.tl-root--disabled) {
+  color: rgba(255,255,255,0.75);
+}
+
+/* Inverse weak → white 55% */
+.tl-root--inverse-weak {
+  color: rgba(255,255,255,0.55);
+}
+.tl-root--inverse-weak:hover:not(.tl-root--disabled) {
+  color: rgba(255,255,255,0.75);
+}
+.tl-root--inverse-weak:active:not(.tl-root--disabled) {
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Focus ── */
 .tl-root:focus-visible {
-  outline: 2px solid var(--tl-color);
+  outline: 2px solid currentColor;
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* External icon alignment — vertically centered with text baseline */
-.tl-external-icon {
-  flex-shrink: 0;
-  /* Slight offset to align optically with cap-height of the text */
-  margin-top: -1px;
-  color: currentColor;
+/* ── Disabled ── */
+.tl-root--disabled {
+  color: var(--text-disabled, rgba(0,9,51,0.35));
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
-/* Dark mode: --text-brand resolves to the brand indigo which works on dark bg too.
-   If a lighter variant is needed, override here. */
-[data-theme='dark'] .tl-root {
-  --tl-color: var(--interactive-action, #4c64d9);
+/* ── Icon slots ── */
+.tl-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
