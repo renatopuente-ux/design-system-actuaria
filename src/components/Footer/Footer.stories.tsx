@@ -1,90 +1,191 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Footer } from './Footer';
+import type { FooterProps, FooterLink, FooterColumn, SocialLink } from './Footer';
 
-const meta: Meta<typeof Footer> = {
-  title: 'Components/Footer',
-  component: Footer,
-  parameters: { layout: 'fullscreen' },
-  tags: ['autodocs'],
-};
-export default meta;
-type Story = StoryObj<typeof Footer>;
+// ─── Inline SVG icons ─────────────────────────────────────────────────────────
 
-const LogoPlaceholder = () => (
+const InstagramIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+    <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+    <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="1.5" />
+    <path
+      d="M13 21v-8h2.5l.5-3H13V8.5C13 7.67 13.33 7 14.5 7H16V4.5S15 4 13.5 4C11.5 4 10 5.5 10 7.5V10H7.5v3H10v8"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const LinkedInIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+    <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M7 10v7M7 7v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path
+      d="M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+    <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+const YouTubeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" width="24" height="24">
+    <rect x="2" y="5" width="20" height="14" rx="4" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M10 9l5 3-5 3V9z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+  </svg>
+);
+
+// ─── Shared fixtures ──────────────────────────────────────────────────────────
+
+const logoPlaceholder = (
   <svg width="120" height="32" viewBox="0 0 120 32" fill="none" aria-label="Actuaria">
     <rect width="32" height="32" rx="6" fill="#4c64d9" />
-    <text x="40" y="22" fill="white" fontFamily="Nunito, sans-serif" fontSize="16" fontWeight="600">
+    <text x="40" y="22" fill="#0c0f1e" fontFamily="Nunito, sans-serif" fontSize="16" fontWeight="700">
       Actuaria
     </text>
   </svg>
 );
 
-const LinkedInIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
+const allSocialLinks: SocialLink[] = [
+  { icon: <InstagramIcon />, href: 'https://instagram.com/actuariaec', label: 'Instagram' },
+  { icon: <FacebookIcon />, href: 'https://facebook.com/actuariaec', label: 'Facebook' },
+  { icon: <LinkedInIcon />, href: 'https://linkedin.com/company/actuaria', label: 'LinkedIn' },
+  { icon: <XIcon />, href: 'https://x.com/actuariaec', label: 'X (Twitter)' },
+  { icon: <YouTubeIcon />, href: 'https://youtube.com/@actuariaec', label: 'YouTube' },
+];
 
-const TwitterIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-  </svg>
-);
+const navLinks: FooterLink[] = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Productos', href: '/productos' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contacto', href: '/contacto' },
+];
 
-const defaultColumns = [
+const columns: FooterColumn[] = [
   {
     title: 'Productos',
     links: [
-      { label: 'Actuaria Plus', href: '#' },
-      { label: 'Calculadoras actuariales', href: '#' },
-      { label: 'Dashboards de riesgo', href: '#' },
-      { label: 'Modelos predictivos', href: '#' },
+      { label: 'Actuaria Plus', href: '/productos/actuaria-plus' },
+      { label: 'Data Wave', href: '/productos/data-wave' },
+      { label: 'Data Analytics', href: '/productos/data-analytics' },
+    ],
+  },
+  {
+    title: 'Servicios',
+    links: [
+      { label: 'Reservas técnicas', href: '/servicios/reservas' },
+      { label: 'Capital regulatorio', href: '/servicios/capital' },
+      { label: 'Consultoría actuarial', href: '/servicios/consultoria' },
     ],
   },
   {
     title: 'Empresa',
     links: [
-      { label: 'Sobre Actuaria', href: '#' },
-      { label: 'Equipo directivo', href: '#' },
-      { label: 'Casos de éxito', href: '#' },
-      { label: 'Contacto', href: '#' },
-    ],
-  },
-  {
-    title: 'Recursos',
-    links: [
-      { label: 'Documentación técnica', href: '#' },
-      { label: 'Guías actuariales', href: '#' },
-      { label: 'Blog de riesgos', href: '#' },
-      { label: 'Soporte', href: '#' },
+      { label: 'Quiénes somos', href: '/empresa' },
+      { label: 'Clientes', href: '/clientes' },
+      { label: 'Contacto', href: '/contacto' },
     ],
   },
 ];
 
-export const Default: Story = {
-  args: {
-    logo: <LogoPlaceholder />,
-    columns: defaultColumns,
-    legal: '© 2026 Actuaria Consultores. Más de 35 años mitigando riesgos financieros.',
-    socialLinks: [
-      { icon: <LinkedInIcon />, href: 'https://linkedin.com', label: 'LinkedIn de Actuaria' },
-      { icon: <TwitterIcon />, href: 'https://twitter.com', label: 'Twitter de Actuaria' },
-    ],
+const legal = '© 2024 Actuaria Consultores. Todos los derechos reservados.';
+const description = 'Actuaria Consultores — 35 años transformando la gestión actuarial en Ecuador.';
+
+// ─── Meta ─────────────────────────────────────────────────────────────────────
+
+const meta: Meta<typeof Footer> = {
+  title: 'Components/Footer',
+  component: Footer,
+  parameters: {
+    layout: 'fullscreen',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    size: {
+      control: { type: 'radio' },
+      options: ['Small', 'Large'],
+    },
+    legal: { control: 'text' },
+    description: { control: 'text' },
   },
 };
 
-export const NoLogo: Story = {
+export default meta;
+
+type Story = StoryObj<FooterProps>;
+
+// ─── Stories ──────────────────────────────────────────────────────────────────
+
+export const SmallDesktop: Story = {
+  name: 'Small — Desktop',
   args: {
-    columns: defaultColumns,
-    legal: '© 2026 Actuaria Consultores. Todos los derechos reservados.',
+    size: 'Small',
+    logo: logoPlaceholder,
+    navLinks,
+    socialLinks: allSocialLinks,
+    legal,
   },
 };
 
-export const MinimalFooter: Story = {
+export const LargeDesktop: Story = {
+  name: 'Large — Desktop',
   args: {
-    legal: '© 2026 Actuaria Consultores · actuaria.com',
+    size: 'Large',
+    logo: logoPlaceholder,
+    description,
+    columns,
+    socialLinks: allSocialLinks,
+    legal,
+  },
+};
+
+export const LargeNoColumns: Story = {
+  name: 'Large — No columns',
+  args: {
+    size: 'Large',
+    logo: logoPlaceholder,
+    description,
+    legal,
+  },
+};
+
+export const SmallMinimal: Story = {
+  name: 'Small — Minimal (no social)',
+  args: {
+    size: 'Small',
+    logo: logoPlaceholder,
+    navLinks,
+    legal,
+  },
+};
+
+export const Playground: Story = {
+  name: 'Playground',
+  args: {
+    size: 'Large',
+    logo: logoPlaceholder,
+    description,
+    navLinks,
+    columns,
+    socialLinks: allSocialLinks,
+    legal,
   },
 };
