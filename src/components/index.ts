@@ -86,7 +86,7 @@ export { AlertGlobal } from './AlertGlobal/AlertGlobal';
 export type { AlertGlobalProps } from './AlertGlobal/AlertGlobal';
 
 export { Modal } from './Modal/Modal';
-export type { ModalProps } from './Modal/Modal';
+export type { ModalProps, ModalTone, ModalSize, ModalAction } from './Modal/Modal';
 
 export { Tooltip } from './Tooltip/Tooltip';
 export type { TooltipProps } from './Tooltip/Tooltip';
