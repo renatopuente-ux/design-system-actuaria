@@ -76,7 +76,10 @@ export { NavigationSideItem } from './NavigationSideItem/NavigationSideItem';
 export type { NavigationSideItemProps, NavigationSideItemType } from './NavigationSideItem/NavigationSideItem';
 
 export { NavigationHeader } from './NavigationHeader/NavigationHeader';
-export type { NavigationHeaderProps, NavLink } from './NavigationHeader/NavigationHeader';
+export type { NavigationHeaderProps, NavigationHeaderType, NavLink } from './NavigationHeader/NavigationHeader';
+
+export { NavigationHeaderMenu } from './NavigationHeaderMenu/NavigationHeaderMenu';
+export type { NavigationHeaderMenuProps, NavigationHeaderMenuState } from './NavigationHeaderMenu/NavigationHeaderMenu';
 
 export { Stepper } from './Stepper/Stepper';
 export type { StepperProps } from './Stepper/Stepper';
