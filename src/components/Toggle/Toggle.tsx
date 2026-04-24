@@ -5,72 +5,65 @@ export interface ToggleProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label?: string;
+  size?: 'Medium' | 'Small';
   disabled?: boolean;
-  size?: 'sm' | 'md';
+  id?: string;
+  className?: string;
 }
 
-/**
- * Toggle — pill-shaped on/off switch.
- * md: 40×24px track, sm: 32×18px track.
- * On state: --interactive-action track. Off state: --stroke-weak track.
- * The thumb translates horizontally via CSS transform for smooth animation.
- */
 export const Toggle: React.FC<ToggleProps> = ({
   checked,
   onChange,
   label,
+  size = 'Medium',
   disabled = false,
-  size = 'md',
+  id,
+  className = '',
 }) => {
-  const id = useId();
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
 
   return (
     <label
-      htmlFor={id}
+      htmlFor={inputId}
       className={[
-        styles['tg-root'],
-        disabled ? styles['tg-root--disabled'] : '',
+        styles['tog-root'],
+        styles[`tog-root--${size === 'Medium' ? 'medium' : 'small'}`],
+        checked ? styles['tog-root--checked'] : '',
+        disabled ? styles['tog-root--disabled'] : '',
+        className,
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      {/* Native checkbox hidden behind the visual toggle */}
       <input
-        id={id}
+        id={inputId}
         type="checkbox"
         role="switch"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         disabled={disabled}
         aria-checked={checked}
-        className={styles['tg-native']}
+        className={styles['tog-native']}
       />
 
       <span
         className={[
-          styles['tg-track'],
-          styles[`tg-track--${size}`],
-          checked ? styles['tg-track--on'] : styles['tg-track--off'],
-          disabled ? styles['tg-track--disabled'] : '',
+          styles['tog-track'],
+          checked ? styles['tog-track--on'] : styles['tog-track--off'],
         ]
           .filter(Boolean)
           .join(' ')}
         aria-hidden="true"
       >
-        <span
-          className={[
-            styles['tg-thumb'],
-            styles[`tg-thumb--${size}`],
-            checked ? styles['tg-thumb--on'] : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-        />
+        <span className={styles['tog-thumb']} />
       </span>
 
       {label && (
-        <span className={styles['tg-label']}>{label}</span>
+        <span className={styles['tog-label']}>{label}</span>
       )}
     </label>
   );
 };
+
+export default Toggle;

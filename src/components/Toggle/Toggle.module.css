@@ -1,22 +1,28 @@
-/* Toggle — prefix: tg- */
-/* All color values reference design tokens only; no raw hex. */
+/* Toggle — tog- prefix  (Figma spec: 3553:142452) */
 
-.tg-root {
+.tog-root {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-8);
   cursor: pointer;
-  font-family: var(--font-family-body);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
   user-select: none;
+  position: relative;
 }
 
-.tg-root--disabled {
+.tog-root--medium {
+  gap: var(--spacing-12, 12px);
+}
+
+.tog-root--small {
+  gap: var(--spacing-8, 8px);
+}
+
+.tog-root--disabled {
   cursor: not-allowed;
-  opacity: 0.45;
 }
 
-/* Visually hidden native input — keeps keyboard and AT accessibility */
-.tg-native {
+/* ── Hidden native input (keeps keyboard + screen-reader access) ── */
+.tog-native {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -28,91 +34,154 @@
   white-space: nowrap;
 }
 
-/* Track — pill shape */
-.tg-track {
+/* ── Track ── */
+.tog-track {
   position: relative;
-  border-radius: var(--radius-pill);
-  transition: background-color 0.2s ease;
+  border-radius: 32px;
   flex-shrink: 0;
+  transition: background-color 200ms ease;
 }
 
-/* md: 40×24px */
-.tg-track--md {
-  width: 40px;
+/* Medium: 64×32px */
+.tog-root--medium .tog-track {
+  width: 64px;
+  height: 32px;
+}
+
+/* Small: 48×24px */
+.tog-root--small .tog-track {
+  width: 48px;
   height: 24px;
 }
 
-/* sm: 32×18px */
-.tg-track--sm {
-  width: 32px;
-  height: 18px;
+/* OFF track: fill/weak bg + border stroke/strong + inset shadow */
+.tog-track--off {
+  background-color: var(--fill-weak, rgba(21,31,71,0.19));
+  border: 1px solid var(--stroke-strong, rgba(0,13,77,0.45));
+  box-shadow: inset 0 1px 4px 0 rgba(0,0,0,0.08);
 }
 
-/* Off state: use stroke-weak as track color */
-.tg-track--off {
-  background-color: var(--stroke-weak);
+/* ON track: fill/selected solid navy, no border */
+.tog-track--on {
+  background-color: var(--fill-selected, #151f47);
+  border: none;
 }
 
-/* On state: interactive-action fill */
-.tg-track--on {
-  background-color: var(--interactive-action);
+/* Disabled OFF: fill/weak, no border */
+.tog-root--disabled .tog-track--off {
+  border: none;
+  box-shadow: none;
 }
 
-.tg-track--disabled {
-  background-color: var(--fill-weaker);
+/* Disabled ON: fill/disabled */
+.tog-root--disabled .tog-track--on {
+  background-color: var(--fill-disabled, rgba(0,17,102,0.1));
 }
 
-/* Focus ring on track when native input is focused */
-.tg-native:focus-visible + .tg-track {
-  box-shadow: var(--shadow-focus);
-  outline: none;
-}
-
-/* Thumb — circular indicator */
-.tg-thumb {
+/* ── Hover/press overlay via ::after ── */
+.tog-track::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%) translateX(3px);
-  background-color: var(--background-base);
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: transparent;
+  transition: background-color 150ms ease;
+}
+
+.tog-root:not(.tog-root--disabled):hover .tog-track::after {
+  background: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.tog-root:not(.tog-root--disabled):active .tog-track::after {
+  background: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+/* ── Focus ring ── */
+.tog-native:focus-visible + .tog-track {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+}
+
+/* ── Thumb ── */
+.tog-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
   border-radius: 50%;
-  transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  /* Shadow/Raised */
+  box-shadow: 0 4px 8px -2px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.08);
+  transition: transform 200ms ease;
+  /* sit above the ::after overlay */
+  z-index: 1;
 }
 
-/* md thumb: 18px */
-.tg-thumb--md {
-  width: 18px;
-  height: 18px;
+/* Medium thumb: 32×32px */
+.tog-root--medium .tog-thumb {
+  width: 32px;
+  height: 32px;
 }
 
-/* sm thumb: 13px */
-.tg-thumb--sm {
-  width: 13px;
-  height: 13px;
+/* Small thumb: 24×24px */
+.tog-root--small .tog-thumb {
+  width: 24px;
+  height: 24px;
 }
 
-/* Thumb slides right when on */
-/* md: track 40px - thumb 18px - 2×3px padding = 16px translate */
-.tg-thumb--md.tg-thumb--on {
-  transform: translateY(-50%) translateX(19px);
+/* Thumb slides right when checked */
+.tog-root--medium.tog-root--checked .tog-thumb {
+  transform: translateX(32px);
 }
 
-/* sm: track 32px - thumb 13px - 2×3px padding = 13px translate */
-.tg-thumb--sm.tg-thumb--on {
-  transform: translateY(-50%) translateX(16px);
+.tog-root--small.tog-root--checked .tog-thumb {
+  transform: translateX(24px);
 }
 
-.tg-label {
-  font-size: var(--font-size-small);
+/* Disabled thumb: reduced shadow */
+.tog-root--disabled .tog-thumb {
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+}
+
+/* ── Label ── */
+.tog-label {
   font-weight: 400;
-  color: var(--text-strong);
-  line-height: 1.4;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  white-space: nowrap;
 }
 
-[data-theme='dark'] .tg-track--off {
-  background-color: var(--fill-weaker);
+.tog-root--medium .tog-label {
+  font-size: var(--font-size-small, 16px);
+  line-height: var(--line-height-small, 24px);
 }
 
-[data-theme='dark'] .tg-thumb {
-  background-color: var(--background-base);
+.tog-root--small .tog-label {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+}
+
+.tog-root--disabled .tog-label {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .tog-track--off {
+  background-color: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .tog-track--on {
+  background-color: var(--interactive-action, #4c64d9);
+}
+
+[data-theme='dark'] .tog-root--disabled .tog-track--on {
+  background-color: rgba(255,255,255,0.15);
+}
+
+[data-theme='dark'] .tog-label {
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .tog-root--disabled .tog-label {
+  color: rgba(255,255,255,0.2);
 }
