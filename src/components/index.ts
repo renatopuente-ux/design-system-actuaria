@@ -64,7 +64,10 @@ export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export type { BreadcrumbsProps } from './Breadcrumbs/Breadcrumbs';
 
 export { Tabs } from './Tabs/Tabs';
-export type { TabsProps } from './Tabs/Tabs';
+export type { TabsProps, TabOption } from './Tabs/Tabs';
+
+export { TabItem } from './TabItem/TabItem';
+export type { TabItemProps } from './TabItem/TabItem';
 
 export { Pagination } from './Pagination/Pagination';
 export type { PaginationProps, PaginationDevice } from './Pagination/Pagination';

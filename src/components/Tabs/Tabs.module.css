@@ -1,93 +1,44 @@
-.tb-root {
-  --tb-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --tb-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --tb-color-text-brand: var(--text-brand, #4c64d9);
-  --tb-color-action: var(--interactive-action, #4c64d9);
-  --tb-color-stroke: var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  --tb-color-fill-hover: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-  --tb-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --tb-font-size: var(--font-size-small, 16px);
-  --tb-font-size-tiny: var(--font-size-tiny, 14px);
-  --tb-spacing-8: var(--spacing-8, 8px);
-  --tb-spacing-12: var(--spacing-12, 12px);
-  --tb-spacing-16: var(--spacing-16, 16px);
-  --tb-spacing-24: var(--spacing-24, 24px);
-  --tb-shadow-focus: var(--shadow-focus, 0 0 0 3px rgba(76, 100, 217, 0.25));
+/* Tabs — tabs- prefix  (Figma spec: 4157:47006) */
 
-  font-family: var(--tb-font-family);
+.tabs-root {
   width: 100%;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
 }
 
-[data-theme='dark'] .tb-root {
-  --tb-color-text-strong: rgba(255, 255, 255, 0.9);
-  --tb-color-text-weak: rgba(255, 255, 255, 0.55);
-  --tb-color-stroke: rgba(255, 255, 255, 0.12);
-  --tb-color-fill-hover: rgba(255, 255, 255, 0.04);
-}
-
-/* Tab bar with bottom border track */
-.tb-tablist {
+/* ── Tab list: 4px bottom border is the grey track ── */
+.tabs-list {
   display: flex;
   align-items: flex-end;
-  gap: 0;
-  border-bottom: 1px solid var(--tb-color-stroke);
+  border-bottom: 4px solid var(--stroke-weak, rgba(0,17,102,0.1));
   overflow-x: auto;
   scrollbar-width: none;
 }
 
-.tb-tablist::-webkit-scrollbar {
+.tabs-list::-webkit-scrollbar {
   display: none;
 }
 
-/* Individual tab button */
-.tb-tab {
-  position: relative;
-  flex-shrink: 0;
-  padding: var(--tb-spacing-12) var(--tb-spacing-16);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  /* Push border-bottom on top of the tablist border */
-  margin-bottom: -1px;
-  cursor: pointer;
-  font-family: var(--tb-font-family);
-  font-size: var(--tb-font-size-tiny);
+/* ── Tab panel ── */
+.tabs-panel {
+  padding: var(--spacing-24, 24px) 0;
+  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  color: var(--tb-color-text-weak);
-  white-space: nowrap;
-  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
-  border-radius: 4px 4px 0 0;
-}
-
-.tb-tab:hover:not(.tb-tab--active) {
-  color: var(--tb-color-text-strong);
-  background-color: var(--tb-color-fill-hover);
-}
-
-/* Active tab: brand color + 2px bottom border */
-.tb-tab--active {
-  font-weight: 600;
-  color: var(--tb-color-text-brand);
-  border-bottom-color: var(--tb-color-action);
-}
-
-.tb-tab:focus-visible {
-  outline: none;
-  box-shadow: var(--tb-shadow-focus);
-}
-
-/* Tab panel */
-.tb-panel {
-  padding: var(--tb-spacing-24) 0;
-  font-size: var(--tb-font-size-tiny);
-  font-weight: 400;
-  color: var(--tb-color-text-weak);
-  line-height: 1.6;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
   outline: none;
 }
 
-.tb-panel:focus-visible {
-  outline: none;
-  box-shadow: var(--tb-shadow-focus);
-  border-radius: 4px;
+.tabs-panel:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+  border-radius: var(--corner-radius-4, 4px);
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .tabs-list {
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+
+[data-theme='dark'] .tabs-panel {
+  color: rgba(255,255,255,0.55);
 }

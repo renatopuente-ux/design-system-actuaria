@@ -1,50 +1,63 @@
 import React, { useId, useState, useRef, useCallback } from 'react';
 import styles from './Tabs.module.css';
+import { TabItem } from '../TabItem/TabItem';
 
-export interface TabItem {
+export interface TabOption {
   id: string;
   label: string;
-  content: React.ReactNode;
+  content?: React.ReactNode;
+  icon?: React.ReactNode;
+  badge?: number | string;
+  disabled?: boolean;
 }
 
 export interface TabsProps {
-  tabs: TabItem[];
+  tabs: TabOption[];
   defaultTab?: string;
+  value?: string;
   onChange?: (id: string) => void;
+  className?: string;
 }
 
-export function Tabs({ tabs, defaultTab, onChange }: TabsProps) {
+export function Tabs({ tabs, defaultTab, value, onChange, className = '' }: TabsProps) {
   const uid = useId();
-  const [activeId, setActiveId] = useState<string>(defaultTab ?? tabs[0]?.id ?? '');
+  const [internalActiveId, setInternalActiveId] = useState<string>(
+    defaultTab ?? tabs.find((t) => !t.disabled)?.id ?? '',
+  );
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+
+  const activeId = value ?? internalActiveId;
 
   const activate = useCallback(
     (id: string) => {
-      setActiveId(id);
+      setInternalActiveId(id);
       onChange?.(id);
     },
     [onChange],
   );
 
-  // Keyboard navigation: ArrowLeft / ArrowRight cycle through tabs
-  function handleKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+  const enabledTabs = tabs.filter((t) => !t.disabled);
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, id: string) {
+    const currentIndex = enabledTabs.findIndex((t) => t.id === id);
     if (e.key === 'ArrowRight') {
       e.preventDefault();
-      const next = tabs[(index + 1) % tabs.length];
+      const next = enabledTabs[(currentIndex + 1) % enabledTabs.length];
       activate(next.id);
       tabRefs.current.get(next.id)?.focus();
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      const prev = tabs[(index - 1 + tabs.length) % tabs.length];
+      const prev = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
       activate(prev.id);
       tabRefs.current.get(prev.id)?.focus();
     } else if (e.key === 'Home') {
       e.preventDefault();
-      activate(tabs[0].id);
-      tabRefs.current.get(tabs[0].id)?.focus();
+      const first = enabledTabs[0];
+      activate(first.id);
+      tabRefs.current.get(first.id)?.focus();
     } else if (e.key === 'End') {
       e.preventDefault();
-      const last = tabs[tabs.length - 1];
+      const last = enabledTabs[enabledTabs.length - 1];
       activate(last.id);
       tabRefs.current.get(last.id)?.focus();
     }
@@ -53,44 +66,41 @@ export function Tabs({ tabs, defaultTab, onChange }: TabsProps) {
   const activeTab = tabs.find((t) => t.id === activeId);
 
   return (
-    <div className={styles['tb-root']}>
-      {/* Tab bar */}
-      <div role="tablist" className={styles['tb-tablist']} aria-label="Secciones">
-        {tabs.map((tab, index) => {
-          const isActive = tab.id === activeId;
+    <div className={[styles['tabs-root'], className].filter(Boolean).join(' ')}>
+      <div role="tablist" className={styles['tabs-list']} aria-label="Secciones">
+        {tabs.map((tab) => {
           const tabId = `${uid}-tab-${tab.id}`;
           const panelId = `${uid}-panel-${tab.id}`;
+          const isSelected = tab.id === activeId;
 
           return (
-            <button
+            <TabItem
               key={tab.id}
               id={tabId}
-              role="tab"
-              aria-selected={isActive}
+              label={tab.label}
+              selected={isSelected}
+              disabled={tab.disabled}
+              icon={tab.icon}
+              badge={tab.badge}
               aria-controls={panelId}
-              tabIndex={isActive ? 0 : -1}
-              className={`${styles['tb-tab']} ${isActive ? styles['tb-tab--active'] : ''}`}
-              onClick={() => activate(tab.id)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
+              tabIndex={isSelected ? 0 : -1}
+              onClick={() => !tab.disabled && activate(tab.id)}
+              onKeyDown={(e) => handleKeyDown(e, tab.id)}
               ref={(el) => {
                 if (el) tabRefs.current.set(tab.id, el);
                 else tabRefs.current.delete(tab.id);
               }}
-              type="button"
-            >
-              {tab.label}
-            </button>
+            />
           );
         })}
       </div>
 
-      {/* Tab panel */}
-      {activeTab && (
+      {activeTab?.content != null && (
         <div
           id={`${uid}-panel-${activeTab.id}`}
           role="tabpanel"
           aria-labelledby={`${uid}-tab-${activeTab.id}`}
-          className={styles['tb-panel']}
+          className={styles['tabs-panel']}
           tabIndex={0}
         >
           {activeTab.content}
@@ -99,3 +109,5 @@ export function Tabs({ tabs, defaultTab, onChange }: TabsProps) {
     </div>
   );
 }
+
+export default Tabs;

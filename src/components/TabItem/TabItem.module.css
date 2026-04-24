@@ -1,0 +1,119 @@
+/* TabItem — ti- prefix  (Figma spec: 3676:26077) */
+
+.ti-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  height: 48px;
+  padding: 0 var(--spacing-16, 16px);
+  background: none;
+  border: none;
+  border-bottom: 4px solid transparent;
+  /* Pull tab bottom down so the indicator overlays the container track */
+  margin-bottom: -4px;
+  cursor: pointer;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.1s ease;
+  box-sizing: border-box;
+}
+
+.ti-btn:hover:not(:disabled) {
+  background: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.ti-btn:active:not(:disabled) {
+  background: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+.ti-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: var(--corner-radius-4, 4px) var(--corner-radius-4, 4px) 0 0;
+}
+
+.ti-btn:disabled {
+  color: var(--text-disabled, rgba(0,17,102,0.1));
+  cursor: not-allowed;
+}
+
+/* ── Selected ── */
+.ti-btn--selected {
+  font-weight: 600;
+  color: var(--text-brand, #151f47);
+  border-bottom-color: var(--stroke-selected, #151f47);
+}
+
+.ti-btn--selected:disabled {
+  border-bottom-color: var(--stroke-disabled, rgba(0,17,102,0.1));
+}
+
+/* ── Icon slot: 20px ── */
+.ti-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* ── Label ── */
+.ti-label {
+  white-space: nowrap;
+}
+
+/* ── Badge count pill ── */
+.ti-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 var(--spacing-8, 8px);
+  background: var(--fill-weak, rgba(21,31,71,0.19));
+  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--spacing-16, 16px);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  flex-shrink: 0;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .ti-btn {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme='dark'] .ti-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+}
+
+[data-theme='dark'] .ti-btn:active:not(:disabled) {
+  background: rgba(255,255,255,0.12);
+}
+
+[data-theme='dark'] .ti-btn--selected {
+  color: rgba(255,255,255,0.9);
+  border-bottom-color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .ti-btn:disabled {
+  color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .ti-btn--selected:disabled {
+  border-bottom-color: rgba(255,255,255,0.15);
+}
+
+[data-theme='dark'] .ti-badge {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+}
