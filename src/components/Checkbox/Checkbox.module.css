@@ -1,13 +1,23 @@
 /* Checkbox — prefix: cb- */
-/* All color values reference design tokens only; no raw hex. */
+/* Figma spec: 3449:65713 */
+/* All color values reference design tokens only; no raw hex except error tokens not yet in global sheet. */
+
+/* ─── Root ─────────────────────────────────────────────────────────────── */
 
 .cb-root {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-8);
   cursor: pointer;
   font-family: var(--font-family-body);
   user-select: none;
+}
+
+.cb-root--large {
+  gap: 12px;
+}
+
+.cb-root--small {
+  gap: 8px;
 }
 
 .cb-root--disabled {
@@ -15,7 +25,40 @@
   opacity: 0.45;
 }
 
-/* Visually hide the native input while keeping it accessible */
+/* ─── Wrap (hover/pressed ring layer) ──────────────────────────────────── */
+
+.cb-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+/* Ring dimensions = box + 4px padding on each side */
+.cb-wrap--large {
+  width: 40px;   /* 32px box + 4px × 2 */
+  height: 40px;
+}
+
+.cb-wrap--small {
+  width: 32px;   /* 24px box + 4px × 2 */
+  height: 32px;
+}
+
+/* Hover ring — shown when root is not disabled */
+.cb-root:not(.cb-root--disabled):hover .cb-wrap {
+  background-color: var(--fill-hover);
+}
+
+/* Pressed ring */
+.cb-root:not(.cb-root--disabled):active .cb-wrap {
+  background-color: var(--fill-press);
+}
+
+/* ─── Native input (sr-only) ────────────────────────────────────────────── */
+
 .cb-native {
   position: absolute;
   width: 1px;
@@ -28,57 +71,81 @@
   white-space: nowrap;
 }
 
-/* Custom 16×16 box */
+/* Focus ring — overlays the .cb-wrap using outline on the sr-only input
+   positioned absolutely inside the wrap */
+.cb-native:focus-visible {
+  /* Expand clipping so the outline is visible */
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  clip: unset;
+  clip-path: none;
+  outline: 2px solid var(--stroke-focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+  background: transparent;
+  margin: 0;
+}
+
+/* ─── Custom box ────────────────────────────────────────────────────────── */
+
 .cb-box {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1.5px solid var(--stroke-weak);
-  background-color: var(--background-base);
-  color: var(--background-base); /* SVG icon inherits white */
-  transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  border-radius: var(--spacing-4);
+  border: 1.5px solid var(--stroke-strong);
+  background-color: #ffffff;
+  color: var(--fill-inverse-strong); /* SVG icon inherits this (white) */
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 }
 
-/* Checked / indeterminate: fill with brand action color */
+.cb-box--large {
+  width: 32px;
+  height: 32px;
+}
+
+.cb-box--small {
+  width: 24px;
+  height: 24px;
+}
+
+/* Selected / Indeterminate */
 .cb-box--active {
-  background-color: var(--interactive-action);
-  border-color: var(--interactive-action);
+  background-color: var(--fill-brand-strong);
+  border-color: var(--fill-brand-strong);
 }
 
+/* Disabled */
 .cb-box--disabled {
-  background-color: var(--fill-weaker);
-  border-color: var(--stroke-weak);
+  border-color: var(--stroke-disabled);
+  color: var(--text-disabled);
 }
 
-/* Focus ring — applied to the visual box when native input is focused */
-.cb-native:focus-visible + .cb-box {
-  box-shadow: var(--shadow-focus);
-  outline: none;
+/* Invalid (valid=false) */
+.cb-box--invalid {
+  border-color: var(--stroke-error-strong);
+  background-color: var(--fill-error-weak);
 }
 
-/* Hover — show subtle fill when not disabled */
-.cb-root:not(.cb-root--disabled):hover .cb-box:not(.cb-box--active) {
-  background-color: var(--fill-brand-weak);
-  border-color: var(--stroke-brand-weak);
-}
+/* ─── Label ─────────────────────────────────────────────────────────────── */
 
 .cb-label {
-  font-size: var(--font-size-small);
   font-weight: 400;
   color: var(--text-strong);
   line-height: 1.4;
 }
 
-[data-theme='dark'] .cb-box {
-  background-color: var(--fill-weaker);
-  border-color: var(--stroke-weak);
+.cb-label--large {
+  font-size: var(--font-size-small); /* 16px */
 }
 
-[data-theme='dark'] .cb-box--active {
-  background-color: var(--interactive-action);
-  border-color: var(--interactive-action);
+.cb-label--small {
+  font-size: var(--font-size-tiny); /* 14px */
+}
+
+.cb-label--disabled {
+  color: var(--text-weak);
 }

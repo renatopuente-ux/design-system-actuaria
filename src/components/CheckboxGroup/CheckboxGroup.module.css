@@ -1,0 +1,94 @@
+/* CheckboxGroup — prefix: cg- */
+/* Figma spec: 3449:65755 */
+
+/* ─── Fieldset reset ────────────────────────────────────────────────────── */
+
+.cg-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-body);
+}
+
+.cg-fieldset--large {
+  gap: 16px; /* between legend and checkboxes block */
+}
+
+.cg-fieldset--small {
+  gap: 12px; /* between legend and checkboxes block */
+}
+
+/* ─── Legend ────────────────────────────────────────────────────────────── */
+
+/* Remove default legend UA float behavior */
+.cg-legend {
+  float: none;
+  padding: 0;
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.4;
+}
+
+.cg-legend--large {
+  font-size: var(--font-size-small); /* 16px */
+}
+
+.cg-legend--small {
+  font-size: var(--font-size-tiny); /* 14px */
+}
+
+.cg-legend-text {
+  font-weight: 600;
+}
+
+.cg-legend-suffix {
+  font-weight: 400;
+  color: var(--text-weak);
+}
+
+/* ─── Checkboxes stack ──────────────────────────────────────────────────── */
+
+.cg-checkboxes {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-checkboxes--large {
+  gap: 8px;
+}
+
+.cg-checkboxes--small {
+  gap: 4px;
+}
+
+/* ─── Hint ──────────────────────────────────────────────────────────────── */
+
+.cg-hint {
+  margin: 0;
+  margin-top: 8px;
+  font-size: var(--font-size-tiny); /* 14px */
+  font-weight: 400;
+  color: var(--text-weak);
+  line-height: 1.4;
+}
+
+/* ─── Error message ─────────────────────────────────────────────────────── */
+
+.cg-error {
+  margin: 0;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-tiny); /* 14px */
+  font-weight: 400;
+  color: #c73a3a;
+  line-height: 1.4;
+}
+
+.cg-error-icon {
+  flex-shrink: 0;
+}

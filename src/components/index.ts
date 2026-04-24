@@ -6,7 +6,10 @@ export { TextArea } from './TextArea/TextArea';
 export type { TextAreaProps } from './TextArea/TextArea';
 
 export { Checkbox } from './Checkbox/Checkbox';
-export type { CheckboxProps } from './Checkbox/Checkbox';
+export type { CheckboxProps, CheckboxSize } from './Checkbox/Checkbox';
+
+export { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+export type { CheckboxGroupProps } from './CheckboxGroup/CheckboxGroup';
 
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';
