@@ -1,47 +1,52 @@
 import React from 'react';
 import styles from './SummaryList.module.css';
 
-export interface SummaryListItem {
-  label: string;
-  value: React.ReactNode;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
+export interface SummaryListRow {
+  term: string;
+  description: React.ReactNode;
+  /** Optional action slot — accepts any ReactNode (links, icon buttons, etc.) */
+  action?: React.ReactNode;
 }
 
 export interface SummaryListProps {
-  items: SummaryListItem[];
+  rows: SummaryListRow[];
+  className?: string;
 }
 
-export const SummaryList: React.FC<SummaryListProps> = ({ items }) => {
+export const SummaryList: React.FC<SummaryListProps> = ({ rows, className = '' }) => {
+  const hasActions = rows.some((r) => r.action != null);
+
   return (
-    <dl className={styles['sl2-root']}>
-      {items.map((item, index) => (
-        <React.Fragment key={index}>
-          <div className={styles['sl2-row']}>
-            <dt className={styles['sl2-label']}>{item.label}</dt>
-
-            <dd className={styles['sl2-value']}>{item.value}</dd>
-
-            {item.action && (
-              <button
-                type="button"
-                className={styles['sl2-action']}
-                onClick={item.action.onClick}
-              >
-                {item.action.label}
-              </button>
-            )}
+    <div className={[styles['sl-root'], className].filter(Boolean).join(' ')}>
+      {/* Terms column */}
+      <div className={styles['sl-col']}>
+        {rows.map((row, i) => (
+          <div key={i} className={[styles['sl-cell'], styles['sl-cell--term']].join(' ')}>
+            <span className={styles['sl-term']}>{row.term}</span>
           </div>
+        ))}
+      </div>
 
-          {/* Divider between rows — not after the last item */}
-          {index < items.length - 1 && (
-            <div className={styles['sl2-divider']} role="separator" />
-          )}
-        </React.Fragment>
-      ))}
-    </dl>
+      {/* Description column */}
+      <div className={styles['sl-col']}>
+        {rows.map((row, i) => (
+          <div key={i} className={[styles['sl-cell'], styles['sl-cell--description']].join(' ')}>
+            <span className={styles['sl-description']}>{row.description}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Action column — only rendered when at least one row has an action */}
+      {hasActions && (
+        <div className={styles['sl-col']}>
+          {rows.map((row, i) => (
+            <div key={i} className={[styles['sl-cell'], styles['sl-cell--action']].join(' ')}>
+              {row.action ?? null}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

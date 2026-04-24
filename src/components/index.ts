@@ -132,7 +132,7 @@ export { Table } from './Table/Table';
 export type { TableProps } from './Table/Table';
 
 export { SummaryList } from './SummaryList/SummaryList';
-export type { SummaryListProps } from './SummaryList/SummaryList';
+export type { SummaryListProps, SummaryListRow } from './SummaryList/SummaryList';
 
 // Typography
 export { Text } from './Text/Text';
