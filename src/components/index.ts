@@ -29,6 +29,9 @@ export type { ButtonProps } from './Button/Button';
 
 export { ButtonIcon } from './ButtonIcon/ButtonIcon';
 export type { ButtonIconProps, ButtonIconVariant, ButtonIconTone, ButtonIconSize, ButtonIconShape } from './ButtonIcon/ButtonIcon';
+
+export { Card } from './Card/Card';
+export type { CardProps, CardType } from './Card/Card';
 export type { ButtonIconProps } from './ButtonIcon/ButtonIcon';
 
 export { ButtonGroup } from './ButtonGroup/ButtonGroup';
