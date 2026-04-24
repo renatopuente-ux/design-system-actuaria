@@ -1,72 +1,94 @@
-import React, { useId, useState } from 'react';
+import React from 'react';
+import { RatingIcon, RatingIconType } from '../RatingIcon/RatingIcon';
 import styles from './Rating.module.css';
 
-export type RatingSize = 'sm' | 'md' | 'lg';
+export type RatingLayout = 'Horizontal' | 'Vertical';
+export type { RatingIconType as RatingType };
 
 export interface RatingProps {
-  value: number;
-  onChange?: (value: number) => void;
+  /** 0–5, supports .5 increments */
+  value?: number;
+  type?: RatingIconType;
+  layout?: RatingLayout;
+  showNumber?: boolean;
+  showReviews?: boolean;
+  reviewCount?: number;
+  onReviewClick?: () => void;
   max?: number;
+  /** Interactive mode — calls onChange on icon click */
+  onChange?: (value: number) => void;
   readonly?: boolean;
-  size?: RatingSize;
+  /** @deprecated use value */
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}
+
+function getState(index: number, value: number): 'Full' | 'Half' | 'Empty' {
+  if (value >= index + 1) return 'Full';
+  if (value >= index + 0.5) return 'Half';
+  return 'Empty';
 }
 
 export const Rating: React.FC<RatingProps> = ({
-  value,
-  onChange,
+  value = 3.5,
+  type = 'Star',
+  layout = 'Horizontal',
+  showNumber = true,
+  showReviews = true,
+  reviewCount = 23,
+  onReviewClick,
   max = 5,
-  readonly = false,
-  size = 'md',
+  onChange,
+  readonly = true,
+  className,
 }) => {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const groupId = useId();
-
-  // Effective display value: hovered index takes priority over selected value
-  const displayValue = hovered ?? value;
-
-  const handleClick = (index: number) => {
-    if (!readonly) onChange?.(index);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    if (readonly) return;
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onChange?.(index);
-    }
-  };
+  const isVertical = layout === 'Vertical';
+  const displayValue = value % 1 === 0 ? `${value}.0` : String(value);
 
   return (
-    <span
-      className={`${styles['rt-root']} ${styles[`rt-root--${size}`]}`}
+    <div
+      className={[
+        styles['rt-root'],
+        isVertical ? styles['rt-root--vertical'] : styles['rt-root--horizontal'],
+        className,
+      ].filter(Boolean).join(' ')}
       role="group"
-      aria-label={`Valoración: ${value} de ${max} estrellas`}
-      id={groupId}
+      aria-label={`Valoración: ${value} de ${max}`}
     >
-      {Array.from({ length: max }, (_, i) => {
-        const starValue = i + 1;
-        const filled = starValue <= displayValue;
+      {/* Icons + number */}
+      <div className={styles['rt-stars-row']}>
+        <div className={styles['rt-icons']}>
+          {Array.from({ length: max }, (_, i) => (
+            <span
+              key={i}
+              onClick={() => !readonly && onChange?.(i + 1)}
+              style={!readonly ? { cursor: 'pointer' } : undefined}
+              aria-label={`${i + 1} de ${max}`}
+            >
+              <RatingIcon type={type} state={getState(i, value)} />
+            </span>
+          ))}
+        </div>
+        {showNumber && (
+          <span className={styles['rt-number']}>{displayValue}</span>
+        )}
+      </div>
 
-        return (
-          <span
-            key={starValue}
-            className={`${styles['rt-star']} ${filled ? styles['rt-star--filled'] : styles['rt-star--empty']}`}
-            role={readonly ? 'img' : 'button'}
-            aria-label={`${starValue} estrella${starValue !== 1 ? 's' : ''}`}
-            aria-pressed={readonly ? undefined : starValue === value}
-            tabIndex={readonly ? -1 : 0}
-            onClick={() => handleClick(starValue)}
-            onKeyDown={(e) => handleKeyDown(e, starValue)}
-            onMouseEnter={() => !readonly && setHovered(starValue)}
-            onMouseLeave={() => !readonly && setHovered(null)}
-          >
-            {/* SVG star for crisp rendering at all sizes */}
-            <svg viewBox="0 0 20 20" aria-hidden="true" className={styles['rt-icon']}>
-              <path d="M10 1.25l2.472 5.009 5.528.803-4 3.897.944 5.5L10 13.762l-4.944 2.697.944-5.5-4-3.897 5.528-.803L10 1.25z" />
-            </svg>
-          </span>
-        );
-      })}
-    </span>
+      {/* Reviews block */}
+      {showReviews && (
+        <div className={[styles['rt-reviews'], isVertical ? styles['rt-reviews--vertical'] : ''].filter(Boolean).join(' ')}>
+          {isVertical && <span className={styles['rt-from']}>From</span>}
+          {onReviewClick ? (
+            <button type="button" className={styles['rt-reviews-link']} onClick={onReviewClick}>
+              ({reviewCount} reviews)
+            </button>
+          ) : (
+            <span className={styles['rt-reviews-text']}>({reviewCount} reviews)</span>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
+
+export default Rating;

@@ -107,7 +107,10 @@ export { LoadingBar } from './LoadingBar/LoadingBar';
 export type { LoadingBarProps } from './LoadingBar/LoadingBar';
 
 export { Rating } from './Rating/Rating';
-export type { RatingProps } from './Rating/Rating';
+export type { RatingProps, RatingLayout } from './Rating/Rating';
+
+export { RatingIcon } from './RatingIcon/RatingIcon';
+export type { RatingIconProps, RatingIconType, RatingIconState } from './RatingIcon/RatingIcon';
 
 // Data display
 export { Badge } from './Badge/Badge';

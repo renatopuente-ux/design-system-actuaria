@@ -1,64 +1,97 @@
-.rt-root {
+/* Rating — rt- prefix  (Figma spec: 6683:289298) */
+
+/* ── Horizontal layout (default) ── */
+.rt-root--horizontal {
   display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  gap: 2px;
-  font-family: var(--font-family-body);
+  gap: var(--spacing-8, 8px);
 }
 
-/* Size variants */
-.rt-root--sm .rt-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.rt-root--md .rt-icon {
-  width: 22px;
-  height: 22px;
-}
-
-.rt-root--lg .rt-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.rt-star {
+/* ── Vertical layout ── */
+.rt-root--vertical {
   display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacing-4, 4px);
+}
+
+/* ── Stars row (icons + number) ── */
+.rt-stars-row {
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: var(--spacing-8, 8px);
+}
+
+/* ── Icons strip ── */
+.rt-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-4, 4px);
+}
+
+/* ── Number ── */
+.rt-number {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+  white-space: nowrap;
+}
+
+/* ── Reviews block ── */
+.rt-reviews {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8, 8px);
+}
+
+.rt-reviews--vertical {
+  justify-content: flex-start;
+  gap: var(--spacing-4, 4px);
+}
+
+.rt-from {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+}
+
+.rt-reviews-text,
+.rt-reviews-link {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-brand, #151f47);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  white-space: nowrap;
+}
+
+.rt-reviews-link {
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  border-radius: 4px;
-  padding: 2px;
-  transition: transform 0.1s ease;
-  user-select: none;
+}
+.rt-reviews-link:hover { opacity: 0.75; }
+.rt-reviews-link:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-/* Readonly: no pointer interaction */
-[role='img'].rt-star {
-  cursor: default;
-}
-
-.rt-star:not([role='img']):hover {
-  transform: scale(1.15);
-}
-
-.rt-star:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
-}
-
-/* Filled star — uses warning color (gold) */
-.rt-star--filled .rt-icon {
-  fill: var(--color-warning);
-  stroke: none;
-}
-
-/* Empty star — uses stroke-weak token */
-.rt-star--empty .rt-icon {
-  fill: none;
-  stroke: var(--stroke-weak);
-  stroke-width: 1.5px;
-}
-
-/* Dark mode — empty stars slightly brighter */
-[data-theme='dark'] .rt-star--empty .rt-icon {
-  stroke: rgba(255, 255, 255, 0.2);
-}
+/* ── Dark mode ── */
+[data-theme='dark'] .rt-number { color: white; }
+[data-theme='dark'] .rt-from { color: rgba(255,255,255,0.6); }
+[data-theme='dark'] .rt-reviews-text,
+[data-theme='dark'] .rt-reviews-link { color: #c7cbf1; }
