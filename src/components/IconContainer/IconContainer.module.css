@@ -1,106 +1,64 @@
 /* IconContainer — ic- prefix
-   Centers an icon in a sized, tinted box.
-   Sizes: sm=32px md=40px lg=48px */
+   Always circular (border-radius: 48px), 12px padding, 24px icon
+   Figma spec: 7 tones × 2 styles (Filled / Stroked) = 14 variants */
 
 .ic-root {
-  --ic-font-family: var(--font-family-body, 'Nunito', sans-serif);
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border-radius: 48px;
+  border: 1px solid transparent;
 }
 
-/* ---- Sizes ---- */
-.ic-root--sm {
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
+/* ── Sizes ────────────────────────────────────────────────── */
+.ic-root--sm { width: 32px;  height: 32px;  font-size: 16px; }
+.ic-root--md { width: 40px;  height: 40px;  font-size: 20px; }
+.ic-root--lg { width: 48px;  height: 48px;  font-size: 24px; }
+
+/* ── Tones (Filled baseline — transparent border) ─────────── */
+
+.ic-tone-neutral {
+  background: rgba(21,31,71,0.19);
+  color: var(--text-strong, rgba(0,6,38,0.9));
 }
 
-.ic-root--md {
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
+.ic-tone-brand {
+  background: var(--fill-brand-weak, rgba(21,31,71,0.05));
+  color: var(--text-brand, #151f47);
 }
 
-.ic-root--lg {
-  width: 48px;
-  height: 48px;
-  font-size: 24px;
+.ic-tone-inverse {
+  background: var(--fill-brand-strong, #151f47);
+  color: var(--text-inverse-strong, white);
 }
 
-/* ---- Shapes ---- */
-.ic-root--circle {
-  border-radius: 50%;
+.ic-tone-destructive {
+  background: var(--fill-error-weak, rgba(255,74,74,0.05));
+  color: var(--text-error, #c73a3a);
 }
 
-.ic-root--square {
-  border-radius: 10px;
+.ic-tone-warning {
+  background: var(--fill-warning-weak, rgba(255,192,46,0.05));
+  color: var(--text-warning, #8f6c1a);
 }
 
-.ic-root--sm.ic-root--square {
-  border-radius: 8px;
+.ic-tone-success {
+  background: var(--fill-success-weak, rgba(10,204,146,0.05));
+  color: var(--text-success, #067a57);
 }
 
-.ic-root--lg.ic-root--square {
-  border-radius: 12px;
+.ic-tone-information {
+  background: rgba(76,100,217,0.05);
+  color: #4c64d9;
 }
 
-/* ---- Variants ---- */
+/* ── Stroked modifier — adds visible border per tone ─────── */
 
-/* default: neutral weak fill */
-.ic-root--default {
-  background-color: rgba(0, 17, 102, 0.06);
-  color: var(--text-weak, rgba(0, 9, 51, 0.65));
-}
-
-/* brand: indigo tinted fill */
-.ic-root--brand {
-  background-color: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
-  color: var(--interactive-action, #4c64d9);
-}
-
-/* success: green tinted */
-.ic-root--success {
-  background-color: rgba(22, 163, 74, 0.08);
-  color: #16a34a;
-}
-
-/* warning: amber tinted */
-.ic-root--warning {
-  background-color: rgba(217, 119, 6, 0.08);
-  color: #d97706;
-}
-
-/* error: red tinted */
-.ic-root--error {
-  background-color: rgba(220, 38, 38, 0.08);
-  color: #dc2626;
-}
-
-/* ---- Dark mode ---- */
-[data-theme='dark'] .ic-root--default {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.6);
-}
-
-[data-theme='dark'] .ic-root--brand {
-  background-color: rgba(76, 100, 217, 0.18);
-  color: #7b93f0;
-}
-
-[data-theme='dark'] .ic-root--success {
-  background-color: rgba(22, 163, 74, 0.15);
-  color: #4ade80;
-}
-
-[data-theme='dark'] .ic-root--warning {
-  background-color: rgba(217, 119, 6, 0.15);
-  color: #fbbf24;
-}
-
-[data-theme='dark'] .ic-root--error {
-  background-color: rgba(220, 38, 38, 0.15);
-  color: #f87171;
-}
+.ic-tone-neutral.ic-stroked     { border-color: var(--stroke-weak, rgba(0,17,102,0.1)); }
+.ic-tone-brand.ic-stroked       { border-color: var(--stroke-brand-weak, rgba(21,31,71,0.2)); }
+.ic-tone-inverse.ic-stroked     { border-color: var(--fill-brand-strong, #151f47); }
+.ic-tone-destructive.ic-stroked { border-color: rgba(199,58,58,0.14); }
+.ic-tone-warning.ic-stroked     { border-color: rgba(143,108,26,0.2); }
+.ic-tone-success.ic-stroked     { border-color: rgba(6,122,87,0.2); }
+.ic-tone-information.ic-stroked { border-color: rgba(76,100,217,0.2); }

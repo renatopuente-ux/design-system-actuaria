@@ -1,24 +1,36 @@
 import React from 'react';
 import styles from './IconContainer.module.css';
 
-type IconContainerSize = 'sm' | 'md' | 'lg';
-type IconContainerVariant = 'default' | 'brand' | 'success' | 'warning' | 'error';
-type IconContainerShape = 'circle' | 'square';
+export type IconContainerTone =
+  | 'Neutral'
+  | 'Brand'
+  | 'Inverse'
+  | 'Destructive'
+  | 'Warning'
+  | 'Success'
+  | 'Information';
 
-interface IconContainerProps {
+export type IconContainerStyle = 'Filled' | 'Stroked';
+
+type IconContainerSize = 'sm' | 'md' | 'lg';
+
+export interface IconContainerProps {
   children: React.ReactNode;
+  /** Figma tone — controls background and icon color */
+  tone?: IconContainerTone;
+  /** Figma style — Stroked adds a border around the container */
+  iconStyle?: IconContainerStyle;
+  /** Size: sm=32px md=40px lg=48px (Figma spec is lg) */
   size?: IconContainerSize;
-  variant?: IconContainerVariant;
-  shape?: IconContainerShape;
-  /** Accessible label for the container (pass if icon is purely decorative and parent provides context) */
+  /** Accessible label for the container */
   'aria-label'?: string;
 }
 
 export const IconContainer: React.FC<IconContainerProps> = ({
   children,
-  size = 'md',
-  variant = 'default',
-  shape = 'square',
+  tone = 'Neutral',
+  iconStyle = 'Filled',
+  size = 'lg',
   'aria-label': ariaLabel,
 }) => {
   return (
@@ -26,9 +38,9 @@ export const IconContainer: React.FC<IconContainerProps> = ({
       className={[
         styles['ic-root'],
         styles[`ic-root--${size}`],
-        styles[`ic-root--${variant}`],
-        styles[`ic-root--${shape}`],
-      ].join(' ')}
+        styles[`ic-tone-${tone.toLowerCase()}`],
+        iconStyle === 'Stroked' ? styles['ic-stroked'] : '',
+      ].filter(Boolean).join(' ')}
       aria-label={ariaLabel}
       role={ariaLabel ? 'img' : undefined}
     >

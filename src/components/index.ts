@@ -185,7 +185,7 @@ export { FileUpload } from './FileUpload/FileUpload';
 export type { FileUploadProps, FileUploadFile } from './FileUpload/FileUpload';
 
 export { IconContainer } from './IconContainer/IconContainer';
-export type { IconContainerProps } from './IconContainer/IconContainer';
+export type { IconContainerProps, IconContainerTone, IconContainerStyle } from './IconContainer/IconContainer';
 
 export { Slot } from './Slot/Slot';
 export type { SlotProps } from './Slot/Slot';
