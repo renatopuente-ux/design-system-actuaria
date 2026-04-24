@@ -1,39 +1,38 @@
-/* Slot — slot- prefix
-   Transparent pass-through when populated; dashed placeholder when empty. */
+/* Slot — slot- prefix  (Figma spec: 5367:8049) */
 
-.slot-root {
-  width: 100%;
-  height: 100%;
+/* ── Empty / placeholder state ── */
+.slot-empty {
   display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-/* Empty / placeholder state */
-.slot-root--empty {
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 80px;
-  border: 1.5px dashed var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  border-radius: var(--radius-card, 16px);
-  background-color: rgba(0, 17, 102, 0.02);
+  overflow: hidden;
+  width: 100%;
+  max-width: 364px;
+  padding: var(--spacing-24, 24px) var(--spacing-32, 32px);
+  box-sizing: border-box;
+  background: var(--fill-weaker, rgba(0,21,128,0.02));
+  border: 1px dashed var(--stroke-strong, rgba(0,13,77,0.45));
+  border-radius: var(--corner-radius-8, 8px);
 }
 
+/* ── Placeholder text — Roboto Mono per DS spec ── */
 .slot-label {
-  font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-tiny, 14px);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
   font-weight: 400;
-  color: var(--text-weak, rgba(0, 9, 51, 0.65));
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  text-align: center;
+  width: 100%;
+  margin: 0;
 }
 
-/* Dark mode */
-[data-theme='dark'] .slot-root--empty {
-  border-color: rgba(255, 255, 255, 0.12);
-  background-color: rgba(255, 255, 255, 0.02);
+/* ── Dark mode ── */
+[data-theme='dark'] .slot-empty {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.2);
 }
 
 [data-theme='dark'] .slot-label {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255,255,255,0.45);
 }

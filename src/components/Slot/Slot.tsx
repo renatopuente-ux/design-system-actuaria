@@ -1,35 +1,37 @@
 import React from 'react';
 import styles from './Slot.module.css';
 
-interface SlotProps {
+export interface SlotProps {
   children?: React.ReactNode;
+  /** Shown instead of children when children is null/undefined */
   fallback?: React.ReactNode;
+  /** Custom placeholder text shown when both children and fallback are absent */
+  placeholder?: string;
   className?: string;
 }
 
-/**
- * Generic layout placeholder.
- * - Renders children if provided.
- * - Renders fallback if no children.
- * - Renders a dashed placeholder box when both are absent — useful for design-system demos.
- */
-export const Slot: React.FC<SlotProps> = ({ children, fallback, className }) => {
+export const Slot: React.FC<SlotProps> = ({
+  children,
+  fallback,
+  placeholder = 'Intercambiar con otro componente',
+  className = '',
+}) => {
   const isEmpty = children == null && fallback == null;
 
   if (isEmpty) {
     return (
       <div
-        className={`${styles['slot-root']} ${styles['slot-root--empty']} ${className ?? ''}`}
-        aria-label="Slot vacío"
+        className={[styles['slot-empty'], className].filter(Boolean).join(' ')}
         role="presentation"
+        aria-label={placeholder}
       >
-        <span className={styles['slot-label']}>Slot</span>
+        <p className={styles['slot-label']}>{placeholder}</p>
       </div>
     );
   }
 
   return (
-    <div className={`${styles['slot-root']} ${className ?? ''}`}>
+    <div className={className || undefined}>
       {children ?? fallback}
     </div>
   );
