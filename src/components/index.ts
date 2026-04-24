@@ -182,7 +182,7 @@ export { SegmentedControl } from './SegmentedControl/SegmentedControl';
 export type { SegmentedControlProps } from './SegmentedControl/SegmentedControl';
 
 export { FileUpload } from './FileUpload/FileUpload';
-export type { FileUploadProps } from './FileUpload/FileUpload';
+export type { FileUploadProps, FileUploadFile } from './FileUpload/FileUpload';
 
 export { IconContainer } from './IconContainer/IconContainer';
 export type { IconContainerProps } from './IconContainer/IconContainer';

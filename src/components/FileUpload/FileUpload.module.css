@@ -1,156 +1,290 @@
 /* FileUpload — fu- prefix
-   Dashed dropzone with drag-over highlight and file list. */
+   Drop zone, label row, file rows with progress bar.
+   Tokens: --text-strong, --text-weak, --text-brand, --stroke-weak,
+           --stroke-brand-strong, --stroke-brand-weak, --stroke-error-strong,
+           --fill-brand-weak, --fill-selected, --fill-weak, --fill-error-weak */
+
+/* ─── Root ─────────────────────────────────────────────────────────────────── */
 
 .fu-root {
-  --fu-border: 1.5px dashed var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  --fu-border-drag: 1.5px dashed var(--interactive-action, #4c64d9);
-  --fu-bg: transparent;
-  --fu-bg-drag: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
-  --fu-radius: var(--radius-card, 16px);
-  --fu-text-label: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --fu-text-hint: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --fu-text-brand: var(--text-brand, #4c64d9);
-  --fu-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --fu-error-color: #c0392b;
-  --fu-file-bg: rgba(0, 17, 102, 0.04);
-
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12, 12px);
-  font-family: var(--fu-font-family);
   width: 100%;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
 }
 
-/* Hidden native input */
-.fu-input {
-  display: none;
+/* ─── Label row ─────────────────────────────────────────────────────────────── */
+
+.fu-label-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
 }
 
-/* Dropzone area */
+.fu-label-line {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.fu-label-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+}
+
+.fu-label-suffix {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.fu-label-hint {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+/* ─── Drop zone ─────────────────────────────────────────────────────────────── */
+
 .fu-dropzone {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-8, 8px);
-  border: var(--fu-border);
-  border-radius: var(--fu-radius);
-  background-color: var(--fu-bg);
-  padding: var(--spacing-24, 24px);
+  gap: 16px;
+  width: 100%;
+  padding: 32px 48px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--stroke-brand-strong, rgba(21, 31, 71, 0.8));
+  background: white;
   cursor: pointer;
   transition: background-color 150ms ease, border-color 150ms ease;
   text-align: center;
-  min-height: 140px;
+  box-sizing: border-box;
 }
 
 .fu-dropzone:focus-visible {
-  outline: 2px solid var(--interactive-action, #4c64d9);
+  outline: 2px solid var(--fill-selected, #151f47);
   outline-offset: 2px;
 }
 
 .fu-dropzone--drag-over {
-  background-color: var(--fu-bg-drag);
-  border: var(--fu-border-drag);
+  background: var(--fill-brand-weak, rgba(21, 31, 71, 0.05));
+  border-color: var(--fill-selected, #151f47);
 }
 
-.fu-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--fu-text-brand);
+.fu-dropzone--invalid {
+  border-color: var(--stroke-error-strong, rgba(199, 58, 58, 0.8));
+  background: var(--fill-error-weak, rgba(255, 74, 74, 0.05));
+}
+
+/* ─── Icon pill (inside drop zone) ─────────────────────────────────────────── */
+
+.fu-icon-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 48px;
+  background: var(--fill-brand-weak, rgba(21, 31, 71, 0.05));
+  border: 1px solid var(--stroke-brand-weak, rgba(21, 31, 71, 0.2));
+  color: var(--text-brand, #151f47);
   flex-shrink: 0;
 }
 
-.fu-label {
+.fu-icon-pill--invalid {
+  color: #c73a3a;
+}
+
+/* ─── Drop zone text ─────────────────────────────────────────────────────────── */
+
+.fu-dropzone-primary {
   margin: 0;
-  font-size: var(--font-size-small, 16px);
+  font-size: 16px;
   font-weight: 600;
-  color: var(--fu-text-label);
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
 }
 
-.fu-hint {
+.fu-dropzone-secondary {
   margin: 0;
-  font-size: var(--font-size-tiny, 14px);
+  font-size: 14px;
   font-weight: 400;
-  color: var(--fu-text-hint);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
 }
 
-/* Errors */
-.fu-errors {
-  margin: 0;
+.fu-dropzone-link {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-brand, #151f47);
+  text-decoration: underline;
+}
+
+/* ─── Error message (below drop zone) ────────────────────────────────────────── */
+
+.fu-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #c73a3a;
+}
+
+/* ─── File list ──────────────────────────────────────────────────────────────── */
+
+.fu-file-list {
+  width: 100%;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
+}
+
+/* ─── File row ───────────────────────────────────────────────────────────────── */
+
+.fu-file-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  box-sizing: border-box;
+}
+
+.fu-file-row--last {
+  border-bottom: none;
+}
+
+/* Icon pill (file row) */
+.fu-file-icon-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 48px;
+  background: var(--fill-weak, rgba(21, 31, 71, 0.19));
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  flex-shrink: 0;
+}
+
+/* File info (center column) */
+.fu-file-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
-.fu-error-item {
-  font-size: var(--font-size-tiny, 14px);
-  color: var(--fu-error-color);
-  font-weight: 400;
-}
-
-/* File list */
-.fu-file-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.fu-file-name-row {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.fu-file-item {
-  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-8, 8px);
-  background-color: var(--fu-file-bg);
-  border-radius: 8px;
-  padding: 8px 12px;
+  gap: 8px;
 }
 
-.fu-file-name {
-  flex: 1;
-  font-size: var(--font-size-tiny, 14px);
-  font-weight: 400;
-  color: var(--fu-text-label);
+.fu-file-name--uploading {
+  font-size: 14px;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
+}
+
+.fu-file-name--uploaded {
+  font-size: 14px;
+  color: var(--text-brand, #151f47);
+  text-decoration: underline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  /* Reset anchor default styles */
+  text-underline-offset: 2px;
+}
+
+a.fu-file-name--uploaded {
+  cursor: pointer;
+}
+
+a.fu-file-name--uploaded:visited {
+  color: var(--text-brand, #151f47);
 }
 
 .fu-file-size {
-  font-size: 12px;
-  color: var(--fu-text-hint);
+  font-size: 14px;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
   white-space: nowrap;
+  flex-shrink: 0;
 }
+
+/* Progress bar */
+.fu-progress-track {
+  height: 4px;
+  border-radius: 32px;
+  background: var(--fill-weak, rgba(21, 31, 71, 0.19));
+  box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  overflow: hidden;
+}
+
+.fu-progress-fill {
+  height: 100%;
+  border-radius: 32px;
+  background: var(--fill-selected, #151f47);
+  transition: width 0.3s ease;
+}
+
+/* ─── Remove button ──────────────────────────────────────────────────────────── */
 
 .fu-remove-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   border: none;
+  background: transparent;
   cursor: pointer;
-  color: var(--fu-text-hint);
-  font-size: 12px;
-  padding: 2px 4px;
-  border-radius: 4px;
-  transition: color 120ms ease, background 120ms ease;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
   flex-shrink: 0;
+  transition: background 120ms ease;
 }
 
 .fu-remove-btn:hover {
-  color: var(--fu-error-color);
-  background: rgba(192, 57, 43, 0.08);
+  background: rgba(21, 31, 71, 0.05);
 }
 
-/* Dark mode */
-[data-theme='dark'] .fu-root {
-  --fu-border: 1.5px dashed rgba(255, 255, 255, 0.15);
-  --fu-border-drag: 1.5px dashed var(--interactive-action, #4c64d9);
-  --fu-bg-drag: rgba(76, 100, 217, 0.15);
-  --fu-text-label: rgba(255, 255, 255, 0.9);
-  --fu-text-hint: rgba(255, 255, 255, 0.5);
-  --fu-file-bg: rgba(255, 255, 255, 0.06);
+/* ─── Dark mode ──────────────────────────────────────────────────────────────── */
+
+[data-theme='dark'] .fu-dropzone {
+  background: var(--surface-dark, #12131a);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .fu-dropzone--drag-over {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme='dark'] .fu-icon-pill {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .fu-file-icon-pill {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .fu-remove-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
