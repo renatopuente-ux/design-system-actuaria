@@ -156,7 +156,10 @@ export { ProgressBar } from './ProgressBar/ProgressBar';
 export type { ProgressBarProps } from './ProgressBar/ProgressBar';
 
 export { MotionBar } from './MotionBar/MotionBar';
-export type { MotionBarProps } from './MotionBar/MotionBar';
+export type { MotionBarProps, MotionBarItem } from './MotionBar/MotionBar';
+
+export { PieChart } from './PieChart/PieChart';
+export type { PieChartProps, PieChartSegment } from './PieChart/PieChart';
 
 // User & identity
 export { User } from './User/User';

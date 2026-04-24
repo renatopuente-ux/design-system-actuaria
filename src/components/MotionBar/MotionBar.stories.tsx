@@ -10,15 +10,35 @@ const meta: Meta<typeof MotionBar> = {
 export default meta;
 type Story = StoryObj<typeof MotionBar>;
 
-export const Default: Story = {
-  args: { value: 7843200, target: 10000000, label: 'RESERVAS MATEMÁTICAS', unit: ' USD' },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+export const Colaboradores: Story = {
+  args: {
+    title: 'Distribución colaboradores por tiempo de servicio',
+    bars: [
+      { label: 'Jubilados',                value: 22,  color: '#e07c6e' },
+      { label: '≥ 25 años',               value: 25,  color: '#151f47' },
+      { label: '≥ 20 años\n< 25 años',    value: 32,  color: '#2d4f8c' },
+      { label: '≥ 15 años\n< 20 años',    value: 96,  color: '#e05a28' },
+      { label: '≥ 10 años\n< 15 años',    value: 182, color: '#5b8ecf' },
+      { label: '< 10 años',               value: 279, color: '#8ab4e8' },
+    ],
+    maxValue: 300,
+  },
 };
-export const Solvencia: Story = {
-  args: { value: 142, target: 200, label: 'ÍNDICE DE SOLVENCIA', unit: '%', color: '#10B981' },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
-};
-export const FastAnimation: Story = {
-  args: { value: 85, target: 100, duration: 400, label: 'KPI RÁPIDO', color: '#F59E0B' },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+
+export const Playground: Story = {
+  args: {
+    title: 'Distribución colaboradores por tiempo de servicio',
+    bars: [
+      { label: 'Jubilados',                value: 22,  color: '#e07c6e' },
+      { label: '≥ 25 años',               value: 25,  color: '#151f47' },
+      { label: '≥ 20 años\n< 25 años',    value: 32,  color: '#2d4f8c' },
+      { label: '≥ 15 años\n< 20 años',    value: 96,  color: '#e05a28' },
+      { label: '≥ 10 años\n< 15 años',    value: 182, color: '#5b8ecf' },
+      { label: '< 10 años',               value: 279, color: '#8ab4e8' },
+    ],
+    maxValue: 300,
+  },
+  argTypes: {
+    title: { control: 'text' },
+  },
 };
