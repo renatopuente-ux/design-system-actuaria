@@ -38,7 +38,7 @@ export type { ButtonGroupProps } from './ButtonGroup/ButtonGroup';
 
 // Radio
 export { RadioButton } from './RadioButton/RadioButton';
-export type { RadioButtonProps } from './RadioButton/RadioButton';
+export type { RadioButtonProps, RadioButtonSize, RadioButtonState } from './RadioButton/RadioButton';
 
 export { RadioButtonGroup } from './RadioButtonGroup/RadioButtonGroup';
 export type { RadioButtonGroupProps, RadioOption } from './RadioButtonGroup/RadioButtonGroup';

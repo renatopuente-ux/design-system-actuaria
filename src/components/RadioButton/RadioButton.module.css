@@ -1,69 +1,111 @@
+/* RadioButton — rb- prefix  (Figma spec: 3449:61137) */
+
 .rb {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-8, 8px);
+  gap: var(--spacing-12, 12px);
   cursor: pointer;
   font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-small, 16px);
   font-weight: 400;
-  line-height: var(--line-height-small, 24px);
   color: var(--text-strong, rgba(0,6,38,0.9));
   user-select: none;
+  border-radius: var(--corner-radius-8, 8px);
 }
 
+/* ── Sizes ── */
+.rb--large { font-size: var(--font-size-small, 16px); line-height: var(--line-height-small, 24px); }
+.rb--small { font-size: var(--font-size-tiny, 14px); line-height: var(--line-height-tiny, 20px); }
+
+/* ── Indicator wrapper (holds input + circle + focus ring) ── */
+.rb__indicator {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rb--large .rb__indicator { width: 32px; height: 32px; }
+.rb--small .rb__indicator { width: 24px; height: 24px; }
+
+/* ── Hidden native input (keeps accessibility) ── */
 .rb__input {
   position: absolute;
   opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: inherit;
+  z-index: 1;
 }
 
+/* ── Custom circle ── */
 .rb__circle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  border: 2px solid var(--stroke-weak, rgba(0,17,102,0.1));
-  background: var(--background-base, white);
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  border: 1.5px solid rgba(0,9,51,0.45);
+  background: white;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+  pointer-events: none;
+}
+
+.rb__circle--checked {
+  background: var(--fill-brand-strong, #151f47);
+  border-color: var(--fill-brand-strong, #151f47);
+}
+
+/* ── Inner dot (visible when checked) ── */
+.rb__dot {
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
   flex-shrink: 0;
 }
+.rb--large .rb__dot { width: 12px; height: 12px; }
+.rb--small .rb__dot { width: 8px;  height: 8px; }
 
-.rb__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--interactive-action, #4c64d9);
+/* ── Label ── */
+.rb__label { line-height: inherit; }
+
+/* ── States (CSS-driven for real interaction) ── */
+.rb:hover:not(.rb--disabled) .rb__circle { border-color: var(--fill-brand-strong, #151f47); background: rgba(21,31,71,0.04); }
+.rb:hover:not(.rb--disabled) .rb__circle--checked { background: var(--fill-brand-strong, #151f47); }
+.rb:active:not(.rb--disabled) .rb__circle { background: rgba(0,17,102,0.10); }
+.rb:active:not(.rb--disabled) .rb__circle--checked { background: var(--fill-brand-strong, #151f47); }
+
+/* Prop-driven state overrides (for Storybook) */
+.rb--hover:not(.rb--disabled) .rb__circle { border-color: var(--fill-brand-strong, #151f47); background: rgba(21,31,71,0.04); }
+.rb--hover:not(.rb--disabled) .rb__circle--checked { background: var(--fill-brand-strong, #151f47); }
+.rb--press:not(.rb--disabled) .rb__circle { background: rgba(0,17,102,0.10); }
+.rb--press:not(.rb--disabled) .rb__circle--checked { background: var(--fill-brand-strong, #151f47); }
+
+/* Focus ring */
+.rb__input:focus-visible ~ .rb__circle {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 3px;
+}
+.rb--focus .rb__circle {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 3px;
 }
 
-.rb--checked .rb__circle {
-  border-color: var(--interactive-action, #4c64d9);
-}
+/* ── Invalid (error) state ── */
+.rb--invalid .rb__circle { border-color: var(--text-error, #c73a3a); }
+.rb--invalid .rb__circle--checked { background: var(--text-error, #c73a3a); border-color: var(--text-error, #c73a3a); }
+.rb--invalid .rb__dot { background: white; }
 
-.rb:hover:not(.rb--disabled) .rb__circle {
-  border-color: var(--interactive-action, #4c64d9);
-}
-
-.rb__input:focus-visible + .rb__circle {
-  box-shadow: 0 0 0 3px rgba(76, 100, 217, 0.25);
-}
-
+/* ── Disabled ── */
 .rb--disabled {
-  opacity: 0.5;
   cursor: not-allowed;
+  opacity: 0.4;
 }
 
-.rb__label {
-  line-height: var(--line-height-small, 24px);
-}
-
-[data-theme='dark'] .rb {
-  color: var(--text-strong, white);
-}
-[data-theme='dark'] .rb__circle {
-  background: transparent;
-  border-color: rgba(255,255,255,0.2);
-}
+/* ── Dark mode ── */
+[data-theme='dark'] .rb { color: rgba(255,255,255,0.9); }
+[data-theme='dark'] .rb__circle { background: transparent; border-color: rgba(255,255,255,0.3); }
+[data-theme='dark'] .rb__circle--checked { background: white; border-color: white; }
+[data-theme='dark'] .rb__dot { background: #151f47; }
