@@ -48,7 +48,7 @@ export { DropdownMenu } from './DropdownMenu/DropdownMenu';
 export type { DropdownMenuProps, DropdownItem, DropdownItemType } from './DropdownMenu/DropdownMenu';
 
 export { SearchInput } from './SearchInput/SearchInput';
-export type { SearchInputProps } from './SearchInput/SearchInput';
+export type { SearchInputProps, SearchInputSize, SearchInputType } from './SearchInput/SearchInput';
 
 export { AvatarDropdown } from './AvatarDropdown/AvatarDropdown';
 export type { AvatarDropdownProps, AvatarMenuItem } from './AvatarDropdown/AvatarDropdown';
