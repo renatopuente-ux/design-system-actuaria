@@ -1,27 +1,38 @@
-.lb-track {
+/* LoadingBar — lb- prefix  (Figma spec: 8px height, navy fill) */
+
+.lb-root {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
   width: 100%;
-  background-color: var(--fill-weaker);
-  border-radius: 9999px;
+}
+
+.lb-track {
+  flex: 1;
+  background: var(--fill-weak, rgba(21,31,71,0.19));
+  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  border-radius: var(--radius-pill, 32px);
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,0.08);
   overflow: hidden;
   position: relative;
 }
 
-/* Determinate bar — grows from left to right via inline width */
+/* Determinate bar — grows left → right via inline width */
 .lb-bar--determinate {
   display: block;
   height: 100%;
-  background-color: var(--interactive-action);
-  border-radius: 9999px;
+  background-color: var(--fill-selected, #151f47);
+  border-radius: var(--radius-pill, 32px);
   transition: width 0.3s ease;
 }
 
-/* Indeterminate bar — sliding animation left → right, infinite */
+/* Indeterminate bar — sliding animation */
 .lb-bar--indeterminate {
   display: block;
   height: 100%;
   width: 40%;
-  background-color: var(--interactive-action);
-  border-radius: 9999px;
+  background-color: var(--fill-selected, #151f47);
+  border-radius: var(--radius-pill, 32px);
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +45,23 @@
   100% { left: 100%; }
 }
 
-/* Dark mode — slightly brighter track */
-[data-theme='dark'] .lb-track {
-  background-color: rgba(255, 255, 255, 0.08);
+.lb-label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
 }
+
+[data-theme='dark'] .lb-track {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.1);
+}
+[data-theme='dark'] .lb-bar--determinate,
+[data-theme='dark'] .lb-bar--indeterminate {
+  background-color: white;
+}
+[data-theme='dark'] .lb-label { color: rgba(255,255,255,0.6); }

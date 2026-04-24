@@ -1,5 +1,7 @@
 .pb { display: flex; flex-direction: column; gap: var(--spacing-8, 8px); width: 100%; }
 
+.pb--vertical { flex-direction: row; width: auto; align-items: flex-end; }
+
 .pb__header { display: flex; justify-content: space-between; align-items: center; }
 
 .pb__label {
@@ -16,10 +18,11 @@
   color: var(--text-strong, rgba(0,6,38,0.9));
 }
 
+/* ── Horizontal track ── */
 .pb__track {
   width: 100%;
-  background: var(--stroke-weak, rgba(0,17,102,0.1));
-  border-radius: 9999px;
+  background: rgba(67,70,99,0.2);
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -29,10 +32,32 @@
 
 .pb__fill {
   height: 100%;
-  border-radius: 9999px;
+  border-radius: 8px;
+  background-color: rgba(67,70,99,0.5);
   transition: width 300ms ease;
 }
 
+/* ── Vertical track ── */
+.pb__track--vertical {
+  width: 4px;
+  height: 68px;
+  background: rgba(67,70,99,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.pb__fill--vertical {
+  width: 100%;
+  height: 0;
+  background-color: rgba(67,70,99,0.5);
+  border-radius: 8px;
+  transition: height 300ms ease;
+}
+
 [data-theme='dark'] .pb__track { background: rgba(255,255,255,0.1); }
+[data-theme='dark'] .pb__track--vertical { background: rgba(255,255,255,0.1); }
 [data-theme='dark'] .pb__label { color: rgba(255,255,255,0.6); }
 [data-theme='dark'] .pb__value { color: white; }
