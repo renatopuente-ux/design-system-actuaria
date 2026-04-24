@@ -1,107 +1,121 @@
 import React, { useId } from 'react';
 import styles from './TextArea.module.css';
 
+const XOctagonIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={styles['ta-error-icon']}>
+    <path
+      d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 export interface TextAreaProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   label?: string;
-  error?: string;
   hint?: string;
+  error?: string;
+  required?: boolean;
+  optional?: boolean;
   disabled?: boolean;
-  rows?: number;
   maxLength?: number;
+  className?: string;
 }
 
-/**
- * TextArea — multi-line text field with optional character counter.
- * Vertical-only resize prevents layout breakage in narrow form columns.
- * Character counter becomes visually prominent near the limit (>90% consumed).
- */
-export const TextArea: React.FC<TextAreaProps> = ({
-  value,
-  onChange,
-  placeholder,
-  label,
-  error,
-  hint,
-  disabled = false,
-  rows = 4,
-  maxLength,
-}) => {
-  const generatedId = useId();
-  const textareaId = generatedId;
-  const hintId = `${textareaId}-hint`;
-  const errorId = `${textareaId}-error`;
-  const countId = `${textareaId}-count`;
+export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  (
+    {
+      value,
+      onChange,
+      placeholder,
+      label,
+      hint,
+      error,
+      required,
+      optional,
+      disabled = false,
+      maxLength,
+      className = '',
+    },
+    ref,
+  ) => {
+    const id = useId();
+    const hintId = `${id}-hint`;
+    const errorId = `${id}-error`;
 
-  const remaining = maxLength !== undefined ? maxLength - value.length : null;
-  const isNearLimit = remaining !== null && remaining <= Math.ceil((maxLength ?? 0) * 0.1);
+    const describedBy = [
+      error ? errorId : null,
+      hint && !error ? hintId : null,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  const describedBy = [
-    error ? errorId : null,
-    hint && !error ? hintId : null,
-    maxLength ? countId : null,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  return (
-    <div className={styles['ta-root']}>
-      {label && (
-        <label htmlFor={textareaId} className={styles['ta-label']}>
-          {label}
-        </label>
-      )}
-
-      <textarea
-        id={textareaId}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        disabled={disabled}
-        rows={rows}
-        maxLength={maxLength}
-        aria-invalid={!!error}
-        aria-describedby={describedBy || undefined}
-        className={[
-          styles['ta-textarea'],
-          error ? styles['ta-textarea--error'] : '',
-          disabled ? styles['ta-textarea--disabled'] : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      />
-
-      <div className={styles['ta-footer']}>
-        <span>
-          {hint && !error && (
-            <span id={hintId} className={styles['ta-hint']}>
-              {hint}
-            </span>
-          )}
-          {error && (
-            <span id={errorId} className={styles['ta-error']} role="alert">
-              {error}
-            </span>
-          )}
-        </span>
-
-        {maxLength !== undefined && (
-          <span
-            id={countId}
-            className={[
-              styles['ta-counter'],
-              isNearLimit ? styles['ta-counter--near-limit'] : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            aria-live="polite"
-          >
-            {value.length}/{maxLength}
-          </span>
+    return (
+      <div className={[styles['ta-root'], className].filter(Boolean).join(' ')}>
+        {label && (
+          <div className={styles['ta-label-block']}>
+            <label
+              htmlFor={id}
+              className={[
+                styles['ta-label'],
+                disabled ? styles['ta-label--disabled'] : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              {label}
+              {required && (
+                <span className={styles['ta-required']} aria-hidden="true">
+                  {' '}*
+                </span>
+              )}
+              {optional && !required && (
+                <span className={styles['ta-optional']}> (opcional)</span>
+              )}
+            </label>
+            {hint && (
+              <span id={hintId} className={styles['ta-hint']}>
+                {hint}
+              </span>
+            )}
+          </div>
         )}
+
+        {error && (
+          <div className={styles['ta-error-block']} id={errorId} role="alert">
+            <XOctagonIcon />
+            <span className={styles['ta-error-text']}>{error}</span>
+          </div>
+        )}
+
+        <textarea
+          ref={ref}
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
+          maxLength={maxLength}
+          aria-invalid={!!error}
+          aria-describedby={describedBy || undefined}
+          className={[
+            styles['ta-field'],
+            error ? styles['ta-field--error'] : '',
+            disabled ? styles['ta-field--disabled'] : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
+
+TextArea.displayName = 'TextArea';
+
+export default TextArea;
