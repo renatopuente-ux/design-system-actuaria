@@ -1,69 +1,274 @@
-.dp { position: relative; display: inline-flex; flex-direction: column; gap: var(--spacing-8, 8px); }
-
-.dp__label {
-  font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-tiny, 14px); font-weight: 600;
-  color: var(--text-weak, rgba(0,9,51,0.65));
+/* ─── Root wrapper ─────────────────────────────────────────────────────────── */
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
 }
 
-.dp__input {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8, 8px);
-  height: 40px; padding: 0 var(--spacing-12, 12px);
-  border: 1.5px solid var(--stroke-weak, rgba(0,17,102,0.1));
-  border-radius: var(--radius-card, 16px);
-  background: var(--background-base, white);
-  cursor: pointer; min-width: 180px;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+/* ─── Label row ────────────────────────────────────────────────────────────── */
+.labelRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  line-height: 1.4;
+}
+
+.label__suffix {
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.hint {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  line-height: 1.4;
+}
+
+/* ─── Field trigger ────────────────────────────────────────────────────────── */
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--stroke-strong, rgba(0, 13, 77, 0.45));
+  border-radius: var(--corner-radius-8, 8px);
+  background: white;
+  cursor: pointer;
   font-family: inherit;
+  transition: border-color 150ms ease;
+  box-sizing: border-box;
 }
-.dp__input:hover:not(:disabled) { border-color: var(--interactive-action, #4c64d9); }
-.dp__input:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(76,100,217,0.25); border-color: var(--interactive-action, #4c64d9); }
-.dp__input--disabled { opacity: 0.5; cursor: not-allowed; }
 
-.dp__value { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); color: var(--text-strong, rgba(0,6,38,0.9)); }
-.dp__placeholder { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); color: var(--text-weak, rgba(0,9,51,0.65)); }
-
-.dp__calendar {
-  position: absolute; top: calc(100% + 8px); left: 0; z-index: 200;
-  background: var(--background-base, white);
-  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
-  border-radius: var(--radius-card, 16px);
-  box-shadow: var(--shadow-overlay);
-  padding: var(--spacing-16, 16px);
-  width: 280px;
-  animation: dp-open 150ms ease;
+.field:hover:not(:disabled) {
+  border-color: var(--stroke-strong, rgba(0, 13, 77, 0.45));
 }
-@keyframes dp-open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
-.dp__nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-12, 12px); }
-.dp__monthyear { font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: var(--font-size-small, 16px); font-weight: 600; color: var(--text-strong, rgba(0,6,38,0.9)); }
-.dp__navbtn {
-  width: 28px; height: 28px; border: none; background: none; cursor: pointer;
-  border-radius: 8px; font-size: 18px; color: var(--text-weak, rgba(0,9,51,0.65));
-  display: flex; align-items: center; justify-content: center;
-  transition: background 100ms ease;
+.field:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: 10px;
 }
-.dp__navbtn:hover { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
-.dp__navbtn:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25); }
 
-.dp__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-.dp__dayname { text-align: center; font-family: var(--font-family-body, 'Nunito', sans-serif); font-size: 11px; font-weight: 600; color: var(--text-weak, rgba(0,9,51,0.65)); padding: 4px 0; }
+/* Invalid state */
+.field--invalid {
+  border-color: var(--stroke-error-strong, rgba(199, 58, 58, 0.8));
+  background: var(--fill-error-weak, rgba(255, 74, 74, 0.05));
+}
 
-.dp__day {
-  display: flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border-radius: 8px; border: none; background: none;
+/* Disabled state */
+.field--disabled {
+  background: rgba(0, 17, 102, 0.04);
+  border-color: var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Field text */
+.field__value {
   font-family: var(--font-family-body, 'Nunito', sans-serif);
-  font-size: var(--font-size-tiny, 14px); font-weight: 400;
-  color: var(--text-strong, rgba(0,6,38,0.9)); cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  text-align: left;
+  flex: 1;
+}
+
+.field__placeholder {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  text-align: left;
+  flex: 1;
+}
+
+/* Calendar icon */
+.field__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+/* ─── Error message ────────────────────────────────────────────────────────── */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 14px;
+  color: #c73a3a;
+  line-height: 1.4;
+}
+
+.error__icon {
+  flex-shrink: 0;
+}
+
+/* ─── Calendar panel ───────────────────────────────────────────────────────── */
+.calendar {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
+  width: 364px;
+  background: white;
+  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  border-radius: var(--corner-radius-8, 8px);
+  box-shadow:
+    0px 8px 8px -4px rgba(0, 0, 0, 0.04),
+    0px 20px 24px -4px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  box-sizing: border-box;
+  animation: calendar-open 150ms ease;
+}
+
+@keyframes calendar-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.calendar__title {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+}
+
+.calendar__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  padding: 0;
+  border-radius: 4px;
   transition: background 100ms ease;
 }
-.dp__day:hover:not(:disabled) { background: var(--fill-brand-weak, rgba(21,31,71,0.05)); }
-.dp__day:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(76,100,217,0.25); }
-.dp__day--selected { background: var(--interactive-action, #4c64d9) !important; color: white !important; font-weight: 600; }
-.dp__day--today { border: 1.5px solid var(--interactive-action, #4c64d9); }
-.dp__day--disabled { opacity: 0.3; cursor: not-allowed; }
 
-[data-theme='dark'] .dp__calendar { background: #1e2030; border-color: rgba(255,255,255,0.1); }
-[data-theme='dark'] .dp__monthyear, [data-theme='dark'] .dp__day { color: white; }
-[data-theme='dark'] .dp__input { background: #1e2030; border-color: rgba(255,255,255,0.1); }
-[data-theme='dark'] .dp__value { color: white; }
+.calendar__arrow:hover {
+  background: rgba(21, 31, 71, 0.08);
+}
+
+.calendar__arrow:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+}
+
+/* Grid: 7 columns × (1 header row + 6 day rows) */
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 48px);
+  margin-top: 4px;
+}
+
+/* Day name headers */
+.calendar__dayname {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+/* ─── CalendarDate cell ────────────────────────────────────────────────────── */
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+  cursor: pointer;
+  padding: 0;
+  transition: background 100ms ease;
+}
+
+.cell:hover:not(:disabled) {
+  background: rgba(21, 31, 71, 0.19);
+}
+
+.cell:active:not(:disabled) {
+  background: rgba(0, 17, 102, 0.1);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: -4px;
+  border-radius: 12px;
+}
+
+/* Selected */
+.cell--selected {
+  background: var(--fill-selected, #151f47) !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Disabled */
+.cell--disabled {
+  color: rgba(0, 17, 102, 0.1);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Today dot */
+.cell__dot {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fill-selected, #151f47);
+}
+
+.cell__dot--selected {
+  background: white;
+}
