@@ -30,10 +30,6 @@ export type { ButtonProps } from './Button/Button';
 export { ButtonIcon } from './ButtonIcon/ButtonIcon';
 export type { ButtonIconProps, ButtonIconVariant, ButtonIconTone, ButtonIconSize, ButtonIconShape } from './ButtonIcon/ButtonIcon';
 
-export { Card } from './Card/Card';
-export type { CardProps, CardType } from './Card/Card';
-export type { ButtonIconProps } from './ButtonIcon/ButtonIcon';
-
 export { ButtonGroup } from './ButtonGroup/ButtonGroup';
 export type { ButtonGroupProps } from './ButtonGroup/ButtonGroup';
 
@@ -131,6 +127,9 @@ export { TextLink } from './TextLink/TextLink';
 export type { TextLinkProps } from './TextLink/TextLink';
 
 // Layout & content
+export { Card } from './Card/Card';
+export type { CardProps, CardType } from './Card/Card';
+
 export { Hero } from './Hero/Hero';
 export type { HeroProps } from './Hero/Hero';
 
@@ -139,12 +138,6 @@ export type { FooterProps } from './Footer/Footer';
 
 export { BannerSlider } from './BannerSlider/BannerSlider';
 export type { BannerSliderProps } from './BannerSlider/BannerSlider';
-
-export { Card } from './Card/Card';
-export type { CardProps } from './Card/Card';
-
-export { CardFlip } from './CardFlip/CardFlip';
-export type { CardFlipProps } from './CardFlip/CardFlip';
 
 export { Drawer } from './Drawer/Drawer';
 export type { DrawerProps } from './Drawer/Drawer';
@@ -193,3 +186,6 @@ export type { SlotProps } from './Slot/Slot';
 
 export { Tracking } from './Tracking/Tracking';
 export type { TrackingProps } from './Tracking/Tracking';
+
+export { ProductCard } from './ProductCard/ProductCard';
+export type { ProductCardProps, ProductCardSize, ProductCardBadge, ProductCardBadgeTone } from './ProductCard/ProductCard';

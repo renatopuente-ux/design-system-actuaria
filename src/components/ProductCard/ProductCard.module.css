@@ -1,0 +1,334 @@
+/* ═══════════════════════════════════════════════════════════════
+   ProductCard — Actuaria Design System
+   Figma nodes: 9018:23233 (Large 432px), 9018:24272 (Small 364px)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Root — perspective container ──────────────────────────── */
+.pc-root {
+  perspective: 1200px;
+  width: 432px;
+  height: 362px;
+  position: relative;
+}
+
+.pc-root--small {
+  width: 364px;
+}
+
+/* ── Inner — 3D flip wrapper ────────────────────────────────── */
+.pc-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pc-root--flipped .pc-inner {
+  transform: rotateY(180deg);
+}
+
+/* ── Shared face styles ─────────────────────────────────────── */
+.pc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--stroke-weak, rgba(0, 17, 102, 0.1));
+  border-radius: var(--corner-radius-16, 16px);
+  overflow: hidden;
+  background: var(--background-raised, white);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-face--back {
+  transform: rotateY(180deg);
+}
+
+.pc-face--ai {
+  background: #efeff6;
+}
+
+/* ── Front face content ─────────────────────────────────────── */
+.pc-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 24px);
+  padding: var(--spacing-32, 32px);
+  flex: 1;
+}
+
+/* ── Icon row ───────────────────────────────────────────────── */
+.pc-icon-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pc-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: var(--text-brand, #151f47);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pc-ai-badge {
+  position: absolute;
+  left: 34px;
+  top: -2px;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+/* ── Detail link ────────────────────────────────────────────── */
+.pc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #ff7b33;
+  flex-shrink: 0;
+}
+
+.pc-link-text {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: #ff7b33;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  white-space: nowrap;
+}
+
+.pc-link-text--large {
+  font-size: var(--font-size-small, 16px);
+}
+
+.pc-link-text--small {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+}
+
+.pc-link:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ── Text group ─────────────────────────────────────────────── */
+.pc-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+}
+
+.pc-heading {
+  margin: 0;
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-heading-4, 20px);
+  font-weight: 600;
+  line-height: var(--line-height-heading-4, 28px);
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+}
+
+.pc-body {
+  margin: 0;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+/* ── Status badge ───────────────────────────────────────────── */
+.pc-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 var(--spacing-8, 8px);
+  border-radius: var(--corner-radius-16, 16px);
+  border: 1px solid;
+  width: fit-content;
+}
+
+.pc-badge--success {
+  background: var(--fill-success-weak, rgba(10, 204, 146, 0.05));
+  border-color: var(--stroke-success-weak, rgba(6, 122, 87, 0.2));
+}
+
+.pc-badge--warning {
+  background: var(--fill-warning-weak, rgba(255, 192, 46, 0.05));
+  border-color: var(--stroke-warning-weak, rgba(143, 108, 26, 0.2));
+}
+
+.pc-badge-label {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+}
+
+.pc-badge-label--success {
+  color: var(--text-success, #067a57);
+}
+
+.pc-badge-label--warning {
+  color: var(--text-warning, #8f6c1a);
+}
+
+/* ── Ingresar button ────────────────────────────────────────── */
+.pc-enter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background: var(--fill-brand-strong, #151f47);
+  color: var(--text-inverse-strong, white);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  line-height: var(--line-height-small, 24px);
+  border: none;
+  border-radius: var(--corner-radius-8, 8px);
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.04);
+  transition: filter 0.15s ease;
+  flex-shrink: 0;
+}
+
+.pc-enter-btn:hover {
+  filter: brightness(1.15);
+}
+
+.pc-enter-btn:active {
+  filter: brightness(0.9);
+  box-shadow: none;
+}
+
+.pc-enter-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+}
+
+/* ── Back face — video area ─────────────────────────────────── */
+.pc-video {
+  height: 190px;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: #d4d6e2;
+}
+
+.pc-video-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #d8daeb 0%, #b8bbd0 100%);
+}
+
+.pc-video-mute {
+  position: absolute;
+  left: 8px;
+  top: 160px;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  background: rgba(59, 59, 59, 0.5);
+  backdrop-filter: blur(2.66px);
+  -webkit-backdrop-filter: blur(2.66px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1;
+}
+
+.pc-video-fullscreen {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: rgba(59, 59, 59, 0.5);
+  backdrop-filter: blur(2.66px);
+  -webkit-backdrop-filter: blur(2.66px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1;
+}
+
+.pc-video-mute:hover,
+.pc-video-fullscreen:hover {
+  background: rgba(59, 59, 59, 0.75);
+}
+
+/* ── Back face — body ───────────────────────────────────────── */
+.pc-back-body {
+  flex: 1;
+  padding: 16px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.pc-back-text {
+  margin: 0;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+}
+
+.pc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-weak, rgba(0, 9, 51, 0.65));
+  margin-top: auto;
+  transition: color 0.15s ease;
+}
+
+.pc-back-btn:hover {
+  color: var(--text-strong, rgba(0, 6, 38, 0.9));
+}
+
+.pc-back-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
