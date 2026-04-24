@@ -1,73 +1,119 @@
-.tx { margin: 0; font-family: var(--font-family-body, 'Nunito', sans-serif); }
+/* Text — tx- prefix  (Figma spec: 5371:9895) */
 
-/* Variants */
-.tx--heading1 {
+.tx {
+  margin: 0;
+}
+
+/* ── Heading variants — font-family/heading (Nunito Semi Bold) ── */
+
+.tx--h1 {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
   font-size: var(--font-size-heading-1, 40px);
-  line-height: var(--line-height-heading-1, 48px);
   font-weight: 600;
+  line-height: var(--line-height-heading-1, 48px);
   letter-spacing: -0.5px;
   color: var(--text-strong, rgba(0,6,38,0.9));
 }
-.tx--heading3 {
+
+.tx--h2 {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-heading-2, 32px);
+  font-weight: 600;
+  line-height: var(--line-height-heading-2, 40px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+.tx--h3 {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
   font-size: var(--font-size-heading-3, 24px);
+  font-weight: 600;
   line-height: var(--line-height-heading-3, 32px);
-  font-weight: 600;
   color: var(--text-strong, rgba(0,6,38,0.9));
 }
-.tx--heading4 {
+
+.tx--h4 {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
   font-size: var(--font-size-heading-4, 20px);
+  font-weight: 600;
   line-height: var(--line-height-heading-4, 28px);
-  font-weight: 400;
   color: var(--text-strong, rgba(0,6,38,0.9));
 }
-.tx--body {
-  font-size: var(--font-size-small, 16px);
-  line-height: var(--line-height-small, 24px);
-  font-weight: 400;
-  color: var(--text-weak, rgba(0,9,51,0.65));
-}
-.tx--bodyBold {
-  font-size: var(--font-size-small, 16px);
-  line-height: var(--line-height-small, 24px);
-  font-weight: 600;
-  color: var(--text-weak, rgba(0,9,51,0.65));
-}
-.tx--tiny {
-  font-size: var(--font-size-tiny, 14px);
-  line-height: var(--line-height-tiny, 20px);
-  font-weight: 400;
-  color: var(--text-weak, rgba(0,9,51,0.65));
-}
+
+/* ── Body variants — font-family/body (Nunito) ── */
+
 .tx--uppercase {
-  font-size: var(--font-size-tiny, 14px);
-  line-height: var(--line-height-tiny, 20px);
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-uppercase, 14px);
   font-weight: 600;
+  line-height: var(--line-height-uppercase, 20px);
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-weak, rgba(0,9,51,0.65));
 }
-.tx--textLink {
+
+.tx--small {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
   font-size: var(--font-size-small, 16px);
+  font-weight: 400;
   line-height: var(--line-height-small, 24px);
-  font-weight: 600;
-  color: var(--text-brand, #151f47);
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 150ms ease;
+  color: var(--text-strong, rgba(0,6,38,0.9));
 }
-.tx--textLink:hover { color: var(--interactive-action, #4c64d9); }
 
-/* Alignment */
-.tx--left  { text-align: left; }
+.tx--tiny {
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-tiny, 14px);
+  font-weight: 400;
+  line-height: var(--line-height-tiny, 20px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+/* ── Sub-body variants — font-family/heading (Nunito), very small ── */
+
+.tx--mini {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-mini, 12px);
+  font-weight: 600;
+  line-height: var(--line-height-mini, 18px);
+  letter-spacing: 1px;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+.tx--micro {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-micro, 10px);
+  font-weight: 400;
+  line-height: var(--line-height-micro, 16px);
+  letter-spacing: 0.5px;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+.tx--dot {
+  font-family: var(--font-family-heading, 'Nunito', sans-serif);
+  font-size: var(--font-size-nano, 8px);
+  font-weight: 600;
+  line-height: var(--line-height-nano, 14px);
+  letter-spacing: 0.8px;
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+/* ── Alignment ── */
+.tx--left   { text-align: left; }
 .tx--center { text-align: center; }
-.tx--right { text-align: right; }
+.tx--right  { text-align: right; }
 
-/* Dark mode */
-[data-theme='dark'] .tx--heading1,
-[data-theme='dark'] .tx--heading3,
-[data-theme='dark'] .tx--heading4 { color: white; }
-[data-theme='dark'] .tx--body,
-[data-theme='dark'] .tx--bodyBold,
+/* ── Dark mode ── */
+[data-theme='dark'] .tx--h1,
+[data-theme='dark'] .tx--h2,
+[data-theme='dark'] .tx--h3,
+[data-theme='dark'] .tx--h4,
+[data-theme='dark'] .tx--small,
 [data-theme='dark'] .tx--tiny,
-[data-theme='dark'] .tx--uppercase { color: rgba(255,255,255,0.65); }
-[data-theme='dark'] .tx--textLink { color: rgba(255,255,255,0.85); }
+[data-theme='dark'] .tx--mini,
+[data-theme='dark'] .tx--micro,
+[data-theme='dark'] .tx--dot {
+  color: rgba(255,255,255,0.9);
+}
+
+[data-theme='dark'] .tx--uppercase {
+  color: rgba(255,255,255,0.55);
+}

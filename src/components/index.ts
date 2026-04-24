@@ -145,7 +145,7 @@ export type { SummaryListProps, SummaryListRow } from './SummaryList/SummaryList
 
 // Typography
 export { Text } from './Text/Text';
-export type { TextProps } from './Text/Text';
+export type { TextProps, TextVariant } from './Text/Text';
 
 export { TextBlock } from './TextBlock/TextBlock';
 export type { TextBlockProps } from './TextBlock/TextBlock';
