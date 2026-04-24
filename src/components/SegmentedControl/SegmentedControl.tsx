@@ -1,26 +1,29 @@
 import React, { useId } from 'react';
 import styles from './SegmentedControl.module.css';
+import { SegmentedControlItem } from '../SegmentedControlItem/SegmentedControlItem';
 
-interface SegmentOption {
+export interface SegmentOption {
   value: string;
   label: string;
+  icon?: React.ReactNode;
 }
 
-interface SegmentedControlProps {
+export interface SegmentedControlProps {
   options: SegmentOption[];
   value: string;
   onChange: (value: string) => void;
-  size?: 'sm' | 'md';
-  /** Accessible label for the control group */
+  size?: 'Medium' | 'Small';
   'aria-label'?: string;
+  className?: string;
 }
 
 export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   options,
   value,
   onChange,
-  size = 'md',
-  'aria-label': ariaLabel = 'Segmented control',
+  size = 'Medium',
+  'aria-label': ariaLabel = 'Opciones',
+  className = '',
 }) => {
   const groupId = useId();
 
@@ -28,24 +31,19 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
     <div
       role="group"
       aria-label={ariaLabel}
-      className={`${styles['sc-root']} ${styles[`sc-root--${size}`]}`}
+      className={[styles['sc-root'], className].filter(Boolean).join(' ')}
     >
-      {options.map((option) => {
-        const isActive = option.value === value;
-        return (
-          <button
-            key={option.value}
-            id={`${groupId}-${option.value}`}
-            type="button"
-            role="radio"
-            aria-checked={isActive}
-            onClick={() => onChange(option.value)}
-            className={`${styles['sc-option']} ${isActive ? styles['sc-option--active'] : ''}`}
-          >
-            {option.label}
-          </button>
-        );
-      })}
+      {options.map((option) => (
+        <SegmentedControlItem
+          key={option.value}
+          id={`${groupId}-${option.value}`}
+          label={option.label}
+          icon={option.icon}
+          selected={option.value === value}
+          size={size}
+          onClick={() => onChange(option.value)}
+        />
+      ))}
     </div>
   );
 };

@@ -194,7 +194,10 @@ export { Logotipo } from './Logotipo/Logotipo';
 export type { LogotipoProps, LogotipoVariant } from './Logotipo/Logotipo';
 
 export { SegmentedControl } from './SegmentedControl/SegmentedControl';
-export type { SegmentedControlProps } from './SegmentedControl/SegmentedControl';
+export type { SegmentedControlProps, SegmentOption } from './SegmentedControl/SegmentedControl';
+
+export { SegmentedControlItem } from './SegmentedControlItem/SegmentedControlItem';
+export type { SegmentedControlItemProps } from './SegmentedControlItem/SegmentedControlItem';
 
 export { FileUpload } from './FileUpload/FileUpload';
 export type { FileUploadProps, FileUploadFile } from './FileUpload/FileUpload';

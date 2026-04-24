@@ -1,0 +1,123 @@
+/* SegmentedControlItem — sci- prefix  (Figma spec: 6373:78567) */
+
+/* ── Button root ── */
+.sci-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--corner-radius-8, 8px);
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  transition: background 0.1s ease;
+}
+
+/* ── Sizes ── */
+.sci-btn--medium { height: 48px; }
+.sci-btn--small  { height: 32px; }
+
+/* ── Inner state layer (handles hover/press bg overlay) ── */
+.sci-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4, 4px);
+  height: 100%;
+  width: 100%;
+  border-radius: var(--corner-radius-8, 8px);
+  transition: background 0.1s ease;
+}
+
+.sci-btn--medium .sci-state { padding: 0 var(--spacing-16, 16px); }
+.sci-btn--small  .sci-state { padding: 0 var(--spacing-12, 12px); gap: 0; }
+
+/* ── Label ── */
+.sci-label {
+  padding: 0 var(--spacing-4, 4px);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 400;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-weak, rgba(0,9,51,0.65));
+  white-space: nowrap;
+  text-align: center;
+}
+
+.sci-btn--small .sci-label {
+  font-size: var(--font-size-tiny, 14px);
+  line-height: var(--line-height-tiny, 20px);
+}
+
+/* ── Icon ── */
+.sci-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sci-icon--medium { width: 20px; height: 20px; }
+.sci-icon--small  { width: 16px; height: 16px; }
+
+/* ── Unselected interactive states ── */
+.sci-btn:not(.sci-btn--selected):not(.sci-btn--disabled):hover .sci-state {
+  background: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.sci-btn:not(.sci-btn--selected):not(.sci-btn--disabled):active .sci-state {
+  background: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+/* ── Selected state ── */
+.sci-btn--selected {
+  background: var(--background-overlay, white);
+  border-color: var(--stroke-strong, rgba(0,13,77,0.45));
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.08), 0px 4px 8px rgba(0,0,0,0.04);
+}
+
+.sci-btn--selected .sci-label {
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+/* ── Selected interactive states ── */
+.sci-btn--selected:not(.sci-btn--disabled):hover .sci-state {
+  background: var(--fill-hover, rgba(21,31,71,0.19));
+}
+
+.sci-btn--selected:not(.sci-btn--disabled):active .sci-state {
+  background: var(--fill-press, rgba(0,17,102,0.1));
+}
+
+/* ── Focus ring ── */
+.sci-btn:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 4px;
+}
+
+.sci-btn--selected:focus-visible {
+  outline-offset: 5px;
+}
+
+/* ── Disabled ── */
+.sci-btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .sci-btn--selected {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+
+[data-theme='dark'] .sci-label {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme='dark'] .sci-btn--selected .sci-label {
+  color: rgba(255,255,255,0.9);
+}
