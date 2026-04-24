@@ -70,7 +70,10 @@ export { Pagination } from './Pagination/Pagination';
 export type { PaginationProps } from './Pagination/Pagination';
 
 export { NavigationSide } from './NavigationSide/NavigationSide';
-export type { NavigationSideProps } from './NavigationSide/NavigationSide';
+export type { NavigationSideProps, NavigationSideType } from './NavigationSide/NavigationSide';
+
+export { NavigationSideItem } from './NavigationSideItem/NavigationSideItem';
+export type { NavigationSideItemProps, NavigationSideItemType } from './NavigationSideItem/NavigationSideItem';
 
 export { NavigationHeader } from './NavigationHeader/NavigationHeader';
 export type { NavigationHeaderProps, NavLink } from './NavigationHeader/NavigationHeader';

@@ -1,0 +1,367 @@
+/* =========================================================
+   NavigationSideItem — CSS Module
+   Prefix: nsi-
+   ========================================================= */
+
+/* --------------------------------------------------------
+   Shared tokens (scoped to this module)
+   -------------------------------------------------------- */
+.nsi-row,
+.nsi-header,
+.nsi-divider,
+.nsi-divider-full,
+.nsi-slot,
+.nsi-alert,
+.nsi-button-wrap,
+.nsi-search-wrap,
+.nsi-avatar-row {
+  --nsi-font: var(--font-family-body, 'Nunito', sans-serif);
+  --nsi-text-strong: rgba(0, 6, 38, 0.9);
+  --nsi-text-weak: rgba(0, 9, 51, 0.65);
+  --nsi-navy: #151f47;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   Interactive row (Default / Hover / Press / Selected / Focus)
+   ========================================================= */
+.nsi-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  width: 320px;
+  min-height: 48px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-left: 4px solid transparent;
+  font-family: var(--nsi-font);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--nsi-text-strong);
+  text-align: left;
+  transition: background 120ms ease;
+}
+
+/* CSS-driven hover (real use) */
+.nsi-row:hover {
+  background: rgba(21, 31, 71, 0.19);
+}
+
+/* CSS-driven press */
+.nsi-row:active {
+  background: rgba(0, 17, 102, 0.10);
+}
+
+/* CSS-driven focus */
+.nsi-row:focus-visible {
+  outline: 2px solid #151f47;
+  outline-offset: -2px;
+}
+
+/* Storybook state overrides */
+.nsi-row--hover {
+  background: rgba(21, 31, 71, 0.19);
+}
+
+.nsi-row--press {
+  background: rgba(0, 17, 102, 0.10);
+}
+
+.nsi-row--selected {
+  background: rgba(21, 31, 71, 0.19);
+  border-left: 4px solid #151f47;
+  padding-left: 20px; /* 24px - 4px border */
+}
+
+.nsi-row--focus {
+  outline: 2px solid #151f47;
+  outline-offset: -2px;
+}
+
+/* Row internals */
+.nsi-row__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--nsi-text-strong);
+}
+
+.nsi-row__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nsi-row__badge,
+.nsi-row__badge-count {
+  flex-shrink: 0;
+}
+
+.nsi-row__chevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  color: var(--nsi-text-weak);
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.nsi-header {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 4px;
+  width: 320px;
+}
+
+.nsi-header__label {
+  font-family: var(--nsi-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 9, 51, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* =========================================================
+   Divider / DividerFull
+   ========================================================= */
+.nsi-divider {
+  padding: 24px;
+  width: 320px;
+  box-sizing: border-box;
+}
+
+.nsi-divider-full {
+  padding: 24px 0;
+  width: 320px;
+  box-sizing: border-box;
+}
+
+.nsi-divider__line {
+  border: none;
+  border-top: 1px solid rgba(0, 17, 102, 0.1);
+  margin: 0;
+  width: 100%;
+}
+
+/* =========================================================
+   Slot
+   ========================================================= */
+.nsi-slot {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  width: 320px;
+}
+
+.nsi-slot__box {
+  border: 1.5px dashed rgba(0, 13, 77, 0.45);
+  border-radius: 8px;
+  padding: 24px;
+  background: rgba(0, 21, 128, 0.02);
+}
+
+/* =========================================================
+   Alert
+   ========================================================= */
+.nsi-alert {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  width: 320px;
+}
+
+.nsi-alert__box {
+  border: 1px solid rgba(0, 17, 102, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(0, 21, 128, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nsi-alert__heading {
+  margin: 0;
+  font-family: var(--nsi-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 6, 38, 0.9);
+}
+
+.nsi-alert__body {
+  margin: 0;
+  font-family: var(--nsi-font);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 9, 51, 0.65);
+}
+
+/* =========================================================
+   Button
+   ========================================================= */
+.nsi-button-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  width: 320px;
+}
+
+.nsi-button {
+  width: 100%;
+  height: 48px;
+  background: #151f47;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--nsi-font);
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: opacity 120ms ease;
+}
+
+.nsi-button:hover {
+  opacity: 0.88;
+}
+
+.nsi-button:focus-visible {
+  outline: 2px solid #151f47;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Search
+   ========================================================= */
+.nsi-search-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  width: 320px;
+}
+
+.nsi-search__inner {
+  position: relative;
+  width: 100%;
+}
+
+.nsi-search__icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: rgba(0, 9, 51, 0.45);
+  pointer-events: none;
+}
+
+.nsi-search__input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid rgba(0, 13, 77, 0.45);
+  border-radius: 8px;
+  padding: 0 12px 0 40px;
+  font-family: var(--nsi-font);
+  font-size: 16px;
+  background: white;
+  color: var(--nsi-text-strong);
+  box-sizing: border-box;
+  /* remove default search input chrome */
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.nsi-search__input::placeholder {
+  color: rgba(0, 9, 51, 0.45);
+}
+
+.nsi-search__input:focus {
+  outline: 2px solid #151f47;
+  outline-offset: -1px;
+}
+
+/* hide default "x" button in search inputs */
+.nsi-search__input::-webkit-search-decoration,
+.nsi-search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* =========================================================
+   Avatar
+   ========================================================= */
+.nsi-avatar-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  width: 320px;
+}
+
+.nsi-avatar__img {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 48px;
+  object-fit: cover;
+}
+
+.nsi-avatar__placeholder {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 48px;
+  background: rgba(21, 31, 71, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--nsi-font);
+  font-size: 16px;
+  font-weight: 600;
+  color: #151f47;
+}
+
+.nsi-avatar__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.nsi-avatar__name {
+  font-family: var(--nsi-font);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 6, 38, 0.9);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nsi-avatar__email {
+  font-family: var(--nsi-font);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 9, 51, 0.65);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nsi-avatar__more {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 9, 51, 0.45);
+}
