@@ -1,92 +1,104 @@
 import React from 'react';
 import styles from './Testimonial.module.css';
 
-interface TestimonialProps {
-  quote: string;
-  author: string;
-  role?: string;
-  company?: string;
-  avatar?: string;
-  /** Rating from 1 to 5 */
-  rating?: number;
-}
-
-/** Renders filled or empty star SVG icons — no emoji dependency */
-const StarIcon: React.FC<{ filled: boolean }> = ({ filled }) => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    aria-hidden="true"
-    className={`${styles['ts-star']} ${filled ? styles['ts-star--filled'] : styles['ts-star--empty']}`}
-  >
+const StarFilledIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={styles['tm-star--filled']}>
     <path
-      d="M8 1.333L9.857 5.893L14.667 6.28L11.2 9.307L12.267 14L8 11.44L3.733 14L4.8 9.307L1.333 6.28L6.143 5.893L8 1.333Z"
+      d="M12 2l2.582 5.236 5.778.84-4.18 4.072.987 5.752L12 15.27l-5.167 2.63.987-5.752L3.64 8.076l5.778-.84L12 2Z"
       fill="currentColor"
     />
   </svg>
 );
 
+const StarEmptyIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={styles['tm-star--empty']}>
+    <path
+      d="M12 2l2.582 5.236 5.778.84-4.18 4.072.987 5.752L12 15.27l-5.167 2.63.987-5.752L3.64 8.076l5.778-.84L12 2Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export interface TestimonialProps {
+  align?: 'Left' | 'Centre';
+  authorName?: string;
+  authorEmail?: string;
+  authorAvatar?: string;
+  quote?: string;
+  rating?: number;
+  className?: string;
+}
+
 export const Testimonial: React.FC<TestimonialProps> = ({
+  align = 'Left',
+  authorName,
+  authorEmail,
+  authorAvatar,
   quote,
-  author,
-  role,
-  company,
-  avatar,
   rating,
+  className = '',
 }) => {
-  const clampedRating = rating !== undefined ? Math.min(5, Math.max(0, Math.round(rating))) : undefined;
+  const isCentre = align === 'Centre';
+  const clampedRating =
+    rating !== undefined ? Math.min(5, Math.max(0, Math.round(rating))) : undefined;
 
   return (
-    <article className={styles['ts-root']} aria-label={`Testimonio de ${author}`}>
-      {/* Large decorative quote mark — aria-hidden, purely visual */}
-      <span className={styles['ts-quote-mark']} aria-hidden="true">&ldquo;</span>
-
-      {/* Optional star rating */}
-      {clampedRating !== undefined && (
-        <div
-          className={styles['ts-rating']}
-          role="img"
-          aria-label={`Calificación: ${clampedRating} de 5 estrellas`}
-        >
-          {Array.from({ length: 5 }, (_, i) => (
-            <StarIcon key={i} filled={i < clampedRating} />
-          ))}
+    <article
+      className={[
+        styles['tm-root'],
+        isCentre ? styles['tm-root--centre'] : '',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      aria-label={authorName ? `Testimonio de ${authorName}` : 'Testimonio'}
+    >
+      {/* Avatar + name + email */}
+      {authorName && (
+        <div className={styles['tm-author']}>
+          <div className={styles['tm-avatar-wrap']}>
+            {authorAvatar ? (
+              <img
+                src={authorAvatar}
+                alt={`Foto de ${authorName}`}
+                className={styles['tm-avatar']}
+              />
+            ) : (
+              <div className={styles['tm-avatar-fallback']} aria-hidden="true">
+                {authorName.charAt(0).toUpperCase()}
+              </div>
+            )}
+          </div>
+          <div className={styles['tm-author-text']}>
+            <span className={styles['tm-author-name']}>{authorName}</span>
+            {authorEmail && (
+              <span className={styles['tm-author-email']}>{authorEmail}</span>
+            )}
+          </div>
         </div>
       )}
 
-      {/* Quote body */}
-      <blockquote className={styles['ts-body']}>
-        <p className={styles['ts-text']}>{quote}</p>
-      </blockquote>
+      {/* Quote text */}
+      {quote && (
+        <p className={styles['tm-quote']}>{quote}</p>
+      )}
 
-      {/* Author row */}
-      <footer className={styles['ts-author-row']}>
-        {avatar && (
-          <img
-            src={avatar}
-            alt={`Foto de ${author}`}
-            className={styles['ts-avatar']}
-            width={44}
-            height={44}
-          />
-        )}
-        {!avatar && (
-          // Fallback initials avatar when no image is provided
-          <div className={styles['ts-avatar-fallback']} aria-hidden="true">
-            {author.charAt(0).toUpperCase()}
-          </div>
-        )}
-        <div className={styles['ts-author-info']}>
-          <span className={styles['ts-author-name']}>{author}</span>
-          {(role || company) && (
-            <span className={styles['ts-author-meta']}>
-              {role}{role && company ? ' · ' : ''}{company}
-            </span>
+      {/* Star rating */}
+      {clampedRating !== undefined && (
+        <div
+          className={styles['tm-rating']}
+          role="img"
+          aria-label={`Calificación: ${clampedRating} de 5 estrellas`}
+        >
+          {Array.from({ length: 5 }, (_, i) =>
+            i < clampedRating ? <StarFilledIcon key={i} /> : <StarEmptyIcon key={i} />,
           )}
         </div>
-      </footer>
+      )}
     </article>
   );
 };
+
+export default Testimonial;
