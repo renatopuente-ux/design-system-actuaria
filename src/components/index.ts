@@ -134,7 +134,7 @@ export { Card } from './Card/Card';
 export type { CardProps, CardType } from './Card/Card';
 
 export { Hero } from './Hero/Hero';
-export type { HeroProps } from './Hero/Hero';
+export type { HeroProps, HeroType, HeroAction } from './Hero/Hero';
 
 export { Footer } from './Footer/Footer';
 export type { FooterProps, FooterSize, FooterLink, FooterColumn, SocialLink } from './Footer/Footer';

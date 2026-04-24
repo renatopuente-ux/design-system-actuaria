@@ -1,185 +1,344 @@
 /* Hero — hr- prefix
-   Full-width section for primary landing content.
-   All values reference CSS custom properties — no raw HEX allowed here. */
+   5 layout types: horizontal, horizontal-padded, vertical, vertical-large, vertical-small
+   Responsive: desktop (>1024px), tablet (≤1024px), mobile (≤768px)
+   All values reference CSS custom properties — no raw HEX except where noted in spec. */
 
+/* ─── Token surface ──────────────────────────────────────────────────────────── */
 .hr-root {
-  --hr-color-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
-  --hr-color-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
-  --hr-color-text-brand: var(--text-brand, #4c64d9);
-  --hr-color-fill-weaker: var(--fill-weaker, rgba(0, 17, 102, 0.04));
-  --hr-color-fill-brand-weak: var(--fill-brand-weak, rgba(76, 100, 217, 0.08));
-  --hr-color-stroke-weak: var(--stroke-weak, rgba(0, 17, 102, 0.1));
-  --hr-color-interactive: var(--interactive-action, #4c64d9);
-  --hr-font-family: var(--font-family-body, 'Nunito', sans-serif);
-  --hr-font-size-h1: var(--font-size-heading-1, 40px);
-  --hr-font-size-small: var(--font-size-small, 16px);
-  --hr-font-size-tiny: var(--font-size-tiny, 14px);
-  --hr-spacing-8: var(--spacing-8, 8px);
-  --hr-spacing-12: var(--spacing-12, 12px);
-  --hr-spacing-16: var(--spacing-16, 16px);
-  --hr-spacing-24: var(--spacing-24, 24px);
-  --hr-spacing-32: var(--spacing-32, 32px);
-  --hr-radius-pill: var(--radius-pill, 48px);
-  --hr-radius-card: var(--radius-card, 16px);
+  --hr-text-strong: var(--text-strong, rgba(0, 6, 38, 0.9));
+  --hr-text-weak: var(--text-weak, rgba(0, 9, 51, 0.65));
+  --hr-fill-weaker: var(--fill-weaker, rgba(0, 21, 128, 0.02));
+  --hr-fill-weak: var(--fill-weak, rgba(21, 31, 71, 0.19));
+  --hr-fill-brand-strong: var(--fill-brand-strong, #151f47);
+  --hr-font-heading: var(--font-family-heading, 'Nunito', sans-serif);
+  --hr-font-body: var(--font-family-body, 'Nunito', sans-serif);
 
   width: 100%;
-  padding: 96px var(--hr-spacing-32);
-  background-color: var(--hr-color-fill-weaker);
   box-sizing: border-box;
+  background: var(--hr-fill-weaker);
 }
 
-/* Alignment variants */
-.hr-root--center .hr-content {
+/* ─── Horizontal layout (default) ───────────────────────────────────────────── */
+.hr-root--horizontal,
+.hr-root--horizontal-padded {
+  min-height: 712px;
+}
+
+/* The flex row wrapper only exists in horizontal layouts */
+.hr-row {
+  display: flex;
+  flex-direction: row;
+  min-height: inherit;
+  width: 100%;
+}
+
+/* ─── Horizontal: content area ───────────────────────────────────────────────── */
+.hr-root--horizontal .hr-content,
+.hr-root--horizontal-padded .hr-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 96px 80px 96px 120px;
+  /* background only on content half for horizontal types */
+  background: var(--hr-fill-weaker);
+}
+
+.hr-root--horizontal-padded .hr-row {
+  padding: 96px 120px;
+}
+
+.hr-root--horizontal-padded .hr-content {
+  padding: 0;
+}
+
+/* ─── Horizontal: image area ─────────────────────────────────────────────────── */
+.hr-root--horizontal .hr-image-wrap,
+.hr-root--horizontal-padded .hr-image-wrap {
+  width: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.hr-root--horizontal .hr-image-wrap > *,
+.hr-root--horizontal-padded .hr-image-wrap > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hr-root--horizontal-padded .hr-image-wrap {
+  border-radius: 24px;
+}
+
+/* ─── Vertical layouts ───────────────────────────────────────────────────────── */
+.hr-root--vertical,
+.hr-root--vertical-large,
+.hr-root--vertical-small {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.hr-root--vertical .hr-content,
+.hr-root--vertical-large .hr-content,
+.hr-root--vertical-small .hr-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 24px;
+  padding: 96px 120px 48px;
+}
+
+/* Vertical: image below content */
+.hr-root--vertical .hr-image-wrap,
+.hr-root--vertical-large .hr-image-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hr-root--vertical .hr-image-wrap > *,
+.hr-root--vertical-large .hr-image-wrap > * {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  display: block;
+}
+
+/* vertical-large: top border-radius on image */
+.hr-root--vertical-large .hr-image-wrap {
+  border-radius: 24px 24px 0 0;
+}
+
+/* vertical-small: contained image */
+.hr-root--vertical-small .hr-image-wrap {
+  max-width: 790px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hr-root--vertical-small .hr-image-wrap > * {
+  width: 100%;
+  height: 530px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── Tag ────────────────────────────────────────────────────────────────────── */
+.hr-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: var(--hr-fill-weak);
+  border-radius: 32px;
+  font-family: var(--hr-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--hr-text-strong);
+  width: fit-content;
+  line-height: 1.4;
+}
+
+.hr-tag--uppercase {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ─── Title ──────────────────────────────────────────────────────────────────── */
+.hr-title {
+  font-family: var(--hr-font-heading);
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 64px;
+  letter-spacing: -1px;
+  color: var(--hr-text-strong);
+  margin: 0;
+}
+
+/* ─── Description ────────────────────────────────────────────────────────────── */
+.hr-description {
+  font-family: var(--hr-font-body);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  color: var(--hr-text-weak);
+  max-width: 560px;
+  margin: 0;
+}
+
+/* Centered description for vertical types */
+.hr-root--vertical .hr-description,
+.hr-root--vertical-large .hr-description,
+.hr-root--vertical-small .hr-description {
   text-align: center;
 }
 
-.hr-root--left .hr-content {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.hr-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--hr-spacing-24);
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-/* Badge pill above the title */
-.hr-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--hr-spacing-8) var(--hr-spacing-16);
-  background-color: var(--hr-color-fill-brand-weak);
-  color: var(--hr-color-text-brand);
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-tiny);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-radius: var(--hr-radius-pill);
-  border: 1px solid var(--hr-color-stroke-weak);
-  width: fit-content;
-}
-
-.hr-subtitle {
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-tiny);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--hr-color-text-brand);
-  margin: 0;
-}
-
-/* Heading-1: 40px / 48px / weight 600 / tracking -0.5px — mandatory per DS */
-.hr-title {
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-h1);
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -0.5px;
-  color: var(--hr-color-text-strong);
-  margin: 0;
-}
-
-.hr-description {
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-small);
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--hr-color-text-weak);
-  margin: 0;
-  max-width: 600px;
-}
-
+/* ─── Button group ───────────────────────────────────────────────────────────── */
 .hr-actions {
   display: flex;
+  flex-direction: row;
+  gap: 16px;
   flex-wrap: wrap;
-  gap: var(--hr-spacing-12);
-  margin-top: var(--hr-spacing-8);
 }
 
-/* Primary button — mirrors DS button pattern without importing Button component */
+/* ─── Primary button ─────────────────────────────────────────────────────────── */
 .hr-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--hr-spacing-12) var(--hr-spacing-24);
-  background-color: var(--hr-color-interactive);
-  color: var(--background-base, #ffffff);
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-small);
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 8px;
+  background: var(--hr-fill-brand-strong);
+  color: #ffffff;
+  font-family: var(--hr-font-body);
+  font-size: 16px;
   font-weight: 600;
-  line-height: 24px;
   border: none;
-  border-radius: var(--hr-radius-card);
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06), 0px 2px 4px rgba(0, 0, 0, 0.08);
+  transition: filter 0.15s ease;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .hr-btn-primary:hover {
-  opacity: 0.88;
+  filter: brightness(1.15);
 }
 
 .hr-btn-primary:focus-visible {
-  outline: 2px solid var(--hr-color-interactive);
+  outline: 2px solid var(--hr-fill-brand-strong);
   outline-offset: 3px;
 }
 
-/* Secondary button — outlined variant */
+/* ─── Secondary button ───────────────────────────────────────────────────────── */
 .hr-btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--hr-spacing-12) var(--hr-spacing-24);
-  background-color: transparent;
-  color: var(--hr-color-text-strong);
-  font-family: var(--hr-font-family);
-  font-size: var(--hr-font-size-small);
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1.5px solid rgba(21, 31, 71, 0.8);
+  color: #151f47;
+  font-family: var(--hr-font-body);
+  font-size: 16px;
   font-weight: 600;
-  line-height: 24px;
-  border: 1.5px solid var(--hr-color-stroke-weak);
-  border-radius: var(--hr-radius-card);
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition: background-color 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .hr-btn-secondary:hover {
-  border-color: var(--hr-color-interactive);
-  background-color: var(--hr-color-fill-brand-weak);
+  background: rgba(21, 31, 71, 0.04);
 }
 
 .hr-btn-secondary:focus-visible {
-  outline: 2px solid var(--hr-color-interactive);
+  outline: 2px solid rgba(21, 31, 71, 0.8);
   outline-offset: 3px;
 }
 
-/* Dark mode overrides */
-[data-theme='dark'] .hr-root {
-  --hr-color-text-strong: #ffffff;
-  --hr-color-text-weak: rgba(255, 255, 255, 0.65);
-  --hr-color-fill-weaker: rgba(255, 255, 255, 0.03);
-  --hr-color-fill-brand-weak: rgba(76, 100, 217, 0.15);
-  --hr-color-stroke-weak: rgba(255, 255, 255, 0.12);
+/* ─── Slot containers ────────────────────────────────────────────────────────── */
+.hr-email-capture,
+.hr-social-proof {
+  width: 100%;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hr-root {
-    padding: 64px var(--hr-spacing-24);
+/* ─── Tablet (≤1024px) ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Horizontal → stack vertically on tablet */
+  .hr-root--horizontal .hr-row,
+  .hr-root--horizontal-padded .hr-row {
+    flex-direction: column;
+  }
+
+  .hr-root--horizontal .hr-content,
+  .hr-root--horizontal-padded .hr-content {
+    padding: 48px 40px;
+    justify-content: flex-start;
+  }
+
+  .hr-root--horizontal-padded .hr-row {
+    padding: 48px 40px;
+  }
+
+  .hr-root--horizontal .hr-image-wrap,
+  .hr-root--horizontal-padded .hr-image-wrap {
+    width: 100%;
+  }
+
+  .hr-root--horizontal .hr-image-wrap > *,
+  .hr-root--horizontal-padded .hr-image-wrap > * {
+    height: 480px;
+  }
+
+  /* vertical-small tablet */
+  .hr-root--vertical-small .hr-image-wrap {
+    max-width: 600px;
+  }
+
+  .hr-root--vertical-small .hr-image-wrap > * {
+    height: 448px;
   }
 
   .hr-title {
-    font-size: 28px;
-    line-height: 36px;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.5px;
+  }
+}
+
+/* ─── Mobile (≤768px) ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hr-root--horizontal .hr-content,
+  .hr-root--horizontal-padded .hr-content {
+    padding: 48px 24px;
+  }
+
+  .hr-root--horizontal-padded .hr-row {
+    padding: 48px 24px;
+  }
+
+  .hr-root--horizontal .hr-image-wrap > *,
+  .hr-root--horizontal-padded .hr-image-wrap > * {
+    height: 320px;
+  }
+
+  .hr-root--vertical .hr-content,
+  .hr-root--vertical-large .hr-content,
+  .hr-root--vertical-small .hr-content {
+    padding: 48px 24px;
+  }
+
+  /* vertical-small: full-width on mobile */
+  .hr-root--vertical-small .hr-image-wrap {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .hr-root--vertical-small .hr-image-wrap > * {
+    height: 280px;
+  }
+
+  .hr-title {
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.5px;
   }
 
   .hr-actions {
     flex-direction: column;
-    align-items: stretch;
+  }
+
+  .hr-btn-primary,
+  .hr-btn-secondary {
+    width: 100%;
   }
 }
