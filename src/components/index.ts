@@ -143,7 +143,7 @@ export { BannerSlider } from './BannerSlider/BannerSlider';
 export type { BannerSliderProps } from './BannerSlider/BannerSlider';
 
 export { Drawer } from './Drawer/Drawer';
-export type { DrawerProps } from './Drawer/Drawer';
+export type { DrawerProps, DrawerSize } from './Drawer/Drawer';
 
 export { Testimonial } from './Testimonial/Testimonial';
 export type { TestimonialProps } from './Testimonial/Testimonial';
