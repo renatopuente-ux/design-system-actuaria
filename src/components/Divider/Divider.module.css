@@ -14,6 +14,12 @@
   flex-shrink: 0;
 }
 
+/* ── strong variant ── */
+.dv-root--strong,
+.dv-line--strong {
+  background-color: var(--stroke-strong, rgba(0, 13, 77, 0.45));
+}
+
 /* ── horizontal with centered label ── */
 .dv-root--labeled {
   display: flex;

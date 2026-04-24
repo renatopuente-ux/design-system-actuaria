@@ -111,7 +111,7 @@ export { Tag } from './Tag/Tag';
 export type { TagProps } from './Tag/Tag';
 
 export { Divider } from './Divider/Divider';
-export type { DividerProps } from './Divider/Divider';
+export type { DividerProps, DividerType } from './Divider/Divider';
 
 export { Table } from './Table/Table';
 export type { TableProps } from './Table/Table';
