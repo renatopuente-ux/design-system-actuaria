@@ -87,6 +87,9 @@ export type { NavigationHeaderMenuProps, NavigationHeaderMenuState } from './Nav
 export { Stepper } from './Stepper/Stepper';
 export type { StepperProps } from './Stepper/Stepper';
 
+export { ProgressIndicator } from './ProgressIndicator/ProgressIndicator';
+export type { ProgressIndicatorProps } from './ProgressIndicator/ProgressIndicator';
+
 // Overlays & feedback
 export { Alert } from './Alert/Alert';
 export type { AlertProps } from './Alert/Alert';

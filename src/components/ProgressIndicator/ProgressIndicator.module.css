@@ -1,0 +1,84 @@
+/* ProgressIndicator — pi- prefix  (Figma spec: 3694:2033) */
+
+.pi-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ── Top: label + track ── */
+.pi-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.pi-label {
+  margin: 0;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-strong, rgba(0,6,38,0.9));
+}
+
+/* ── Track (flex row of segments) ── */
+.pi-track {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-4, 4px);
+  width: 100%;
+}
+
+/* ── Individual segment ── */
+.pi-segment {
+  flex: 1 0 0;
+  height: 8px;
+  border-radius: var(--spacing-4, 4px);
+  min-width: 1px;
+}
+
+.pi-segment--active {
+  background: var(--fill-selected, #151f47);
+}
+
+.pi-segment--inactive {
+  background: transparent;
+  border: 1px solid var(--stroke-weak, rgba(0,17,102,0.1));
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ── Back link ── */
+.pi-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-family-body, 'Nunito', sans-serif);
+  font-size: var(--font-size-small, 16px);
+  font-weight: 600;
+  line-height: var(--line-height-small, 24px);
+  color: var(--text-brand, #151f47);
+  transition: opacity 0.12s ease;
+}
+.pi-back:hover { opacity: 0.75; }
+.pi-back:focus-visible {
+  outline: 2px solid var(--stroke-focus, #151f47);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Dark mode ── */
+[data-theme='dark'] .pi-label { color: white; }
+[data-theme='dark'] .pi-back { color: #c7cbf1; }
+[data-theme='dark'] .pi-segment--active { background: white; }
+[data-theme='dark'] .pi-segment--inactive {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,0.2);
+}
